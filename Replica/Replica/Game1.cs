@@ -19,6 +19,9 @@ namespace Replica
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        BasicEffect defaultEffect;
+        VertexBuffer vBuffer;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -33,7 +36,20 @@ namespace Replica
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            defaultEffect = new BasicEffect(GraphicsDevice);
+            //defaultEffect.EnableDefaultLighting();
+            defaultEffect.VertexColorEnabled = true;
+
+            List<VertexPositionColor> vertexList = new List<VertexPositionColor>();
+            vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 0), Color.White));
+            vertexList.Add(new VertexPositionColor(new Vector3(1, 0, 0), Color.White));
+            vertexList.Add(new VertexPositionColor(new Vector3(1, 0, 1), Color.White));
+            
+            vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 0), Color.White));
+            vertexList.Add(new VertexPositionColor(new Vector3(1, 0, 1), Color.White));
+            vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 1), Color.White));
+            vBuffer = new VertexBuffer(GraphicsDevice, VertexPositionColor.VertexDeclaration, vertexList.Count, BufferUsage.WriteOnly);
+            vBuffer.SetData<VertexPositionColor>(vertexList.ToArray());
 
             base.Initialize();
         }
@@ -83,7 +99,16 @@ namespace Replica
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            defaultEffect.World = Matrix.Identity;
+            defaultEffect.View = Matrix.CreateLookAt(new Vector3(0, 1, 0), new Vector3(0, 0, 0), new Vector3(1, 0, 0));
+            defaultEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(90), GraphicsDevice.DisplayMode.AspectRatio, 0.5f, 1000.0f);
+
+            foreach (EffectPass pass in defaultEffect.CurrentTechnique.Passes)
+            {
+                pass.Apply();
+                GraphicsDevice.SetVertexBuffer(vBuffer);
+                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, vBuffer.VertexCount / 3);
+            }
 
             base.Draw(gameTime);
         }
