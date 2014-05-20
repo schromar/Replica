@@ -22,6 +22,8 @@ namespace Replica
         BasicEffect defaultEffect;
         VertexBuffer vBuffer;
 
+        Player player;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -36,20 +38,24 @@ namespace Replica
         /// </summary>
         protected override void Initialize()
         {
+            IsMouseVisible = true;
+
             defaultEffect = new BasicEffect(GraphicsDevice);
             //defaultEffect.EnableDefaultLighting();
             defaultEffect.VertexColorEnabled = true;
 
             List<VertexPositionColor> vertexList = new List<VertexPositionColor>();
             vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 0), Color.White));
-            vertexList.Add(new VertexPositionColor(new Vector3(1, 0, 0), Color.White));
-            vertexList.Add(new VertexPositionColor(new Vector3(1, 0, 1), Color.White));
+            vertexList.Add(new VertexPositionColor(new Vector3(10, 0, 0), Color.White));
+            vertexList.Add(new VertexPositionColor(new Vector3(10, 0, 10), Color.White));
             
-            vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 0), Color.White));
-            vertexList.Add(new VertexPositionColor(new Vector3(1, 0, 1), Color.White));
-            vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 1), Color.White));
+            vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 0), Color.Red));
+            vertexList.Add(new VertexPositionColor(new Vector3(10, 0, 10), Color.Red));
+            vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 10), Color.Red));
             vBuffer = new VertexBuffer(GraphicsDevice, VertexPositionColor.VertexDeclaration, vertexList.Count, BufferUsage.WriteOnly);
             vBuffer.SetData<VertexPositionColor>(vertexList.ToArray());
+
+            player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
 
             base.Initialize();
         }
@@ -86,7 +92,7 @@ namespace Replica
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
+            player.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -100,8 +106,8 @@ namespace Replica
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             defaultEffect.World = Matrix.Identity;
-            defaultEffect.View = Matrix.CreateLookAt(new Vector3(0, 1, 0), new Vector3(0, 0, 0), new Vector3(1, 0, 0));
-            defaultEffect.Projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(90), GraphicsDevice.DisplayMode.AspectRatio, 0.5f, 1000.0f);
+            defaultEffect.View = player.GetView();
+            defaultEffect.Projection = player.GetProjection();
 
             foreach (EffectPass pass in defaultEffect.CurrentTechnique.Passes)
             {
