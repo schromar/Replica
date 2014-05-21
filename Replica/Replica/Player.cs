@@ -103,6 +103,21 @@ namespace Replica
             view = Matrix.CreateLookAt(position, position+forward, up);
         }
 
+        public Vector3 GetPosition()
+        {
+            return position;
+        }
+
+        public Vector3 GetForward()
+        {
+            return forward;
+        }
+
+        public Vector3 GetUp()
+        {
+            return up;
+        }
+
         public Matrix GetView()
         {
             return view;

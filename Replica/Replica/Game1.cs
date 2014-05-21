@@ -22,6 +22,11 @@ namespace Replica
         BasicEffect defaultEffect;
         VertexBuffer vBuffer;
 
+        SoundEffectInstance soundEffectInstance;
+        AudioEmitter emitter = new AudioEmitter();
+        AudioListener listener = new AudioListener();
+        Vector3 objectPos;
+
         List<Entity> entities;
 
         public Game1()
@@ -70,6 +75,11 @@ namespace Replica
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            SoundEffect soundEffect = Content.Load<SoundEffect>("Neolectrical");
+            soundEffectInstance = soundEffect.CreateInstance();
+            emitter.Position = Vector3.Zero;
+            soundEffectInstance.Apply3D(listener, emitter);
+            soundEffectInstance.Play();
         }
 
         /// <summary>
@@ -95,6 +105,12 @@ namespace Replica
             {
                 entity.Update(gameTime);
             }
+
+            Player player = (Player)entities[0];
+            listener.Position = player.GetPosition();
+            listener.Forward = player.GetForward();
+            listener.Up = player.GetUp();
+            soundEffectInstance.Apply3D(listener, emitter);
 
             base.Update(gameTime);
         }
