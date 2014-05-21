@@ -22,7 +22,7 @@ namespace Replica
         BasicEffect defaultEffect;
         VertexBuffer vBuffer;
 
-        Player player;
+        List<Entity> entities;
 
         public Game1()
         {
@@ -38,7 +38,7 @@ namespace Replica
         /// </summary>
         protected override void Initialize()
         {
-            IsMouseVisible = true;
+            //IsMouseVisible = true;
 
             defaultEffect = new BasicEffect(GraphicsDevice);
             //defaultEffect.EnableDefaultLighting();
@@ -55,7 +55,8 @@ namespace Replica
             vBuffer = new VertexBuffer(GraphicsDevice, VertexPositionColor.VertexDeclaration, vertexList.Count, BufferUsage.WriteOnly);
             vBuffer.SetData<VertexPositionColor>(vertexList.ToArray());
 
-            player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+            entities = new List<Entity>();
+            entities.Add(new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
 
             base.Initialize();
         }
@@ -69,7 +70,6 @@ namespace Replica
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -78,7 +78,6 @@ namespace Replica
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
         /// <summary>
@@ -92,7 +91,10 @@ namespace Replica
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            player.Update(gameTime);
+            foreach(Entity entity in entities)
+            {
+                entity.Update(gameTime);
+            }
 
             base.Update(gameTime);
         }
@@ -105,6 +107,8 @@ namespace Replica
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            Player player = (Player)entities[0];
+
             defaultEffect.World = Matrix.Identity;
             defaultEffect.View = player.GetView();
             defaultEffect.Projection = player.GetProjection();
@@ -114,6 +118,11 @@ namespace Replica
                 pass.Apply();
                 GraphicsDevice.SetVertexBuffer(vBuffer);
                 GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, vBuffer.VertexCount / 3);
+            }
+
+            foreach (Entity entity in entities)
+            {
+                entity.Draw(gameTime, defaultEffect);
             }
 
             base.Draw(gameTime);
