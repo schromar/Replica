@@ -25,9 +25,9 @@ namespace Replica
         SoundEffectInstance soundEffectInstance;
         AudioEmitter emitter = new AudioEmitter();
         AudioListener listener = new AudioListener();
-        Vector3 objectPos;
 
         List<Entity> entities;
+        Player player;
 
         public Game1()
         {
@@ -61,7 +61,8 @@ namespace Replica
             vBuffer.SetData<VertexPositionColor>(vertexList.ToArray());
 
             entities = new List<Entity>();
-            entities.Add(new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
+            player = new Player(entities, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
+            entities.Add(player);
 
             base.Initialize();
         }
@@ -101,15 +102,14 @@ namespace Replica
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            foreach(Entity entity in entities)
+            for (int i = 0; i < entities.Count; i++) //Certain entities will have to create/delete other entities in their Update, foreach does not work
             {
-                entity.Update(gameTime);
+                entities[i].Update(gameTime);
             }
 
-            Player player = (Player)entities[0];
-            listener.Position = player.GetPosition();
-            listener.Forward = player.GetForward();
-            listener.Up = player.GetUp();
+            listener.Position = player.GetTransform().position;
+            listener.Forward = player.GetTransform().forward;
+            listener.Up = player.GetTransform().up;
             soundEffectInstance.Apply3D(listener, emitter);
 
             base.Update(gameTime);
@@ -123,11 +123,9 @@ namespace Replica
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            Player player = (Player)entities[0];
-
             defaultEffect.World = Matrix.Identity;
-            defaultEffect.View = player.GetView();
-            defaultEffect.Projection = player.GetProjection();
+            defaultEffect.View = player.GetCamera().GetView();
+            defaultEffect.Projection = player.GetCamera().GetProjection();
 
             foreach (EffectPass pass in defaultEffect.CurrentTechnique.Passes)
             {

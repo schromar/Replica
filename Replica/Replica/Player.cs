@@ -11,44 +11,47 @@ namespace Replica
     {
         Vector2 resolution;
 
-        Vector3 position;
-        Vector3 forward;
-        Vector3 right;
-        Vector3 up;
-
         float mouseSpeed;
         float movementSpeed;
         Vector2 rotation;
 
-        Matrix view;
-        Matrix projection;
+        Camera camera;
 
-        public Player(int windowWidth, int windowHeight)
+        public Player(List<Entity> entities, int windowWidth, int windowHeight)
+            : base(entities)
         {
             resolution = new Vector2(windowWidth, windowHeight);
 
-            position = new Vector3(5, 1, 5);
-            forward = Vector3.Forward;
-            right = Vector3.Right;
-            up = Vector3.Up;
+            transform.position = new Vector3(5, 1, 5);
 
             mouseSpeed = 0.1f;
             movementSpeed = 5;
             rotation = Vector2.Zero;
 
-            UpdateView();
-            projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(90), resolution.X/resolution.Y, 0.5f, 1000.0f);
+            camera = new Camera(resolution);
         }
 
         public override void Update(GameTime gameTime)
         {
-            RotateCamera(gameTime);
-            MoveCamera(gameTime);
+            Rotate(gameTime);
+            Move(gameTime);
 
-            UpdateView();
+            camera.SetTransform(transform);
+
+            MouseState mState = Mouse.GetState();
+            if (mState.LeftButton == ButtonState.Pressed)
+            {
+                entities.Add(new Replicant(entities, transform));
+                Console.WriteLine(entities.Count);
+            }
         }
 
-        void RotateCamera(GameTime gameTime)
+        public Camera GetCamera()
+        {
+            return camera;
+        }
+
+        void Rotate(GameTime gameTime)
         {
             MouseState mState = Mouse.GetState();
 
@@ -58,16 +61,16 @@ namespace Replica
             rotation += mouseMovement * mouseSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //Math. It happens. Here.
-            forward = new Vector3((float)Math.Cos(rotation.Y) * (float)Math.Sin(rotation.X),
+            transform.forward = new Vector3((float)Math.Cos(rotation.Y) * (float)Math.Sin(rotation.X),
                                             (float)Math.Sin(rotation.Y),
                                             (float)Math.Cos(rotation.Y) * (float)Math.Cos(rotation.X));
-            right = new Vector3((float)Math.Sin(rotation.X - Math.PI / 2.0f),
+            transform.right = new Vector3((float)Math.Sin(rotation.X - Math.PI / 2.0f),
                                         0,
                                         (float)Math.Cos(rotation.X - Math.PI / 2.0f));
-            up = Vector3.Cross(right, forward);
+            transform.up = Vector3.Cross(transform.right, transform.forward);
         }
 
-        void MoveCamera(GameTime gameTime)
+        void Move(GameTime gameTime)
         {
             KeyboardState kState = Keyboard.GetState();
 
@@ -95,37 +98,7 @@ namespace Replica
                 movement *= movementSpeed;
             }
             movement *= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            position += forward * movement.X + right * movement.Y;
-        }
-
-        void UpdateView()
-        {
-            view = Matrix.CreateLookAt(position, position+forward, up);
-        }
-
-        public Vector3 GetPosition()
-        {
-            return position;
-        }
-
-        public Vector3 GetForward()
-        {
-            return forward;
-        }
-
-        public Vector3 GetUp()
-        {
-            return up;
-        }
-
-        public Matrix GetView()
-        {
-            return view;
-        }
-
-        public Matrix GetProjection()
-        {
-            return projection;
+            transform.position += transform.forward * movement.X + transform.right * movement.Y;
         }
     }
 }
