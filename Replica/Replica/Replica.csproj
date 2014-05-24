@@ -107,7 +107,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Credits.cs" />
+    <Compile Include="Cutscene.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="Gameover.cs" />
     <Compile Include="Gamestate.cs" />
     <Compile Include="Ingame.cs" />
     <Compile Include="Levelselection.cs" />
