@@ -20,14 +20,19 @@ namespace Replica
         SpriteBatch spriteBatch;
 
         BasicEffect defaultEffect;
-        VertexBuffer vBuffer;
-
-        SoundEffectInstance soundEffectInstance;
-        AudioEmitter emitter = new AudioEmitter();
-        AudioListener listener = new AudioListener();
 
         List<Entity> entities;
         Player player;
+
+        Model model;
+
+        //RENDER TESTING
+        VertexBuffer vBuffer;
+
+        //AUDIO TESTING
+        SoundEffectInstance soundEffectInstance;
+        AudioEmitter emitter = new AudioEmitter();
+        AudioListener listener = new AudioListener();
 
         public Game1()
         {
@@ -49,6 +54,7 @@ namespace Replica
             //defaultEffect.EnableDefaultLighting();
             defaultEffect.VertexColorEnabled = true;
 
+            //RENDER TESTING
             List<VertexPositionColor> vertexList = new List<VertexPositionColor>();
             vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 0), Color.White));
             vertexList.Add(new VertexPositionColor(new Vector3(10, 0, 0), Color.White));
@@ -59,10 +65,6 @@ namespace Replica
             vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 10), Color.Red));
             vBuffer = new VertexBuffer(GraphicsDevice, VertexPositionColor.VertexDeclaration, vertexList.Count, BufferUsage.WriteOnly);
             vBuffer.SetData<VertexPositionColor>(vertexList.ToArray());
-
-            entities = new List<Entity>();
-            player = new Player(entities, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height);
-            entities.Add(player);
 
             base.Initialize();
         }
@@ -76,11 +78,18 @@ namespace Replica
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            SoundEffect soundEffect = Content.Load<SoundEffect>("Neolectrical");
+            model = Content.Load<Model>("Models\\p1_wedge");
+
+            //AUDIO TESTING
+            SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
             soundEffectInstance = soundEffect.CreateInstance();
             emitter.Position = Vector3.Zero;
             soundEffectInstance.Apply3D(listener, emitter);
             soundEffectInstance.Play();
+
+            entities = new List<Entity>();
+            player = new Player(entities, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model);
+            entities.Add(player);
         }
 
         /// <summary>
@@ -107,6 +116,7 @@ namespace Replica
                 entities[i].Update(gameTime);
             }
 
+            //AUDIO TESTING
             listener.Position = player.GetTransform().position;
             listener.Forward = player.GetTransform().forward;
             listener.Up = player.GetTransform().up;
@@ -127,16 +137,17 @@ namespace Replica
             defaultEffect.View = player.GetCamera().GetView();
             defaultEffect.Projection = player.GetCamera().GetProjection();
 
+            foreach (Entity entity in entities)
+            {
+                entity.Draw(gameTime, defaultEffect, player.GetCamera());
+            }
+
+            //RENDER TESTING
             foreach (EffectPass pass in defaultEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
                 GraphicsDevice.SetVertexBuffer(vBuffer);
                 GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, vBuffer.VertexCount / 3);
-            }
-
-            foreach (Entity entity in entities)
-            {
-                entity.Draw(gameTime, defaultEffect);
             }
 
             base.Draw(gameTime);

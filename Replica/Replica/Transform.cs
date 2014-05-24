@@ -6,7 +6,8 @@ using Microsoft.Xna.Framework;
 
 namespace Replica
 {
-    class Transform
+    //class Transform
+    public struct Transform
     {
         //What if an entity returns the transform and it is changed? (reference?)
         public Vector3 position;
@@ -15,13 +16,13 @@ namespace Replica
         public Vector3 right;
         public Vector3 up;
 
-        public Transform()
+        /*public Transform()
         {
             position = Vector3.Zero;
 
             forward = Vector3.Forward;
             right = Vector3.Right;
             up = Vector3.Up;
-        }
+        }*/
     }
 }

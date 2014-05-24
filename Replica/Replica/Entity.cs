@@ -9,13 +9,15 @@ namespace Replica
 {
     class Entity
     {
-        //Position, Direction, BoundingBox, Model, Texture, Duration
+        //BoundingBox, Model, Texture, Duration
         protected List<Entity> entities;
+
         protected Transform transform;
 
         public Entity(List<Entity> entities)
         {
             this.entities = entities;
+
             transform = new Transform();
         }
 
@@ -24,7 +26,8 @@ namespace Replica
 
         }
 
-        public virtual void Draw(GameTime gameTime, BasicEffect effect)
+        //Thinking about removing the BasicEffect again?
+        public virtual void Draw(GameTime gameTime, BasicEffect effect, Camera camera)
         {
 
         }

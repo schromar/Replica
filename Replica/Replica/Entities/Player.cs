@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Replica
@@ -16,8 +17,9 @@ namespace Replica
         Vector2 rotation;
 
         Camera camera;
+        Model model;
 
-        public Player(List<Entity> entities, int windowWidth, int windowHeight)
+        public Player(List<Entity> entities, int windowWidth, int windowHeight, Model model)
             : base(entities)
         {
             resolution = new Vector2(windowWidth, windowHeight);
@@ -29,6 +31,8 @@ namespace Replica
             rotation = Vector2.Zero;
 
             camera = new Camera(resolution);
+
+            this.model = model;
         }
 
         public override void Update(GameTime gameTime)
@@ -38,17 +42,18 @@ namespace Replica
 
             camera.SetTransform(transform);
 
+            //Spawn Replicant on mouseclick
             MouseState mState = Mouse.GetState();
             if (mState.LeftButton == ButtonState.Pressed)
             {
-                entities.Add(new Replicant(entities, transform));
+                entities.Add(new Replicant(entities, transform, model));
                 Console.WriteLine(entities.Count);
             }
         }
 
         public Camera GetCamera()
         {
-            return camera;
+            return camera; //What happens if camera is changed after getter was used?
         }
 
         void Rotate(GameTime gameTime)
