@@ -21,6 +21,11 @@ namespace Replica
 
         public override void Draw(GameTime gameTime, BasicEffect effect, Camera camera)
         {
+            Matrix rotation=Matrix.Identity;
+            rotation.Forward = transform.forward;
+            rotation.Right = transform.right;
+            rotation.Up = transform.up;
+
             Matrix[] transforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(transforms);
 
@@ -29,7 +34,7 @@ namespace Replica
                 foreach (BasicEffect mEffect in mesh.Effects)
                 {
                     mEffect.EnableDefaultLighting();
-                    mEffect.World = transforms[mesh.ParentBone.Index] * Matrix.CreateScale(0.001f) * Matrix.CreateTranslation(transform.position);
+                    mEffect.World = transforms[mesh.ParentBone.Index] * rotation * Matrix.CreateScale(0.001f) * Matrix.CreateTranslation(transform.position);
                     mEffect.View = camera.GetView();
                     mEffect.Projection = camera.GetProjection();
                 }
