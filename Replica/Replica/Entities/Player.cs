@@ -76,23 +76,22 @@ namespace Replica
         }
 
         void Move(GameTime gameTime)
-        {
-            KeyboardState kState = Keyboard.GetState();
-
+        {          
             Vector2 movement = Vector2.Zero;
-            if (kState.IsKeyDown(Keys.W))
+
+            if (Input.isPressed(Keys.W))
             {
                 movement.X += movementSpeed;
             }
-            if (kState.IsKeyDown(Keys.S))
+            if (Input.isPressed(Keys.S))
             {
                 movement.X -= movementSpeed;
             }
-            if (kState.IsKeyDown(Keys.A))
+            if (Input.isPressed(Keys.A))
             {
                 movement.Y -= movementSpeed;
             }
-            if (kState.IsKeyDown(Keys.D))
+            if (Input.isPressed(Keys.D))
             {
                 movement.Y += movementSpeed;
             }

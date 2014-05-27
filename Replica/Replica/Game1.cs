@@ -11,9 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Replica
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
+   
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
@@ -40,12 +38,7 @@ namespace Replica
             Content.RootDirectory = "Content";
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
+        
         protected override void Initialize()
         {
             //IsMouseVisible = true;
@@ -68,47 +61,38 @@ namespace Replica
 
             base.Initialize();
         }
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
+      
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            model = Content.Load<Model>("Models\\p1_wedge");
+            //model = Content.Load<Model>("Models\\p1_wedge");
 
             //AUDIO TESTING
-            SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
-            soundEffectInstance = soundEffect.CreateInstance();
+            //SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
+            //soundEffectInstance = soundEffect.CreateInstance();
             emitter.Position = Vector3.Zero;
-            soundEffectInstance.Apply3D(listener, emitter);
-            soundEffectInstance.Play();
+            //soundEffectInstance.Apply3D(listener, emitter);
+            //soundEffectInstance.Play();
 
             entities = new List<Entity>();
             player = new Player(entities, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model);
             entities.Add(player);
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
         protected override void UnloadContent()
         {
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+
+            Input.prevKeyboard = Input.currentKeyboard;
+            Input.currentKeyboard = Keyboard.GetState();
+            
+
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Input.isClicked(Keys.Escape))
                 this.Exit();
 
             for (int i = 0; i < entities.Count; i++) //Certain entities will have to create/delete other entities in their Update, foreach does not work
@@ -120,15 +104,11 @@ namespace Replica
             listener.Position = player.GetTransform().position;
             listener.Forward = player.GetTransform().forward;
             listener.Up = player.GetTransform().up;
-            soundEffectInstance.Apply3D(listener, emitter);
+            //soundEffectInstance.Apply3D(listener, emitter);
 
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);

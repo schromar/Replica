@@ -114,6 +114,7 @@
     <Compile Include="Gameover.cs" />
     <Compile Include="Gamestate.cs" />
     <Compile Include="Ingame.cs" />
+    <Compile Include="Input.cs" />
     <Compile Include="Levelselection.cs" />
     <Compile Include="Mainmenu.cs" />
     <Compile Include="Options.cs" />
