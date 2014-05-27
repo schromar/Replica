@@ -67,14 +67,14 @@ namespace Replica
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            //model = Content.Load<Model>("Models\\p1_wedge");
+            model = Content.Load<Model>("Models\\p1_wedge");
 
             //AUDIO TESTING
-            //SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
-            //soundEffectInstance = soundEffect.CreateInstance();
+            SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
+            soundEffectInstance = soundEffect.CreateInstance();
             emitter.Position = Vector3.Zero;
-            //soundEffectInstance.Apply3D(listener, emitter);
-            //soundEffectInstance.Play();
+            soundEffectInstance.Apply3D(listener, emitter);
+            soundEffectInstance.Play();
 
             entities = new List<Entity>();
             player = new Player(entities, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model);
@@ -104,7 +104,7 @@ namespace Replica
             listener.Position = player.GetTransform().position;
             listener.Forward = player.GetTransform().forward;
             listener.Up = player.GetTransform().up;
-            //soundEffectInstance.Apply3D(listener, emitter);
+            soundEffectInstance.Apply3D(listener, emitter);
 
             base.Update(gameTime);
         }
