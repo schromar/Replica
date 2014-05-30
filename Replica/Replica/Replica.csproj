@@ -107,17 +107,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Credits.cs" />
+    <Compile Include="Gamestates\Credits.cs" />
     <Compile Include="Camera.cs" />
-    <Compile Include="Cutscene.cs" />
+    <Compile Include="Gamestates\Cutscene.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="Gameover.cs" />
+    <Compile Include="Gamestates\Gameover.cs" />
     <Compile Include="Gamestate.cs" />
-    <Compile Include="Ingame.cs" />
+    <Compile Include="Gamestates\Ingame.cs" />
     <Compile Include="Input.cs" />
-    <Compile Include="Levelselection.cs" />
-    <Compile Include="Mainmenu.cs" />
-    <Compile Include="Options.cs" />
+    <Compile Include="Gamestates\Levelselection.cs" />
+    <Compile Include="Gamestates\Mainmenu.cs" />
+    <Compile Include="Gamestates\Options.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
