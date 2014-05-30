@@ -15,6 +15,7 @@ namespace Replica
             : base(entities)
         {
             this.transform = transform;
+            bounds.Max = new Vector3(1, 1, 1);
 
             this.model = model;
         }

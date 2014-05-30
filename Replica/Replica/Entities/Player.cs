@@ -22,9 +22,10 @@ namespace Replica
         public Player(List<Entity> entities, int windowWidth, int windowHeight, Model model)
             : base(entities)
         {
-            resolution = new Vector2(windowWidth, windowHeight);
-
             transform.position = new Vector3(5, 1, 5);
+            bounds.Max = new Vector3(1, 1, 1);
+
+            resolution = new Vector2(windowWidth, windowHeight);
 
             mouseSpeed = 0.1f;
             movementSpeed = 5;

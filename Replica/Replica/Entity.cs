@@ -13,12 +13,14 @@ namespace Replica
         protected List<Entity> entities;
 
         protected Transform transform;
+        protected BoundingBox bounds;
 
         public Entity(List<Entity> entities)
         {
             this.entities = entities;
 
             transform = new Transform();
+            bounds = new BoundingBox();
         }
 
         public virtual void Update(GameTime gameTime)
@@ -32,9 +34,19 @@ namespace Replica
 
         }
 
+        public virtual void OnCollision(Entity entity)
+        {
+
+        }
+
         public Transform GetTransform()
         {
             return transform;
+        }
+
+        public BoundingBox GetBounds()
+        {
+            return bounds;
         }
     }
 }

@@ -95,10 +95,12 @@ namespace Replica
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Input.isClicked(Keys.Escape))
                 this.Exit();
 
-            for (int i = 0; i < entities.Count; i++) //Certain entities will have to create/delete other entities in their Update, foreach does not work
+            for (int i = 0; i < entities.Count; i++) //Certain entities will create/delete other entities in their Update, foreach does not work
             {
                 entities[i].Update(gameTime);
             }
+
+            CollisionSystem.CheckCollisions(entities);
 
             //AUDIO TESTING
             listener.Position = player.GetTransform().position;
