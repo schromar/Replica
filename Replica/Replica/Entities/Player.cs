@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Replica
+namespace Replica.Entities
 {
     class Player : Entity
     {
@@ -23,7 +23,10 @@ namespace Replica
             : base(entities)
         {
             transform.position = new Vector3(5, 1, 5);
-            bounds.Max = new Vector3(1, 1, 1);
+            Vector3 boundSize = new Vector3(2, 2, 2);
+            //Wrong assumption to simplify: camera position is middle of player model
+            bounds.Min = transform.position - boundSize / 2.0f;
+            bounds.Max = transform.position + boundSize / 2.0f;
 
             resolution = new Vector2(windowWidth, windowHeight);
 
@@ -48,7 +51,7 @@ namespace Replica
             if (mState.LeftButton == ButtonState.Pressed)
             {
                 entities.Add(new Replicant(entities, transform, model));
-                Console.WriteLine(entities.Count);
+                //Console.WriteLine(entities.Count);
             }
         }
 
@@ -103,7 +106,14 @@ namespace Replica
                 movement *= movementSpeed;
             }
             movement *= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            transform.position += transform.forward * movement.X + transform.right * movement.Y;
+            Vector3 finalVelocity = transform.forward * movement.X + transform.right * movement.Y;
+            transform.position += finalVelocity;
+
+            //Move bounds with player
+            bounds.Min += finalVelocity;
+            bounds.Max += finalVelocity;
+
+            Console.WriteLine(transform.position);
         }
     }
 }

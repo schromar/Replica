@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using Replica.Entities;
+using Replica.Entities.Blocks;
+
 namespace Replica
 {
    
@@ -79,6 +82,10 @@ namespace Replica
             entities = new List<Entity>();
             player = new Player(entities, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model);
             entities.Add(player);
+
+            Transform switchPos=new Transform();
+            switchPos.position=new Vector3(10, 0, 10);
+            entities.Add(new Switch(entities, switchPos));
         }
 
         protected override void UnloadContent()
@@ -121,7 +128,7 @@ namespace Replica
 
             foreach (Entity entity in entities)
             {
-                entity.Draw(gameTime, defaultEffect, player.GetCamera());
+                entity.Draw(GraphicsDevice, gameTime, defaultEffect, player.GetCamera());
             }
 
             //RENDER TESTING
