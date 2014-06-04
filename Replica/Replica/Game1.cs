@@ -85,7 +85,19 @@ namespace Replica
 
             Transform switchPos=new Transform();
             switchPos.position=new Vector3(10, 0, 10);
-            entities.Add(new Switch(entities, switchPos));
+            List<Switch> requirements = new List<Switch>();
+            requirements.Add(new Switch(entities, switchPos));
+            switchPos.position.Z = 0;
+            requirements.Add(new Switch(entities, switchPos));
+
+            foreach (Switch entity in requirements)
+            {
+                entities.Add(entity);
+            }
+
+            Transform doorPos = new Transform();
+            doorPos.position = new Vector3(0, 0, 10);
+            entities.Add(new Door(entities, doorPos, requirements));
         }
 
         protected override void UnloadContent()

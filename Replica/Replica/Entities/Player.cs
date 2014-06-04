@@ -23,8 +23,9 @@ namespace Replica.Entities
             : base(entities)
         {
             transform.position = new Vector3(5, 1, 5);
-            Vector3 boundSize = new Vector3(2, 2, 2);
+
             //Wrong assumption to simplify: camera position is middle of player model
+            Vector3 boundSize = new Vector3(2, 2, 2);
             bounds.Min = transform.position - boundSize / 2.0f;
             bounds.Max = transform.position + boundSize / 2.0f;
 
@@ -112,8 +113,6 @@ namespace Replica.Entities
             //Move bounds with player
             bounds.Min += finalVelocity;
             bounds.Max += finalVelocity;
-
-            Console.WriteLine(transform.position);
         }
     }
 }

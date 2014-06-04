@@ -15,8 +15,10 @@ namespace Replica.Entities
             : base(entities)
         {
             this.transform = transform;
-            //TODO: proper bounds
-            bounds.Max = new Vector3(1, 1, 1);
+
+            Vector3 boundSize = new Vector3(2, 2, 2);
+            bounds.Min = transform.position - boundSize / 2.0f;
+            bounds.Max = transform.position + boundSize / 2.0f;
 
             this.model = model;
         }
