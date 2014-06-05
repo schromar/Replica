@@ -51,8 +51,27 @@ namespace Replica.Entities
             MouseState mState = Mouse.GetState();
             if (mState.LeftButton == ButtonState.Pressed)
             {
-                entities.Add(new Replicant(entities, transform, model));
-                //Console.WriteLine(entities.Count);
+                //Create Ray from Player Transform to check if Player is looking at Entities
+                Ray ray = new Ray(transform.position, transform.forward);
+                List<KeyValuePair<float, Entity>> collisions=CollisionSystem.RayIntersection(entities, ray);
+
+                //Check whether looked at Entity is solid to spawn the Replicant on
+                int solidIndex = -1;
+                for (int i = 0; i < collisions.Count; i++)
+                {
+                    if (collisions[i].Value.GetType() == typeof(Block)) //TODO: RTTI!!!
+                    {
+                        solidIndex = i;
+                        break;
+                    }
+                }
+
+                if (solidIndex != -1) //Only spawn Replicant if we are not looking into infinity?
+                {
+                    Transform replicantTransform = transform;
+                    replicantTransform.position = transform.position + transform.forward * collisions[solidIndex].Key;
+                    entities.Add(new Replicant(entities, replicantTransform, model));
+                }
             }
         }
 

@@ -83,21 +83,29 @@ namespace Replica
             player = new Player(entities, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model);
             entities.Add(player);
 
-            Transform switchPos=new Transform();
-            switchPos.position=new Vector3(10, 0, 10);
+            Transform pos=new Transform();
+            pos.position=new Vector3(10, 0, 10);
             List<Switch> requirements = new List<Switch>();
-            requirements.Add(new Switch(entities, switchPos));
-            switchPos.position.Z = 0;
-            requirements.Add(new Switch(entities, switchPos));
+            requirements.Add(new Switch(entities, pos));
+            pos.position=new Vector3(10, 0, 0);
+            requirements.Add(new Switch(entities, pos));
 
             foreach (Switch entity in requirements)
             {
                 entities.Add(entity);
             }
 
-            Transform doorPos = new Transform();
-            doorPos.position = new Vector3(0, 0, 10);
-            entities.Add(new Door(entities, doorPos, requirements));
+            pos.position = new Vector3(0, 0, 10);
+            entities.Add(new Door(entities, pos, requirements));
+
+            pos.position = new Vector3(8, 0, 10);
+            entities.Add(new Block(entities, pos));
+            pos.position = new Vector3(8, 0, 0);
+            entities.Add(new Block(entities, pos));
+            pos.position = new Vector3(6, 0, 0);
+            entities.Add(new Block(entities, pos));
+            pos.position = new Vector3(4, 0, 0);
+            entities.Add(new Block(entities, pos));
         }
 
         protected override void UnloadContent()

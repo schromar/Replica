@@ -16,6 +16,8 @@ namespace Replica.Entities.Blocks
         {
             collided = false;
             activated = false;
+
+            boundsColor = Color.Green;
         }
 
         public override void Update(GameTime gameTime)
@@ -26,6 +28,7 @@ namespace Replica.Entities.Blocks
 
         public override void OnCollision(Entity entity)
         {
+            //TODO: Check if entity is Player/Replicant
             collided = true;
         }
 

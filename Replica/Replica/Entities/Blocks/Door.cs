@@ -16,6 +16,8 @@ namespace Replica.Entities.Blocks
         {
             this.requirements = requirements;
             open = false;
+
+            boundsColor = Color.Yellow;
         }
 
         public override void Update(GameTime gameTime)
@@ -33,7 +35,7 @@ namespace Replica.Entities.Blocks
 
         public override void OnCollision(Entity entity)
         {
-            if (entity.GetType() == typeof(Player)) //RTTI=bad?
+            if (entity.GetType() == typeof(Player)) //TODO: RTTI!!!
             {
                 if (open)
                 {

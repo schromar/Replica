@@ -15,12 +15,16 @@ namespace Replica
         protected Transform transform;
         protected BoundingBox bounds;
 
+        protected Color boundsColor; //For testing purposes
+
         public Entity(List<Entity> entities)
         {
             this.entities = entities;
 
             transform = new Transform();
             bounds = new BoundingBox();
+
+            boundsColor = Color.White;
         }
 
         public virtual void Update(GameTime gameTime)
@@ -44,7 +48,7 @@ namespace Replica
             // Assign the 8 box vertices
             for (int i = 0; i < corners.Length; i++)
             {
-                primitiveList[i] = new VertexPositionColor(corners[i], Color.White);
+                primitiveList[i] = new VertexPositionColor(corners[i], boundsColor);
             }
 
             // Draw the box with a LineList
