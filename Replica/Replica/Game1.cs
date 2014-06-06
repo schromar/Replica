@@ -32,6 +32,8 @@ namespace Replica
         AudioEmitter emitter = new AudioEmitter();
         AudioListener listener = new AudioListener();*/
 
+        Texture2D pix;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -64,16 +66,18 @@ namespace Replica
             soundEffectInstance.Apply3D(listener, emitter);
             soundEffectInstance.Play();*/
 
+            pix = Content.Load<Texture2D>("Textures\\pix");
+
             entities = new List<Entity>();
             player = new Player(entities, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model);
             entities.Add(player);
 
             //Building the Level
-            Transform pos=new Transform();
-            pos.position=new Vector3(10, 0, 10);
+            Transform pos = new Transform();
+            pos.position = new Vector3(10, 0, 10);
             List<Switch> requirements = new List<Switch>();
             requirements.Add(new Switch(entities, pos));
-            pos.position=new Vector3(10, 0, 0);
+            pos.position = new Vector3(10, 0, 0);
             requirements.Add(new Switch(entities, pos));
 
             foreach (Switch entity in requirements)
@@ -136,6 +140,11 @@ namespace Replica
             {
                 entity.Draw(GraphicsDevice, gameTime, defaultEffect, player.GetCamera());
             }
+
+            spriteBatch.Begin();
+            Rectangle crosshairBounds = new Rectangle(GraphicsDevice.Viewport.Width / 2-2, GraphicsDevice.Viewport.Height / 2-2, 4, 4); //TODO: Replace with variables
+            spriteBatch.Draw(pix, crosshairBounds, Color.Red);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
