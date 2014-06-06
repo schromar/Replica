@@ -9,7 +9,6 @@ namespace Replica
 {
     class Entity
     {
-        //BoundingBox, Model, Texture, Duration
         protected List<Entity> entities;
 
         protected Transform transform;

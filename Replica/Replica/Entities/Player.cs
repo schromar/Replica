@@ -36,7 +36,6 @@ namespace Replica.Entities
             rotation = Vector2.Zero;
 
             camera = new Camera(resolution);
-
             this.model = model;
         }
 
@@ -44,34 +43,13 @@ namespace Replica.Entities
         {
             Rotate(gameTime);
             Move(gameTime);
-
             camera.SetTransform(transform);
 
             //Spawn Replicant on mouseclick
             MouseState mState = Mouse.GetState();
             if (mState.LeftButton == ButtonState.Pressed)
             {
-                //Create Ray from Player Transform to check if Player is looking at Entities
-                Ray ray = new Ray(transform.position, transform.forward);
-                List<KeyValuePair<float, Entity>> collisions=CollisionSystem.RayIntersection(entities, ray);
-
-                //Check whether looked at Entity is solid to spawn the Replicant on
-                int solidIndex = -1;
-                for (int i = 0; i < collisions.Count; i++)
-                {
-                    if (collisions[i].Value.GetType() == typeof(Block)) //TODO: RTTI!!!
-                    {
-                        solidIndex = i;
-                        break;
-                    }
-                }
-
-                if (solidIndex != -1) //Only spawn Replicant if we are not looking into infinity?
-                {
-                    Transform replicantTransform = transform;
-                    replicantTransform.position = transform.position + transform.forward * collisions[solidIndex].Key;
-                    entities.Add(new Replicant(entities, replicantTransform, model));
-                }
+                SpawnReplicant();
             }
         }
 
@@ -132,6 +110,31 @@ namespace Replica.Entities
             //Move bounds with player
             bounds.Min += finalVelocity;
             bounds.Max += finalVelocity;
+        }
+
+        void SpawnReplicant()
+        {
+            //Create Ray from Player Transform to check if Player is looking at Entities
+            Ray ray = new Ray(transform.position, transform.forward);
+            List<KeyValuePair<float, Entity>> collisions = CollisionSystem.RayIntersection(entities, ray);
+
+            //Check whether looked at Entity is solid to spawn the Replicant on
+            int solidIndex = -1;
+            for (int i = 0; i < collisions.Count; i++)
+            {
+                if (collisions[i].Value.GetType() == typeof(Block)) //TODO: RTTI!!!
+                {
+                    solidIndex = i;
+                    break;
+                }
+            }
+
+            if (solidIndex != -1) //Only spawn Replicant if we are not looking into infinity?
+            {
+                Transform replicantTransform = transform;
+                replicantTransform.position = transform.position + transform.forward * collisions[solidIndex].Key;
+                entities.Add(new Replicant(entities, replicantTransform, model));
+            }
         }
     }
 }

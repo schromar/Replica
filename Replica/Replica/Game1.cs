@@ -27,13 +27,10 @@ namespace Replica
 
         Model model;
 
-        //RENDER TESTING
-        VertexBuffer vBuffer;
-
         //AUDIO TESTING
-        SoundEffectInstance soundEffectInstance;
+        /*SoundEffectInstance soundEffectInstance;
         AudioEmitter emitter = new AudioEmitter();
-        AudioListener listener = new AudioListener();
+        AudioListener listener = new AudioListener();*/
 
         public Game1()
         {
@@ -50,18 +47,6 @@ namespace Replica
             //defaultEffect.EnableDefaultLighting();
             defaultEffect.VertexColorEnabled = true;
 
-            //RENDER TESTING
-            List<VertexPositionColor> vertexList = new List<VertexPositionColor>();
-            vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 0), Color.White));
-            vertexList.Add(new VertexPositionColor(new Vector3(10, 0, 0), Color.White));
-            vertexList.Add(new VertexPositionColor(new Vector3(10, 0, 10), Color.White));
-            
-            vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 0), Color.Red));
-            vertexList.Add(new VertexPositionColor(new Vector3(10, 0, 10), Color.Red));
-            vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 10), Color.Red));
-            vBuffer = new VertexBuffer(GraphicsDevice, VertexPositionColor.VertexDeclaration, vertexList.Count, BufferUsage.WriteOnly);
-            vBuffer.SetData<VertexPositionColor>(vertexList.ToArray());
-
             base.Initialize();
         }
       
@@ -73,16 +58,17 @@ namespace Replica
             model = Content.Load<Model>("Models\\p1_wedge");
 
             //AUDIO TESTING
-            SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
+            /*SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
             soundEffectInstance = soundEffect.CreateInstance();
             emitter.Position = Vector3.Zero;
             soundEffectInstance.Apply3D(listener, emitter);
-            soundEffectInstance.Play();
+            soundEffectInstance.Play();*/
 
             entities = new List<Entity>();
             player = new Player(entities, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model);
             entities.Add(player);
 
+            //Building the Level
             Transform pos=new Transform();
             pos.position=new Vector3(10, 0, 10);
             List<Switch> requirements = new List<Switch>();
@@ -130,10 +116,10 @@ namespace Replica
             CollisionSystem.CheckCollisions(entities);
 
             //AUDIO TESTING
-            listener.Position = player.GetTransform().position;
+            /*listener.Position = player.GetTransform().position;
             listener.Forward = player.GetTransform().forward;
             listener.Up = player.GetTransform().up;
-            soundEffectInstance.Apply3D(listener, emitter);
+            soundEffectInstance.Apply3D(listener, emitter);*/
 
             base.Update(gameTime);
         }
@@ -149,14 +135,6 @@ namespace Replica
             foreach (Entity entity in entities)
             {
                 entity.Draw(GraphicsDevice, gameTime, defaultEffect, player.GetCamera());
-            }
-
-            //RENDER TESTING
-            foreach (EffectPass pass in defaultEffect.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-                GraphicsDevice.SetVertexBuffer(vBuffer);
-                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, vBuffer.VertexCount / 3);
             }
 
             base.Draw(gameTime);

@@ -15,6 +15,8 @@ namespace Replica
         Matrix view;
         Matrix projection;
 
+        //TODO: Add fov attribute?
+
         public Camera(Vector2 resolution)
         {
             this.resolution = resolution;
