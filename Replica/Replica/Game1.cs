@@ -12,11 +12,13 @@ using Microsoft.Xna.Framework.Media;
 namespace Replica
 {
    
+    
+
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        MouseState mouse = Mouse.GetState();
         BasicEffect defaultEffect;
 
         List<Entity> entities;
@@ -32,7 +34,20 @@ namespace Replica
         AudioEmitter emitter = new AudioEmitter();
         AudioListener listener = new AudioListener();
 
-        
+        enum Gamestate
+        {
+            MainMenu,
+            Options,
+            Credits,
+            InGame,
+            Cradits,
+            Cutszene,
+            GameOver
+        }
+        Gamestate Currentstate = Gamestate.MainMenu;
+        int screenwidth = 800;
+        int screenheight = 600; 
+
 
         public Game1()
         {
@@ -43,7 +58,8 @@ namespace Replica
         
         protected override void Initialize()
         {
-            //IsMouseVisible = true;
+            IsMouseVisible = true;
+            
 
             defaultEffect = new BasicEffect(GraphicsDevice);
             //defaultEffect.EnableDefaultLighting();
@@ -60,7 +76,9 @@ namespace Replica
             vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 10), Color.Red));
             vBuffer = new VertexBuffer(GraphicsDevice, VertexPositionColor.VertexDeclaration, vertexList.Count, BufferUsage.WriteOnly);
             vBuffer.SetData<VertexPositionColor>(vertexList.ToArray());
-
+            Texture2D play = Content.Load<Texture2D>("Textures\\game");
+            Button playbutton = new Button(play, graphics.GraphicsDevice);
+            playbutton.setPosition(new Vector2(350, 300));
             base.Initialize();
         }
       
@@ -68,9 +86,12 @@ namespace Replica
         {
             // Create a new SpriteBatch, which can be used to draw textures.
            
-
+            
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            graphics.PreferredBackBufferWidth = screenwidth;
+            graphics.PreferredBackBufferHeight = screenheight;
+            graphics.ApplyChanges();
+            
             model = Content.Load<Model>("Models\\p1_wedge");
 
             //AUDIO TESTING
@@ -91,9 +112,42 @@ namespace Replica
 
         protected override void Update(GameTime gameTime)
         {
-
+            
             Input.prevKeyboard = Input.currentKeyboard;
             Input.currentKeyboard = Keyboard.GetState();
+
+            switch (Currentstate)
+            {
+                case Gamestate.MainMenu:
+                   
+            Button playbutton = new Button(Content.Load<Texture2D>("Textures\\game"), graphics.GraphicsDevice);
+            playbutton.setPosition( new Vector2(350, 300));
+            playbutton.Update(Mouse.GetState());
+           
+                    if (playbutton.isClicked == true)
+                    {
+                        Currentstate = Gamestate.InGame;
+                        playbutton.Update(Mouse.GetState());
+                    }
+                    break;
+                case Gamestate.InGame :
+                    break;
+                case Gamestate.Options :
+                    break;
+                case Gamestate.GameOver:
+                    break;
+                case Gamestate.Cutszene:
+                    break;
+                case Gamestate.Credits:
+                    break; 
+
+
+
+            }
+
+
+
+
             
 
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Input.isClicked(Keys.Escape))
@@ -116,8 +170,22 @@ namespace Replica
         }
 
         protected override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+        {   spriteBatch.Begin();
+            switch (Currentstate)
+            {
+                case Gamestate.MainMenu:
+                    Texture2D play = Content.Load<Texture2D>("Textures\\game");
+            Button playbutton = new Button(play, graphics.GraphicsDevice);
+            playbutton.setPosition( new Vector2(350, 300));
+                    spriteBatch.Draw(Content.Load<Texture2D>("Textures\\dna"),new Rectangle(0,0,screenwidth,screenheight),Color.WhiteSmoke);
+
+                    playbutton.Draw(spriteBatch, play, new Rectangle(350, 300, GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 15), Color.White);
+
+                   
+
+                    break;
+                case Gamestate.InGame:
+                    GraphicsDevice.Clear(Color.CornflowerBlue);
 
             defaultEffect.World = Matrix.Identity;
             defaultEffect.View = player.GetCamera().GetView();
@@ -135,6 +203,20 @@ namespace Replica
                 GraphicsDevice.SetVertexBuffer(vBuffer);
                 GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, vBuffer.VertexCount / 3);
             }
+            break; 
+                case Gamestate.Options:
+                    break;
+                case Gamestate.GameOver:
+                    break;
+                case Gamestate.Cutszene:
+                    break;
+                case Gamestate.Credits:
+                    break;
+
+
+
+            }
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

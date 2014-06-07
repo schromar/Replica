@@ -11,7 +11,7 @@ namespace Replica
     class Mainmenu  : Gamestate 
 
     {
-        Texture2D background = Content.Load<Texture2D>("textures\\dna.xcf"); 
+         
 
     }
 }
