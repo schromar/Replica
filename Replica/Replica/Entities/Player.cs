@@ -114,6 +114,7 @@ namespace Replica.Entities
 
         void SpawnReplicant()
         {
+            //TODO: Make sure Replicant does not spawn inside Player
             //Create Ray from Player Transform to check if Player is looking at Entities
             Ray ray = new Ray(transform.position, transform.forward);
             List<KeyValuePair<float, Entity>> collisions = CollisionSystem.RayIntersection(entities, ray);
