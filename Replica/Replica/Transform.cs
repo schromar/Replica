@@ -16,7 +16,7 @@ namespace Replica
         public Vector3 right;
         public Vector3 up;
 
-        /*public Transform()
+      /*  public Transform()
         {
             position = Vector3.Zero;
 

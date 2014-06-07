@@ -32,6 +32,8 @@ namespace Replica
         AudioEmitter emitter = new AudioEmitter();
         AudioListener listener = new AudioListener();
 
+        
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -65,6 +67,8 @@ namespace Replica
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
+           
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             model = Content.Load<Model>("Models\\p1_wedge");
