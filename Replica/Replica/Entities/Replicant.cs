@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Replica
+namespace Replica.Entities
 {
     class Replicant : Entity
     {
@@ -15,12 +15,15 @@ namespace Replica
             : base(entities)
         {
             this.transform = transform;
-            bounds.Max = new Vector3(1, 1, 1);
+
+            Vector3 boundSize = new Vector3(2, 2, 2);
+            bounds.Min = transform.position - boundSize / 2.0f;
+            bounds.Max = transform.position + boundSize / 2.0f;
 
             this.model = model;
         }
 
-        public override void Draw(GameTime gameTime, BasicEffect effect, Camera camera)
+        public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
         {
             Matrix rotation=Matrix.Identity;
             rotation.Forward = transform.forward;
@@ -41,6 +44,8 @@ namespace Replica
                 }
                 mesh.Draw();
             }
+
+            base.Draw(graphics, gameTime, effect, camera);
         }
     }
 }

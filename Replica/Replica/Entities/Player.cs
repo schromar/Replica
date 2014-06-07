@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Replica
+namespace Replica.Entities
 {
     class Player : Entity
     {
@@ -23,7 +23,11 @@ namespace Replica
             : base(entities)
         {
             transform.position = new Vector3(5, 1, 5);
-            bounds.Max = new Vector3(1, 1, 1);
+
+            //Wrong assumption to simplify: camera position is middle of player model
+            Vector3 boundSize = new Vector3(2, 2, 2);
+            bounds.Min = transform.position - boundSize / 2.0f;
+            bounds.Max = transform.position + boundSize / 2.0f;
 
             resolution = new Vector2(windowWidth, windowHeight);
 
@@ -32,7 +36,6 @@ namespace Replica
             rotation = Vector2.Zero;
 
             camera = new Camera(resolution);
-
             this.model = model;
         }
 
@@ -40,15 +43,13 @@ namespace Replica
         {
             Rotate(gameTime);
             Move(gameTime);
-
             camera.SetTransform(transform);
 
             //Spawn Replicant on mouseclick
             MouseState mState = Mouse.GetState();
             if (mState.LeftButton == ButtonState.Pressed)
             {
-                entities.Add(new Replicant(entities, transform, model));
-                Console.WriteLine(entities.Count);
+                SpawnReplicant();
             }
         }
 
@@ -103,7 +104,38 @@ namespace Replica
                 movement *= movementSpeed;
             }
             movement *= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            transform.position += transform.forward * movement.X + transform.right * movement.Y;
+            Vector3 finalVelocity = transform.forward * movement.X + transform.right * movement.Y;
+            transform.position += finalVelocity;
+
+            //Move bounds with player
+            bounds.Min += finalVelocity;
+            bounds.Max += finalVelocity;
+        }
+
+        void SpawnReplicant()
+        {
+            //TODO: Make sure Replicant does not spawn inside Player
+            //Create Ray from Player Transform to check if Player is looking at Entities
+            Ray ray = new Ray(transform.position, transform.forward);
+            List<KeyValuePair<float, Entity>> collisions = CollisionSystem.RayIntersection(entities, ray);
+
+            //Check whether looked at Entity is solid to spawn the Replicant on
+            int solidIndex = -1;
+            for (int i = 0; i < collisions.Count; i++)
+            {
+                if (collisions[i].Value.GetType() == typeof(Block)) //TODO: RTTI!!!
+                {
+                    solidIndex = i;
+                    break;
+                }
+            }
+
+            if (solidIndex != -1) //Only spawn Replicant if we are not looking into infinity?
+            {
+                Transform replicantTransform = transform;
+                replicantTransform.position = transform.position + transform.forward * collisions[solidIndex].Key;
+                entities.Add(new Replicant(entities, replicantTransform, model));
+            }
         }
     }
 }

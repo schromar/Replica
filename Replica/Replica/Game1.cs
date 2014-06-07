@@ -9,6 +9,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using Replica.Entities;
+using Replica.Entities.Blocks;
+
 namespace Replica
 {
    
@@ -26,13 +29,12 @@ namespace Replica
 
         Model model;
 
-        //RENDER TESTING
-        VertexBuffer vBuffer;
-
         //AUDIO TESTING
-        SoundEffectInstance soundEffectInstance;
+        /*SoundEffectInstance soundEffectInstance;
         AudioEmitter emitter = new AudioEmitter();
-        AudioListener listener = new AudioListener();
+        AudioListener listener = new AudioListener();*/
+
+        Texture2D pix;
 
         enum Gamestate
         {
@@ -65,6 +67,7 @@ namespace Replica
             //defaultEffect.EnableDefaultLighting();
             defaultEffect.VertexColorEnabled = true;
 
+
             //RENDER TESTING
             List<VertexPositionColor> vertexList = new List<VertexPositionColor>();
             vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 0), Color.White));
@@ -74,11 +77,12 @@ namespace Replica
             vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 0), Color.Red));
             vertexList.Add(new VertexPositionColor(new Vector3(10, 0, 10), Color.Red));
             vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 10), Color.Red));
-            vBuffer = new VertexBuffer(GraphicsDevice, VertexPositionColor.VertexDeclaration, vertexList.Count, BufferUsage.WriteOnly);
+            VertexBuffer vBuffer = new VertexBuffer(GraphicsDevice, VertexPositionColor.VertexDeclaration, vertexList.Count, BufferUsage.WriteOnly);
             vBuffer.SetData<VertexPositionColor>(vertexList.ToArray());
             Texture2D play = Content.Load<Texture2D>("Textures\\game");
             Button playbutton = new Button(play, graphics.GraphicsDevice);
             playbutton.setPosition(new Vector2(350, 300));
+
             base.Initialize();
         }
       
@@ -95,15 +99,42 @@ namespace Replica
             model = Content.Load<Model>("Models\\p1_wedge");
 
             //AUDIO TESTING
-            SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
+            /*SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
             soundEffectInstance = soundEffect.CreateInstance();
             emitter.Position = Vector3.Zero;
             soundEffectInstance.Apply3D(listener, emitter);
-            soundEffectInstance.Play();
+            soundEffectInstance.Play();*/
+
+            pix = Content.Load<Texture2D>("Textures\\game");
 
             entities = new List<Entity>();
             player = new Player(entities, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model);
             entities.Add(player);
+
+            //Building the Level
+            Transform pos = new Transform();
+            pos.position = new Vector3(10, 0, 10);
+            List<Switch> requirements = new List<Switch>();
+            requirements.Add(new Switch(entities, pos));
+            pos.position = new Vector3(10, 0, 0);
+            requirements.Add(new Switch(entities, pos));
+
+            foreach (Switch entity in requirements)
+            {
+                entities.Add(entity);
+            }
+
+            pos.position = new Vector3(0, 0, 10);
+            entities.Add(new Door(entities, pos, requirements));
+
+            pos.position = new Vector3(8, 0, 10);
+            entities.Add(new Block(entities, pos));
+            pos.position = new Vector3(8, 0, 0);
+            entities.Add(new Block(entities, pos));
+            pos.position = new Vector3(6, 0, 0);
+            entities.Add(new Block(entities, pos));
+            pos.position = new Vector3(4, 0, 0);
+            entities.Add(new Block(entities, pos));
         }
 
         protected override void UnloadContent()
@@ -161,10 +192,10 @@ namespace Replica
             CollisionSystem.CheckCollisions(entities);
 
             //AUDIO TESTING
-            listener.Position = player.GetTransform().position;
+            /*listener.Position = player.GetTransform().position;
             listener.Forward = player.GetTransform().forward;
             listener.Up = player.GetTransform().up;
-            soundEffectInstance.Apply3D(listener, emitter);
+            soundEffectInstance.Apply3D(listener, emitter);*/
 
             base.Update(gameTime);
         }
@@ -193,16 +224,25 @@ namespace Replica
 
             foreach (Entity entity in entities)
             {
-                entity.Draw(gameTime, defaultEffect, player.GetCamera());
+                entity.Draw(GraphicsDevice, gameTime, defaultEffect, player.GetCamera());
             }
-
             //RENDER TESTING
             foreach (EffectPass pass in defaultEffect.CurrentTechnique.Passes)
             {
+                List<VertexPositionColor> vertexList = new List<VertexPositionColor>();
+                vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 0), Color.White));
+                vertexList.Add(new VertexPositionColor(new Vector3(10, 0, 0), Color.White));
+                vertexList.Add(new VertexPositionColor(new Vector3(10, 0, 10), Color.White));
+
+                vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 0), Color.Red));
+                vertexList.Add(new VertexPositionColor(new Vector3(10, 0, 10), Color.Red));
+                vertexList.Add(new VertexPositionColor(new Vector3(0, 0, 10), Color.Red));
                 pass.Apply();
-                GraphicsDevice.SetVertexBuffer(vBuffer);
-                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, vBuffer.VertexCount / 3);
-            }
+                GraphicsDevice.SetVertexBuffer(new VertexBuffer(GraphicsDevice, VertexPositionColor.VertexDeclaration, vertexList.Count, BufferUsage.WriteOnly));
+                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, new VertexBuffer(GraphicsDevice, VertexPositionColor.VertexDeclaration, vertexList.Count, BufferUsage.WriteOnly).VertexCount / 3);
+             }
+             Rectangle crosshairBounds = new Rectangle(GraphicsDevice.Viewport.Width / 2-2, GraphicsDevice.Viewport.Height / 2-2, 4, 4); //TODO: Replace with variables
+            spriteBatch.Draw(pix, crosshairBounds, Color.Red);
             break; 
                 case Gamestate.Options:
                     break;
@@ -216,6 +256,10 @@ namespace Replica
 
 
             }
+
+      
+           
+
             spriteBatch.End();
 
             base.Draw(gameTime);
