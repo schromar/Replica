@@ -42,11 +42,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Textures\game.jpg">
       <Name>game</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+=======
+    <Folder Include="Music\" />
+>>>>>>> 80191197c166f56cbcee4dc2916c7820616ac713
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\p1_wedge.fbx">
@@ -56,15 +60,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Music\Neolectrical.mp3">
-      <Name>Neolectrical</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
+    <Compile Include="Textures\wedge_p1_diff_v1.tga">
+      <Name>wedge_p1_diff_v1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Textures\wedge_p1_diff_v1.tga">
-      <Name>wedge_p1_diff_v1</Name>
+    <Compile Include="Textures\pix.png">
+      <Name>pix</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
