@@ -38,7 +38,7 @@ namespace Replica
         AudioEmitter emitter = new AudioEmitter();
         AudioListener listener = new AudioListener();*/
 
-        Texture2D pix;
+       // Texture2D pix;
 
 
         enum Gamestate
@@ -115,7 +115,7 @@ namespace Replica
             {
                 soundEffectInstance.Play();
             }*/
-            pix = Content.Load<Texture2D>("Textures\\game");
+           Texture2D pix = Content.Load<Texture2D>("Textures\\game");
 
             /*SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
             soundEffectInstance = soundEffect.CreateInstance();
@@ -123,7 +123,7 @@ namespace Replica
             soundEffectInstance.Apply3D(listener, emitter);
             soundEffectInstance.Play();*/
 
-            pix = Content.Load<Texture2D>("Textures\\pix");
+           // pix = Content.Load<Texture2D>("Textures\\pix");
 
 
             entities = new List<Entity>();
