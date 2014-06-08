@@ -169,6 +169,7 @@ namespace Replica
             switch (Currentstate)
             {
                 case Gamestate.MainMenu:
+                    IsMouseVisible = true;
                     if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Input.isClicked(Keys.Escape))
                         this.Exit();
 
@@ -242,7 +243,8 @@ namespace Replica
         }
 
         protected override void Draw(GameTime gameTime)
-        {   spriteBatch.Begin();
+        {   
+            spriteBatch.Begin();
             switch (Currentstate)
             {
                 case Gamestate.MainMenu:
@@ -302,17 +304,17 @@ namespace Replica
 
 
 
-            }
+            }spriteBatch.End();
 
 
            
  
-            spriteBatch.End();
+            
 
       
            
 
-            spriteBatch.End();
+        
 
             base.Draw(gameTime);
         }
