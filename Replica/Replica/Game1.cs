@@ -47,7 +47,6 @@ namespace Replica
             Options,
             Credits,
             InGame,
-            Cradits,
             Cutszene,
             GameOver
         }
@@ -125,7 +124,7 @@ namespace Replica
             soundEffectInstance.Play();*/
 
             pix = Content.Load<Texture2D>("Textures\\pix");
->>>>>>> 80191197c166f56cbcee4dc2916c7820616ac713
+
 
             entities = new List<Entity>();
             player = new Player(entities, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model);
@@ -289,7 +288,7 @@ namespace Replica
                 GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, new VertexBuffer(GraphicsDevice, VertexPositionColor.VertexDeclaration, vertexList.Count, BufferUsage.WriteOnly).VertexCount / 3);
              }
              Rectangle crosshairBounds = new Rectangle(GraphicsDevice.Viewport.Width / 2-2, GraphicsDevice.Viewport.Height / 2-2, 4, 4); //TODO: Replace with variables
-             spriteBatch.Draw(pix, crosshairBounds, Color.Red);
+             spriteBatch.Draw(Content.Load<Texture2D>("Textures\\game"), crosshairBounds, Color.Red);
            
             break; 
                 case Gamestate.Options:
