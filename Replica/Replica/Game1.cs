@@ -30,7 +30,7 @@ namespace Replica
         Model model;
 
         //AUDIO TESTING
-        /*SoundEffectInstance soundEffectInstance;
+     /*   SoundEffectInstance soundEffectInstance;
         AudioEmitter emitter = new AudioEmitter();
         AudioListener listener = new AudioListener();*/
 
@@ -60,7 +60,7 @@ namespace Replica
         
         protected override void Initialize()
         {
-            IsMouseVisible = true;
+          
             
 
             defaultEffect = new BasicEffect(GraphicsDevice);
@@ -99,12 +99,14 @@ namespace Replica
             model = Content.Load<Model>("Models\\p1_wedge");
 
             //AUDIO TESTING
-            /*SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
+          /*  SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
             soundEffectInstance = soundEffect.CreateInstance();
             emitter.Position = Vector3.Zero;
             soundEffectInstance.Apply3D(listener, emitter);
-            soundEffectInstance.Play();*/
-
+            if (Currentstate == Gamestate.InGame)
+            {
+                soundEffectInstance.Play();
+            }*/
             pix = Content.Load<Texture2D>("Textures\\game");
 
             entities = new List<Entity>();
@@ -150,18 +152,48 @@ namespace Replica
             switch (Currentstate)
             {
                 case Gamestate.MainMenu:
-                   
+                    if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Input.isClicked(Keys.Escape))
+                        this.Exit();
+
             Button playbutton = new Button(Content.Load<Texture2D>("Textures\\game"), graphics.GraphicsDevice);
-            playbutton.setPosition( new Vector2(350, 300));
-            playbutton.Update(Mouse.GetState());
+            playbutton.setPosition( new Vector2(350, 100));
+             Texture2D exit = Content.Load<Texture2D>("Textures\\exit");
+                    Button exitbutton = new Button(exit, graphics.GraphicsDevice);
+                    exitbutton.setPosition (new Vector2 (350, 200));
+                    playbutton.Update(Mouse.GetState());
+                    exitbutton.Update(Mouse.GetState());
            
                     if (playbutton.isClicked == true)
                     {
                         Currentstate = Gamestate.InGame;
                         playbutton.Update(Mouse.GetState());
                     }
+                   
+
+                    if (exitbutton.isClicked == true)
+                    {
+                            this.Exit();
+                        
+                    }
+
                     break;
                 case Gamestate.InGame :
+                    IsMouseVisible = false; 
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Input.isClicked(Keys.Escape))
+                this.Exit();
+
+            for (int i = 0; i < entities.Count; i++) //Certain entities will create/delete other entities in their Update, foreach does not work
+            {
+                entities[i].Update(gameTime);
+            }
+
+            CollisionSystem.CheckCollisions(entities);
+
+            //AUDIO TESTING
+           /* listener.Position = player.GetTransform().position;
+            listener.Forward = player.GetTransform().forward;
+            listener.Up = player.GetTransform().up;
+            soundEffectInstance.Apply3D(listener, emitter);*/
                     break;
                 case Gamestate.Options :
                     break;
@@ -181,21 +213,6 @@ namespace Replica
 
             
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Input.isClicked(Keys.Escape))
-                this.Exit();
-
-            for (int i = 0; i < entities.Count; i++) //Certain entities will create/delete other entities in their Update, foreach does not work
-            {
-                entities[i].Update(gameTime);
-            }
-
-            CollisionSystem.CheckCollisions(entities);
-
-            //AUDIO TESTING
-            /*listener.Position = player.GetTransform().position;
-            listener.Forward = player.GetTransform().forward;
-            listener.Up = player.GetTransform().up;
-            soundEffectInstance.Apply3D(listener, emitter);*/
 
             base.Update(gameTime);
         }
@@ -207,11 +224,15 @@ namespace Replica
                 case Gamestate.MainMenu:
                     Texture2D play = Content.Load<Texture2D>("Textures\\game");
             Button playbutton = new Button(play, graphics.GraphicsDevice);
-            playbutton.setPosition( new Vector2(350, 300));
+            playbutton.setPosition( new Vector2(350, 100));
                     spriteBatch.Draw(Content.Load<Texture2D>("Textures\\dna"),new Rectangle(0,0,screenwidth,screenheight),Color.WhiteSmoke);
 
-                    playbutton.Draw(spriteBatch, play, new Rectangle(350, 300, GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 15), Color.White);
-
+                    playbutton.Draw(spriteBatch, play, new Rectangle(350, 100, GraphicsDevice.Viewport.Width / 8, GraphicsDevice.Viewport.Height / 15), Color.White);
+                      Texture2D exit = Content.Load<Texture2D>("Textures\\exit");
+                    Button exitbutton = new Button(exit, graphics.GraphicsDevice);
+                    exitbutton.setPosition (new Vector2 (350, 200));
+                    exitbutton.Draw(spriteBatch,exit,new Rectangle (350,200,GraphicsDevice.Viewport.Width/8, GraphicsDevice.Viewport.Height/15), Color.AliceBlue
+                        );
                    
 
                     break;
