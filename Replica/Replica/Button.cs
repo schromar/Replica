@@ -55,9 +55,9 @@ namespace Replica
             position = newPosition;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Texture2D texture, Rectangle rectangle, Color color)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, rectangle, color);
+            spriteBatch.Draw(texture, rectangle, Color.White);
         }
 
 
