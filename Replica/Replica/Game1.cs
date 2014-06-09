@@ -24,6 +24,7 @@ namespace Replica
 
         List<Entity> entities;
         Player player;
+        Level level;
 
         Model model;
 
@@ -96,30 +97,7 @@ namespace Replica
             player = new Player(entities, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model);
             entities.Add(player);
 
-            //Building the Level
-            Transform pos = new Transform();
-            pos.position = new Vector3(10, 0, 10);
-            List<Switch> requirements = new List<Switch>();
-            requirements.Add(new Switch(entities, pos));
-            pos.position = new Vector3(10, 0, 0);
-            requirements.Add(new Switch(entities, pos));
-
-            foreach (Switch entity in requirements)
-            {
-                entities.Add(entity);
-            }
-
-            pos.position = new Vector3(0, 0, 10);
-            entities.Add(new Door(entities, pos, requirements));
-
-            pos.position = new Vector3(8, 0, 10);
-            entities.Add(new Block(entities, pos));
-            pos.position = new Vector3(8, 0, 0);
-            entities.Add(new Block(entities, pos));
-            pos.position = new Vector3(6, 0, 0);
-            entities.Add(new Block(entities, pos));
-            pos.position = new Vector3(4, 0, 0);
-            entities.Add(new Block(entities, pos));
+            level = new Level(entities, "01_OneButton");
         }
 
         protected override void UnloadContent()
