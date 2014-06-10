@@ -20,7 +20,7 @@ namespace Replica.Entities
         Model model;
 
         public Player(List<Entity> entities, int windowWidth, int windowHeight, Model model)
-            : base(entities)
+            : base(entities, EntityType.Player)
         {
             transform.position = new Vector3(5, 1, 5);
 
@@ -123,7 +123,7 @@ namespace Replica.Entities
             int solidIndex = -1;
             for (int i = 0; i < collisions.Count; i++)
             {
-                if (collisions[i].Value.GetType() == typeof(Block)) //TODO: RTTI!!!
+                if (collisions[i].Value.GetEntityType() == EntityType.Block)
                 {
                     solidIndex = i;
                     break;

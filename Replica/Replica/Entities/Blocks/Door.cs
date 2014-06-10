@@ -12,7 +12,7 @@ namespace Replica.Entities.Blocks
         bool open;
 
         public Door(List<Entity> entities, Transform transform, List<Switch> requirements)
-            : base(entities, transform)
+            : base(entities, transform, EntityType.Door)
         {
             this.requirements = requirements;
             open = false;
@@ -35,7 +35,7 @@ namespace Replica.Entities.Blocks
 
         public override void OnCollision(Entity entity)
         {
-            if (entity.GetType() == typeof(Player)) //TODO: RTTI!!!
+            if (entity.GetEntityType() == EntityType.Player) //TODO: Testing
             {
                 if (open)
                 {

@@ -8,8 +8,8 @@ namespace Replica.Entities
 {
     class Block : Entity
     {
-        public Block(List<Entity> entities, Transform transform)
-            : base(entities)
+        public Block(List<Entity> entities, Transform transform, EntityType type=EntityType.Block)
+            : base(entities, type)
         {
             this.transform = transform;
             Vector3 boundSize = new Vector3(2, 2, 2); //Every block currently is 2x2x2 big, also transform.position is the middle point

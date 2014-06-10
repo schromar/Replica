@@ -12,7 +12,7 @@ namespace Replica.Entities
         Model model;
 
         public Replicant(List<Entity> entities, Transform transform, Model model)
-            : base(entities)
+            : base(entities,  EntityType.Replicant)
         {
             this.transform = transform;
 

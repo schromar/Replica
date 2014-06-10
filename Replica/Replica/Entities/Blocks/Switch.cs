@@ -12,7 +12,7 @@ namespace Replica.Entities.Blocks
         bool activated; //Not that easy since we can't check whether Switch is NOT colliding
 
         public Switch(List<Entity> entities, Transform transform)
-            : base(entities, transform)
+            : base(entities, transform, EntityType.Switch)
         {
             collided = false;
             activated = false;
@@ -28,8 +28,10 @@ namespace Replica.Entities.Blocks
 
         public override void OnCollision(Entity entity)
         {
-            //TODO: Check if entity is Player/Replicant
-            collided = true;
+            if (entity.GetEntityType() == EntityType.Player || entity.GetEntityType() == EntityType.Replicant) //TODO: Testing
+            {
+                collided = true;
+            }
         }
 
         public bool isActivated()

@@ -9,6 +9,15 @@ namespace Replica
 {
     class Entity
     {
+        public enum EntityType
+        {
+            Block,
+            Player,
+            Replicant,
+            Door,
+            Switch
+        }
+        protected EntityType type;
         protected List<Entity> entities;
 
         protected Transform transform;
@@ -16,8 +25,9 @@ namespace Replica
 
         protected Color boundsColor; //For testing purposes
 
-        public Entity(List<Entity> entities)
+        public Entity(List<Entity> entities, EntityType type)
         {
+            this.type = type;
             this.entities = entities;
 
             transform = new Transform();
@@ -61,6 +71,11 @@ namespace Replica
         public virtual void OnCollision(Entity entity)
         {
 
+        }
+
+        public EntityType GetEntityType()
+        {
+            return type;
         }
 
         public Transform GetTransform()
