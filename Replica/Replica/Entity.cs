@@ -17,18 +17,23 @@ namespace Replica
             Door,
             Switch
         }
-        protected EntityType type;
+        
         protected List<Entity> entities;
+        protected Level lvl;
+        protected EntityType type;
 
         protected Transform transform;
         protected BoundingBox bounds;
+        
 
         protected Color boundsColor; //For testing purposes
 
-        public Entity(List<Entity> entities, EntityType type)
+        public Entity(List<Entity> entities, Level lvl , EntityType type)
         {
-            this.type = type;
             this.entities = entities;
+            this.lvl = lvl;
+            this.type = type;
+            
 
             transform = new Transform();
             bounds = new BoundingBox();

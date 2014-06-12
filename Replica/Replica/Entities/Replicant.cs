@@ -11,8 +11,8 @@ namespace Replica.Entities
     {
         Model model;
 
-        public Replicant(List<Entity> entities, Transform transform, Model model)
-            : base(entities,  EntityType.Replicant)
+        public Replicant(Transform transform, Model model, List<Entity> entities, Level lvl)
+            : base(entities, lvl, EntityType.Replicant)
         {
             this.transform = transform;
 

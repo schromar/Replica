@@ -14,9 +14,9 @@ namespace Replica
     {
         
         Entity[, ,] lvl;
-        List<Entity> redSwitches;
-        List<Entity> greenSwitches;
-        List<Entity> blueSwitches;
+        List<Switch> redSwitches;
+        List<Switch> greenSwitches;
+        List<Switch> blueSwitches;
         
 
         public Level(List<Entity> entities, string mapName)
@@ -27,9 +27,9 @@ namespace Replica
 
             lvl = new Entity[map.Width, map.Layers.Count, map.Height];
 
-            redSwitches = new List<Entity>();
-            greenSwitches = new List<Entity>();
-            blueSwitches = new List<Entity>();
+            redSwitches = new List<Switch>();
+            greenSwitches = new List<Switch>();
+            blueSwitches = new List<Switch>();
 
             for (int y = 0; y < map.Layers.Count; y++)
             {
@@ -49,7 +49,7 @@ namespace Replica
                             currentEntity = null;
                             break;
                         case 1:
-                            currentEntity = new Block(entities, t);
+                            currentEntity = new Block(t,entities,this);
                             break;
                         case 2:
                             currentEntity = null;
@@ -58,25 +58,25 @@ namespace Replica
                             currentEntity = null;    
                             break;
                         case 4:
-                            currentEntity = new Switch(entities, t, "red");
-                            redSwitches.Add(currentEntity);
+                            currentEntity = new Switch(t, "red", entities, this);
+                            redSwitches.Add((Switch)currentEntity);
                             break;
                         case 5:
-                            currentEntity = new Switch(entities, t, "green");
-                            greenSwitches.Add(currentEntity);
+                            currentEntity = new Switch(t, "green", entities, this);
+                            greenSwitches.Add((Switch)currentEntity);
                             break;
                         case 6:
-                            currentEntity = new Switch(entities, t, "blue");
-                            blueSwitches.Add(currentEntity);
+                            currentEntity = new Switch(t, "blue", entities, this);
+                            blueSwitches.Add((Switch)currentEntity);
                             break;
                         case 7:
-                            currentEntity = new Door(entities, t, "red");
+                            currentEntity = new Door(t, "red", entities, this);
                             break;
                         case 8:
-                            currentEntity = new Door(entities, t, "green");
+                            currentEntity = new Door(t, "green", entities, this);
                             break;
                         case 9:
-                            currentEntity = new Door(entities, t, "blue");
+                            currentEntity = new Door(t, "blue", entities, this);
                             break;
                         //TODO: remaining EntityTypes
                         default:
@@ -92,7 +92,7 @@ namespace Replica
             }
         }
 
-        public List<Entity> getSwitches(String color)
+        public List<Switch> getSwitches(String color)
         {
             if (color.Equals("red"))
                 return redSwitches;

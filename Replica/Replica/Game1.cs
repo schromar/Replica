@@ -23,8 +23,9 @@ namespace Replica
         BasicEffect defaultEffect;
 
         List<Entity> entities;
+        
         Player player;
-        Level level;
+        Level lvl;
 
         Model model;
 
@@ -35,6 +36,7 @@ namespace Replica
 
         Texture2D pix;
         Texture2D dna;
+        Texture2D happy;
 
         Button playbutton;
         Button exitbutton;
@@ -77,7 +79,7 @@ namespace Replica
 
             pix = Content.Load<Texture2D>("Textures\\pix");
             dna = Content.Load<Texture2D>("Textures\\dna");
-
+            happy = Content.Load<Texture2D>("Textures\\happy");
             Texture2D play = Content.Load<Texture2D>("Textures\\game");
             playbutton = new Button(play, graphics.GraphicsDevice);
             playbutton.setPosition(new Vector2(350, 100));
@@ -94,10 +96,10 @@ namespace Replica
             soundEffectInstance.Play();*/
 
             entities = new List<Entity>();
-            player = new Player(entities, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model);
+            lvl = new Level(entities, "03_Leapfrogging");
+            //red = new List<Entity>();
+            player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model, entities, lvl);
             entities.Add(player);
-
-            level = new Level(entities, "03_Leapfrogging");
         }
 
         protected override void UnloadContent()
@@ -135,8 +137,15 @@ namespace Replica
                         entities[i].Update(gameTime);
                     }
 
-                    CollisionSystem.CheckCollisions(entities);
+                    
 
+
+                    CollisionSystem.CheckCollisions(entities);
+                    if (Door.done == true)
+                    {
+                        Currentstate = Gamestate.Credits;
+                            
+                    }
                     //AUDIO TESTING
                     /*listener.Position = player.GetTransform().position;
                     listener.Forward = player.GetTransform().forward;
@@ -174,6 +183,9 @@ namespace Replica
 
                     Rectangle crosshairBounds = new Rectangle(GraphicsDevice.Viewport.Width / 2 - 2, GraphicsDevice.Viewport.Height / 2 - 2, 4, 4); //TODO: Replace with variables
                     spriteBatch.Draw(pix, crosshairBounds, Color.Red);
+                    break;
+                case Gamestate.Credits:
+                    spriteBatch.Draw(happy, new Rectangle(0, 0, happy.Width, happy.Height), Color.White);
                     break;
                 default:
                     break;

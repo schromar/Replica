@@ -14,7 +14,8 @@ namespace Replica
             {
                 for (int j = i + 1; j < entities.Count; j++)
                 {
-                    if (entities[i].GetBounds().Intersects(entities[j].GetBounds()))
+                    if (!(entities[i].GetEntityType()==Entity.EntityType.Block && entities[j].GetEntityType()==Entity.EntityType.Block)
+                        && entities[i].GetBounds().Intersects(entities[j].GetBounds()))
                     {
                         entities[i].OnCollision(entities[j]);
                         entities[j].OnCollision(entities[i]);

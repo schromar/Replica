@@ -19,8 +19,8 @@ namespace Replica.Entities
         Camera camera;
         Model model;
 
-        public Player(List<Entity> entities, int windowWidth, int windowHeight, Model model)
-            : base(entities, EntityType.Player)
+        public Player(int windowWidth, int windowHeight, Model model, List<Entity> entities, Level lvl)
+            : base(entities, lvl, EntityType.Player)
         {
             transform.position = new Vector3(5, 1, 5);
 
@@ -134,7 +134,7 @@ namespace Replica.Entities
             {
                 Transform replicantTransform = transform;
                 replicantTransform.position = transform.position + transform.forward * collisions[solidIndex].Key;
-                entities.Add(new Replicant(entities, replicantTransform, model));
+                entities.Add(new Replicant(replicantTransform, model, entities, lvl));
             }
         }
     }
