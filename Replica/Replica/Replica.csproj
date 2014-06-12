@@ -132,7 +132,6 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Entities\Replicant.cs" />
-    <Compile Include="Statics.cs" />
     <Compile Include="Transform.cs" />
   </ItemGroup>
   <ItemGroup>
