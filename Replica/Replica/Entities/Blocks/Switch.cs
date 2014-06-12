@@ -10,12 +10,14 @@ namespace Replica.Entities.Blocks
     {
         bool collided;
         bool activated; //Not that easy since we can't check whether Switch is NOT colliding
+        String color;
 
-        public Switch(List<Entity> entities, Transform transform)
+        public Switch(List<Entity> entities, Transform transform, String color)
             : base(entities, transform, EntityType.Switch)
         {
             collided = false;
             activated = false;
+            this.color = color;
 
             boundsColor = Color.Green;
         }

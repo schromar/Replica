@@ -97,7 +97,7 @@ namespace Replica
             player = new Player(entities, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model);
             entities.Add(player);
 
-            level = new Level(entities, "01_OneButton");
+            level = new Level(entities, "03_Leapfrogging");
         }
 
         protected override void UnloadContent()

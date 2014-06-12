@@ -10,11 +10,13 @@ namespace Replica.Entities.Blocks
     {
         List<Switch> requirements;
         bool open;
+        string color;
 
-        public Door(List<Entity> entities, Transform transform, List<Switch> requirements)
+        public Door(List<Entity> entities, Transform transform,String color)
             : base(entities, transform, EntityType.Door)
         {
-            this.requirements = requirements;
+            
+            this.color = color;
             open = false;
 
             boundsColor = Color.Yellow;
@@ -23,14 +25,17 @@ namespace Replica.Entities.Blocks
         public override void Update(GameTime gameTime)
         {
             open = true;
-            foreach(Switch requirement in requirements)
+
+           
+
+            /*foreach(Switch requirement in requirements)
             {
                 if (!requirement.isActivated())
                 {
                     open = false;
                     break;
                 }
-            }
+            }*/
         }
 
         public override void OnCollision(Entity entity)
