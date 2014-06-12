@@ -116,7 +116,7 @@ namespace Replica.Entities
         {
             Transform replicantTransform = transform;
             replicantTransform.position = transform.position + transform.forward*new Vector3(2, 2, 2).Length(); //TODO: Save size and reuse
-            Replicant replicant = new Replicant(entities, replicantTransform, model);
+            Replicant replicant = new Replicant(replicantTransform, model, entities, lvl);
             bool spawning = true;
             foreach (Entity entity in entities)
             {
