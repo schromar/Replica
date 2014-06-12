@@ -93,40 +93,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Levels\01_OneButton.tmx">
-      <Name>01_OneButton</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Levels\02_TwoButtons.tmx">
-      <Name>02_TwoButtons</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Levels\03_Leapfrogging.tmx">
-      <Name>03_Leapfrogging</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Levels\04_LeapfroggingTwoButtons.tmx">
-      <Name>04_LeapfroggingTwoButtons</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Levels\05_Water.tmx">
-      <Name>05_Water</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="Levels\06_Imitation.tmx">
-      <Name>06_Imitation</Name>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Levels\ReplicaTileset.png">
-      <Name>ReplicaTileset</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Textures\happy.jpg">
       <Name>happy</Name>
       <Importer>TextureImporter</Importer>

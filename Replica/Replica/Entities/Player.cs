@@ -114,9 +114,26 @@ namespace Replica.Entities
 
         void SpawnReplicant()
         {
-            //TODO: Make sure Replicant does not spawn inside Player
+            Transform replicantTransform = transform;
+            replicantTransform.position = transform.position + transform.forward*new Vector3(2, 2, 2).Length(); //TODO: Save size and reuse
+            Replicant replicant = new Replicant(entities, replicantTransform, model);
+            bool spawning = true;
+            foreach (Entity entity in entities)
+            {
+                if (replicant.GetBounds().Intersects(entity.GetBounds()) && entity.GetEntityType() == EntityType.Block)
+                {
+                    spawning = false;
+                    break;
+                }
+            }
+            if (spawning)
+            {
+                entities.Add(replicant);
+            }
+
+            //ALTERNATIVE SPAWNING
             //Create Ray from Player Transform to check if Player is looking at Entities
-            Ray ray = new Ray(transform.position, transform.forward);
+            /*Ray ray = new Ray(transform.position, transform.forward);
             List<KeyValuePair<float, Entity>> collisions = CollisionSystem.RayIntersection(entities, ray);
 
             //Check whether looked at Entity is solid to spawn the Replicant on
@@ -135,7 +152,7 @@ namespace Replica.Entities
                 Transform replicantTransform = transform;
                 replicantTransform.position = transform.position + transform.forward * collisions[solidIndex].Key;
                 entities.Add(new Replicant(replicantTransform, model, entities, lvl));
-            }
+            }*/
         }
     }
 }
