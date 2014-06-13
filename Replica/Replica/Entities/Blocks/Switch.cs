@@ -19,7 +19,19 @@ namespace Replica.Entities.Blocks
             activated = false;
             this.color = color;
 
-            boundsColor = Color.Green;
+            if (color == "green")
+            {
+                boundsColor = Color.Green;
+            }
+            if (color == "red")
+            {
+                boundsColor = Color.Red;
+            }
+            if (color == "blue")
+            {
+                boundsColor = Color.Blue;
+            }
+            
         }
 
         public override void Update(GameTime gameTime)

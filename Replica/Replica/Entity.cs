@@ -15,7 +15,8 @@ namespace Replica
             Player,
             Replicant,
             Door,
-            Switch
+            Switch,
+            Goal 
         }
         
         protected List<Entity> entities;

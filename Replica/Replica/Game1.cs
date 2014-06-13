@@ -96,7 +96,7 @@ namespace Replica
             soundEffectInstance.Play();*/
 
             entities = new List<Entity>();
-            lvl = new Level(entities, "03_Leapfrogging");
+            lvl = new Level(entities, "differentbuttoncolor");
             //red = new List<Entity>();
             player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model, entities, lvl);
             entities.Add(player);
