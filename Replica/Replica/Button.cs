@@ -21,7 +21,7 @@ namespace Replica
         {
 
             texture = newTexture;
-            size = new Vector2(gdevice.Viewport.Width / 8, gdevice.Viewport.Height / 30);
+            size = new Vector2(gdevice.Viewport.Width / 8, gdevice.Viewport.Height / 15);
 
 
         }

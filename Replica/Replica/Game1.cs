@@ -185,7 +185,7 @@ namespace Replica
                     spriteBatch.Draw(pix, crosshairBounds, Color.Red);
                     break;
                 case Gamestate.Credits:
-                    spriteBatch.Draw(happy, new Rectangle(0, 0, happy.Width, happy.Height), Color.White);
+                    spriteBatch.Draw(happy, new Rectangle(0, 0, dna.Width-150, dna.Height), Color.White);
                     break;
                 default:
                     break;
