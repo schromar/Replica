@@ -13,8 +13,8 @@ namespace Replica.Entities.Blocks
         string color;
         public static bool done;
 
-        public Door(Transform transform, String color, List<Entity> entities, Level lvl)
-            : base(transform, entities, lvl, EntityType.Door)
+        public Door(Transform transform, Vector3 boundSize, String color, List<Entity> entities, Level lvl)
+            : base(transform, boundSize, entities, lvl, EntityType.Door)
         {
 
             requirements = lvl.getSwitches(color);

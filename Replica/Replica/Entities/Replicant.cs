@@ -11,12 +11,11 @@ namespace Replica.Entities
     {
         Model model;
 
-        public Replicant(Transform transform, Model model, List<Entity> entities, Level lvl)
+        public Replicant(Transform transform, Model model, Vector3 boundSize, List<Entity> entities, Level lvl)
             : base(entities, lvl, EntityType.Replicant)
         {
             this.transform = transform;
 
-            Vector3 boundSize = new Vector3(2, 2, 2);
             bounds.Min = transform.position - boundSize / 2.0f;
             bounds.Max = transform.position + boundSize / 2.0f;
 
