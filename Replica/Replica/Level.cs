@@ -92,6 +92,8 @@ namespace Replica
             }
         }
 
+          
+
         public List<Switch> getSwitches(String color)
         {
             if (color.Equals("red"))

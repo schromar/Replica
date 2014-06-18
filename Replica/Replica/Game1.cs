@@ -27,6 +27,8 @@ namespace Replica
         Player player;
         Level lvl;
 
+        String currentLvl;
+
         Model model;
 
         //AUDIO TESTING
@@ -62,6 +64,7 @@ namespace Replica
         protected override void Initialize()
         {
             IsMouseVisible = true;
+            currentLvl = "01_OneButton";
 
             defaultEffect = new BasicEffect(GraphicsDevice);
             //defaultEffect.EnableDefaultLighting();
@@ -96,7 +99,7 @@ namespace Replica
             soundEffectInstance.Play();*/
 
             entities = new List<Entity>();
-            lvl = new Level(entities, "differentbuttoncolor");
+            lvl = new Level(entities, currentLvl);
             //red = new List<Entity>();
             player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model, entities, lvl);
             entities.Add(player);
@@ -112,9 +115,31 @@ namespace Replica
             Input.prevKeyboard = Input.currentKeyboard;
             Input.currentKeyboard = Keyboard.GetState();
 
+            
+                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Input.isClicked(Keys.Escape))
+                {
+                    if (Currentstate == Gamestate.MainMenu)
+                        this.Exit();
+                    else Currentstate = Gamestate.MainMenu;
+                }
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Input.isClicked(Keys.Escape))
-                this.Exit();
+            if(Input.isClicked(Keys.F1))
+            {
+                currentLvl = "01_OneButton";
+                entities.Clear();
+                lvl = new Level(entities, currentLvl);
+                player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model, entities, lvl);
+                entities.Add(player);
+            }
+
+            if (Input.isClicked(Keys.F2))
+            {
+                currentLvl = "02_TwoButtons";
+                entities.Clear();
+                lvl = new Level(entities, currentLvl);
+                player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model, entities, lvl);
+                entities.Add(player);
+            }
 
             switch (Currentstate)
             {
@@ -193,6 +218,16 @@ namespace Replica
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public String getLevel()
+        {
+            return currentLvl;
+        }
+
+        public void epicFuncttionOfHell(String woooooohoo)
+        {
+            Console.WriteLine("Gerd was here");
         }
     }
 }

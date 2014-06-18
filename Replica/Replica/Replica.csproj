@@ -114,7 +114,6 @@
     <Compile Include="CollisionSystem.cs" />
     <Compile Include="Entities\Block.cs" />
     <Compile Include="Entities\Blocks\Door.cs" />
-    <Compile Include="Entities\Blocks\Goal.cs" />
     <Compile Include="Entities\Blocks\Switch.cs" />
     <Compile Include="Gamestates\Credits.cs" />
     <Compile Include="Camera.cs" />
