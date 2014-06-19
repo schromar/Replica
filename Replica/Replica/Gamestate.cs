@@ -13,17 +13,24 @@ using Microsoft.Xna.Framework.Media;
 
 namespace Replica
 {
-    class Gamestate
+    public enum eGamestates
     {
-       
+        LeaveGame,
+        MainMenu,
+        Levelselection,
+        Options,
+        Credits,
+        InGame,
+        Cutscene,
+        GameOver
+    }
 
+    public interface Gamestate
+    {
+        void init();
 
-        public  virtual void Update(GameTime gameTime)
-        {
-        }
-        public virtual void Draw(SpriteBatch spritebatch)
-        {
-        }
+        eGamestates update();
 
+        void draw();
     }
 }

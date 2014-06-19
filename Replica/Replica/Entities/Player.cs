@@ -10,6 +10,8 @@ namespace Replica.Entities
 {
     class Player : Entity
     {
+        Vector3 boundSize;
+
         Vector2 resolution;
 
         float mouseSpeed;
@@ -19,13 +21,15 @@ namespace Replica.Entities
         Camera camera;
         Model model;
 
+        Vector3 prevMovement;
+
         public Player(int windowWidth, int windowHeight, Model model, List<Entity> entities, Level lvl)
             : base(entities, lvl, EntityType.Player)
         {
             transform.position = new Vector3(5, 1, 5);
 
             //Wrong assumption to simplify: camera position is middle of player model
-            Vector3 boundSize = new Vector3(2, 2, 2);
+            boundSize = new Vector3(2, 2, 2);
             bounds.Min = transform.position - boundSize / 2.0f;
             bounds.Max = transform.position + boundSize / 2.0f;
 
@@ -37,6 +41,8 @@ namespace Replica.Entities
 
             camera = new Camera(resolution);
             this.model = model;
+
+            prevMovement = Vector3.Zero;
         }
 
         public override void Update(GameTime gameTime)
@@ -50,6 +56,21 @@ namespace Replica.Entities
             if (mState.LeftButton == ButtonState.Pressed)
             {
                 SpawnReplicant();
+            }
+        }
+
+        public override void OnCollision(Entity entity)
+        {
+            if (entity.GetEntityType() == EntityType.Block || entity.GetEntityType() == EntityType.Replicant)
+            {
+                //TODO: Less duplication
+                transform.position -= prevMovement;
+
+                //Move bounds with player
+                bounds.Min -= prevMovement;
+                bounds.Max -= prevMovement;
+
+                camera.SetTransform(transform);
             }
         }
 
@@ -110,13 +131,15 @@ namespace Replica.Entities
             //Move bounds with player
             bounds.Min += finalVelocity;
             bounds.Max += finalVelocity;
+
+            prevMovement = finalVelocity;
         }
 
         void SpawnReplicant()
         {
             Transform replicantTransform = transform;
-            replicantTransform.position = transform.position + transform.forward*new Vector3(2, 2, 2).Length(); //TODO: Save size and reuse
-            Replicant replicant = new Replicant(replicantTransform, model, entities, lvl);
+            replicantTransform.position = transform.position + transform.forward*boundSize.Length();
+            Replicant replicant = new Replicant(replicantTransform, model, boundSize, entities, lvl);
             bool spawning = true;
             foreach (Entity entity in entities)
             {

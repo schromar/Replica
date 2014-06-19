@@ -5,7 +5,19 @@ using System.Text;
 
 namespace Replica
 {
-    class Cutscene : Gamestate
+    public class Cutscene : Gamestate
     {
+        public void init()
+        {
+        }
+
+        public eGamestates update()
+        {
+            return eGamestates.Cutscene;
+        }
+
+        public void draw()
+        {
+        }
     }
 }

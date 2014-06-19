@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace Replica
 {
-    //class Transform
+    //class Transform instead?
     public struct Transform
     {
         //What if an entity returns the transform and it is changed? (reference?)
@@ -15,6 +15,7 @@ namespace Replica
         public Vector3 forward;
         public Vector3 right;
         public Vector3 up;
+        //TODO: Add size attribute?
 
       /*  public Transform()
         {

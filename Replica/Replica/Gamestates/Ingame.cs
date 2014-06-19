@@ -5,7 +5,19 @@ using System.Text;
 
 namespace Replica
 {
-    class Ingame : Gamestate
+    public class Ingame : Gamestate
     {
+        public void init()
+        {
+        }
+
+        public eGamestates update()
+        {
+            return eGamestates.InGame;
+        }
+
+        public void draw()
+        {
+        }
     }
 }

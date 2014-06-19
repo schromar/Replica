@@ -10,6 +10,17 @@ using Replica.Entities.Blocks;
 
 namespace Replica
 {
+    public enum eLevels
+    {
+        Level00,
+        Level01,
+        Level02,
+        Level03,
+        Level04,
+        Level05,
+        Level06
+    }
+
     class Level
     {
         
@@ -17,6 +28,10 @@ namespace Replica
         List<Switch> redSwitches;
         List<Switch> greenSwitches;
         List<Switch> blueSwitches;
+
+        Level[] levels = new Level[Enum.GetNames(typeof(eLevels)).Length];
+
+        
         
 
         public Level(List<Entity> entities, string mapName)
@@ -31,6 +46,8 @@ namespace Replica
             greenSwitches = new List<Switch>();
             blueSwitches = new List<Switch>();
 
+            Vector3 blockSize = new Vector3(4, 4, 4);
+
             for (int y = 0; y < map.Layers.Count; y++)
             {
                 for (int index = 0; index < map.Layers[y].Tiles.Count; index++)
@@ -40,7 +57,7 @@ namespace Replica
                     Vector3 position=new Vector3(currentTile.X, y, currentTile.Y);
                     Entity currentEntity;
                     Transform t = new Transform();
-                    t.position = new Vector3(position.X * 2, position.Y *2, position.Z * 2); //TODO: Assuming block size
+                    t.position = position * blockSize;
 
                     switch (currentTile.Gid)
                     {
@@ -49,7 +66,7 @@ namespace Replica
                             currentEntity = null;
                             break;
                         case 1:
-                            currentEntity = new Block(t,entities,this);
+                            currentEntity = new Block(t, blockSize, entities,this);
                             break;
                         case 2:
                             currentEntity = null;
@@ -58,25 +75,25 @@ namespace Replica
                             currentEntity = null;    
                             break;
                         case 4:
-                            currentEntity = new Switch(t, "red", entities, this);
+                            currentEntity = new Switch(t, blockSize, "red", entities, this);
                             redSwitches.Add((Switch)currentEntity);
                             break;
                         case 5:
-                            currentEntity = new Switch(t, "green", entities, this);
+                            currentEntity = new Switch(t, blockSize, "green", entities, this);
                             greenSwitches.Add((Switch)currentEntity);
                             break;
                         case 6:
-                            currentEntity = new Switch(t, "blue", entities, this);
+                            currentEntity = new Switch(t, blockSize, "blue", entities, this);
                             blueSwitches.Add((Switch)currentEntity);
                             break;
                         case 7:
-                            currentEntity = new Door(t, "red", entities, this);
+                            currentEntity = new Door(t, blockSize, "red", entities, this);
                             break;
                         case 8:
-                            currentEntity = new Door(t, "green", entities, this);
+                            currentEntity = new Door(t, blockSize, "green", entities, this);
                             break;
                         case 9:
-                            currentEntity = new Door(t, "blue", entities, this);
+                            currentEntity = new Door(t, blockSize, "blue", entities, this);
                             break;
                         //TODO: remaining EntityTypes
                         default:

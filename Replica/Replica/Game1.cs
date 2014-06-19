@@ -11,17 +11,18 @@ using Microsoft.Xna.Framework.Media;
 
 using Replica.Entities;
 using Replica.Entities.Blocks;
+using Replica.Statics;
 
 namespace Replica
 {
 
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        public static GraphicsDeviceManager graphics;
+        public static SpriteBatch spriteBatch;
 
         BasicEffect defaultEffect;
-
+        
         List<Entity> entities;
         
         Player player;
@@ -29,30 +30,15 @@ namespace Replica
 
         String currentLvl;
 
-        Model model;
-
         //AUDIO TESTING
         /*SoundEffectInstance soundEffectInstance;
         AudioEmitter emitter = new AudioEmitter();
         AudioListener listener = new AudioListener();*/
+                
+        eGamestates currentState = eGamestates.MainMenu;
+        eGamestates prevState = eGamestates.MainMenu;
 
-        Texture2D pix;
-        Texture2D dna;
-        Texture2D happy;
-
-        Button playbutton;
-        Button exitbutton;
-
-        enum Gamestate
-        {
-            MainMenu,
-            Options,
-            Credits,
-            InGame,
-            Cutszene,
-            GameOver
-        }
-        Gamestate Currentstate = Gamestate.MainMenu;
+        Gamestate gamestate = new Mainmenu();
 
         public Game1()
         {
@@ -63,11 +49,12 @@ namespace Replica
 
         protected override void Initialize()
         {
+            Assets.loadcontent(Content);
+            gamestate.init();
             IsMouseVisible = true;
             currentLvl = "01_OneButton";
 
             defaultEffect = new BasicEffect(GraphicsDevice);
-            //defaultEffect.EnableDefaultLighting();
             defaultEffect.VertexColorEnabled = true;
 
             base.Initialize();
@@ -78,19 +65,6 @@ namespace Replica
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            model = Content.Load<Model>("Models\\p1_wedge");
-
-            pix = Content.Load<Texture2D>("Textures\\pix");
-            dna = Content.Load<Texture2D>("Textures\\dna");
-            happy = Content.Load<Texture2D>("Textures\\happy");
-            Texture2D play = Content.Load<Texture2D>("Textures\\game");
-            playbutton = new Button(play, graphics.GraphicsDevice);
-            playbutton.setPosition(new Vector2(350, 100));
-
-            Texture2D exit = Content.Load<Texture2D>("Textures\\exit");
-            exitbutton = new Button(exit, graphics.GraphicsDevice);
-            exitbutton.setPosition(new Vector2(350, 200));
-
             //AUDIO TESTING
             /*SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
             soundEffectInstance = soundEffect.CreateInstance();
@@ -100,8 +74,7 @@ namespace Replica
 
             entities = new List<Entity>();
             lvl = new Level(entities, currentLvl);
-            //red = new List<Entity>();
-            player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model, entities, lvl);
+            player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model, entities, lvl);
             entities.Add(player);
         }
 
@@ -115,20 +88,14 @@ namespace Replica
             Input.prevKeyboard = Input.currentKeyboard;
             Input.currentKeyboard = Keyboard.GetState();
 
-            
-                if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Input.isClicked(Keys.Escape))
-                {
-                    if (Currentstate == Gamestate.MainMenu)
-                        this.Exit();
-                    else Currentstate = Gamestate.MainMenu;
-                }
+            currentState = gamestate.update();
 
             if(Input.isClicked(Keys.F1))
             {
                 currentLvl = "01_OneButton";
                 entities.Clear();
                 lvl = new Level(entities, currentLvl);
-                player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model, entities, lvl);
+                player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model, entities, lvl);
                 entities.Add(player);
             }
 
@@ -137,38 +104,35 @@ namespace Replica
                 currentLvl = "02_TwoButtons";
                 entities.Clear();
                 lvl = new Level(entities, currentLvl);
-                player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, model, entities, lvl);
+                player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model, entities, lvl);
                 entities.Add(player);
             }
 
-            switch (Currentstate)
+            switch (currentState)
             {
-                case Gamestate.MainMenu:
-                    playbutton.Update(Mouse.GetState());
-                    exitbutton.Update(Mouse.GetState());
-                    if (playbutton.isClicked)
-                    {
-                        Currentstate = Gamestate.InGame;
-                        IsMouseVisible = false;
-                    }
-                    if (exitbutton.isClicked)
-                    {
-                            this.Exit();
-                    }
+                case eGamestates.MainMenu:
+
+                    IsMouseVisible = true;      
                     break;
-                case Gamestate.InGame:
+
+                case eGamestates.LeaveGame:
+
+                    this.Exit();
+                    break;
+
+                case eGamestates.InGame:
+
+                    IsMouseVisible = false;
+
                     for (int i = 0; i < entities.Count; i++) //Certain entities will create/delete other entities in their Update, foreach does not work
                     {
                         entities[i].Update(gameTime);
                     }
 
-                    
-
-
                     CollisionSystem.CheckCollisions(entities);
                     if (Door.done == true)
                     {
-                        Currentstate = Gamestate.Credits;
+                        currentState = eGamestates.Credits;
                             
                     }
                     //AUDIO TESTING
@@ -181,6 +145,11 @@ namespace Replica
                     break;
             };
 
+            if (currentState != prevState)
+                handleNewGameState();
+
+            prevState = currentState;
+
             base.Update(gameTime);
         }
 
@@ -189,14 +158,12 @@ namespace Replica
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            switch (Currentstate)
-            {
-                case Gamestate.MainMenu:
-                    spriteBatch.Draw(dna, new Rectangle(0, 0, dna.Width, dna.Height), Color.White);
-                    playbutton.Draw(spriteBatch);
-                    exitbutton.Draw(spriteBatch);
-                    break;
-                case Gamestate.InGame:
+           
+            gamestate.draw();
+            
+            switch (currentState)
+            {                
+                case eGamestates.InGame:
                     defaultEffect.World = Matrix.Identity;
                     defaultEffect.View = player.GetCamera().GetView();
                     defaultEffect.Projection = player.GetCamera().GetProjection();
@@ -207,17 +174,82 @@ namespace Replica
                     }
 
                     Rectangle crosshairBounds = new Rectangle(GraphicsDevice.Viewport.Width / 2 - 2, GraphicsDevice.Viewport.Height / 2 - 2, 4, 4); //TODO: Replace with variables
-                    spriteBatch.Draw(pix, crosshairBounds, Color.Red);
+                    spriteBatch.Draw(Assets.pix, crosshairBounds, Color.Red);
                     break;
-                case Gamestate.Credits:
-                    spriteBatch.Draw(happy, new Rectangle(0, 0, dna.Width-150, dna.Height), Color.White);
-                    break;
+                
                 default:
                     break;
             };
             spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void handleNewGameState()
+        {
+            switch (currentState)
+            {
+
+                case eGamestates.LeaveGame:
+                    this.Exit();
+                    break;
+
+                case eGamestates.InGame:
+
+                    gamestate = new Ingame();
+
+                    gamestate.init();
+                    break;
+
+                case eGamestates.Levelselection:
+
+                    gamestate = new Levelselection();
+
+                    gamestate.init();
+                    break;
+
+                case eGamestates.Cutscene:
+
+                    gamestate = new Cutscene();
+
+                    gamestate.init();
+                    break;
+
+                case eGamestates.Options:
+
+                    gamestate = new Options();
+
+                    gamestate.init();
+                    break;
+
+                case eGamestates.MainMenu:
+
+                    gamestate = new Mainmenu();
+
+                    gamestate.init();
+
+                    break;
+
+                case eGamestates.GameOver:
+
+                    gamestate = new Gameover();
+
+                    gamestate.init();
+
+                    break;
+
+                case eGamestates.Credits:
+
+                    gamestate = new Credits();
+
+                    gamestate.init();
+
+                    break;
+
+                default:
+                    System.Console.WriteLine("unknown gamestate in - handleNewGameState() - in Game1");
+                    break;
+            }
         }
 
         public String getLevel()
