@@ -12,8 +12,8 @@ namespace Replica.Entities.Blocks
         bool activated; //Not that easy since we can't check whether Switch is NOT colliding
         String color;
 
-        public Switch(Transform transform, Vector3 boundSize, String color, List<Entity> entities, Level lvl)
-            : base(transform, boundSize, entities, lvl, EntityType.Switch)
+        public Switch(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, String color)
+            : base(entities, lvl, transform, boundsSize, EntityType.Switch)
         {
             collided = false;
             activated = false;
@@ -48,7 +48,7 @@ namespace Replica.Entities.Blocks
             }
         }
 
-        public bool isActivated()
+        public bool IsActivated()
         {
             return activated;
         }

@@ -74,7 +74,7 @@ namespace Replica
 
             entities = new List<Entity>();
             lvl = new Level(entities, currentLvl);
-            player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model, entities, lvl);
+            player = new Player(entities, lvl, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model);
             entities.Add(player);
         }
 
@@ -95,7 +95,7 @@ namespace Replica
                 currentLvl = "01_OneButton";
                 entities.Clear();
                 lvl = new Level(entities, currentLvl);
-                player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model, entities, lvl);
+                player = new Player(entities, lvl, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model);
                 entities.Add(player);
             }
 
@@ -104,7 +104,7 @@ namespace Replica
                 currentLvl = "02_TwoButtons";
                 entities.Clear();
                 lvl = new Level(entities, currentLvl);
-                player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model, entities, lvl);
+                player = new Player(entities, lvl, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model);
                 entities.Add(player);
             }
 

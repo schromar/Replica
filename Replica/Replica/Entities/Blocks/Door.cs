@@ -13,10 +13,9 @@ namespace Replica.Entities.Blocks
         string color;
         public static bool done;
 
-        public Door(Transform transform, Vector3 boundSize, String color, List<Entity> entities, Level lvl)
-            : base(transform, boundSize, entities, lvl, EntityType.Door)
+        public Door(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, String color)
+            : base(entities, lvl, transform, boundsSize, EntityType.Door)
         {
-
             requirements = lvl.getSwitches(color);
             this.color = color;
             open = false;
@@ -32,7 +31,7 @@ namespace Replica.Entities.Blocks
 
             foreach(Switch requirement in requirements)
             {
-                if (!requirement.isActivated())
+                if (!requirement.IsActivated())
                 {
                     open = false;
                     break;

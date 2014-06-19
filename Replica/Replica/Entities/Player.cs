@@ -10,8 +10,6 @@ namespace Replica.Entities
 {
     class Player : Entity
     {
-        Vector3 boundSize;
-
         Vector2 resolution;
 
         float mouseSpeed;
@@ -22,16 +20,15 @@ namespace Replica.Entities
         Model model;
 
         Vector3 prevMovement;
+        FootSensor foot;
 
-        public Player(int windowWidth, int windowHeight, Model model, List<Entity> entities, Level lvl)
-            : base(entities, lvl, EntityType.Player)
+        float yVelocity;
+        float gravity;
+
+        public Player(List<Entity> entities, Level lvl, int windowWidth, int windowHeight, Model model)
+            : base(entities, lvl, EntityType.Player, new Transform(), new Vector3(2, 2, 2))
         {
-            transform.position = new Vector3(5, 1, 5);
-
-            //Wrong assumption to simplify: camera position is middle of player model
-            boundSize = new Vector3(2, 2, 2);
-            bounds.Min = transform.position - boundSize / 2.0f;
-            bounds.Max = transform.position + boundSize / 2.0f;
+            transform.position = new Vector3(5, 100, 5);
 
             resolution = new Vector2(windowWidth, windowHeight);
 
@@ -43,12 +40,20 @@ namespace Replica.Entities
             this.model = model;
 
             prevMovement = Vector3.Zero;
+            Transform footTransform=new Transform();
+            footTransform.position=new Vector3(transform.position.X, bounds.Min.Y, transform.position.Z);
+            foot = new FootSensor(entities, lvl, footTransform, new Vector3(0.5f));
+            entities.Add(foot);
+
+            yVelocity = 0;
+            gravity = -0.25f;
         }
 
         public override void Update(GameTime gameTime)
         {
             Rotate(gameTime);
-            Move(gameTime);
+            MoveXZ(gameTime);
+            MoveY(gameTime);
             camera.SetTransform(transform);
 
             //Spawn Replicant on mouseclick
@@ -63,15 +68,16 @@ namespace Replica.Entities
         {
             if (entity.GetEntityType() == EntityType.Block || entity.GetEntityType() == EntityType.Replicant)
             {
-                //TODO: Less duplication
-                transform.position -= prevMovement;
-
-                //Move bounds with player
-                bounds.Min -= prevMovement;
-                bounds.Max -= prevMovement;
-
-                camera.SetTransform(transform);
+                yVelocity = 0;
+                SetPosition(transform.position - prevMovement);
             }
+        }
+
+        public override void SetPosition(Vector3 position)
+        {
+            base.SetPosition(position);
+            camera.SetTransform(transform);
+            foot.SetPosition(new Vector3(transform.position.X, bounds.Min.Y, transform.position.Z));
         }
 
         public Camera GetCamera()
@@ -98,7 +104,7 @@ namespace Replica.Entities
             transform.up = Vector3.Cross(transform.right, transform.forward);
         }
 
-        void Move(GameTime gameTime)
+        void MoveXZ(GameTime gameTime)
         {          
             Vector2 movement = Vector2.Zero;
 
@@ -125,21 +131,38 @@ namespace Replica.Entities
                 movement *= movementSpeed;
             }
             movement *= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector3 finalVelocity = transform.forward * movement.X + transform.right * movement.Y;
-            transform.position += finalVelocity;
+            Vector3 forwardWithoutY = transform.forward;
+            forwardWithoutY.Y = 0;
+            Vector3 finalVelocity = forwardWithoutY * movement.X + transform.right * movement.Y;
 
-            //Move bounds with player
-            bounds.Min += finalVelocity;
-            bounds.Max += finalVelocity;
+            SetPosition(transform.position + finalVelocity);
+            prevMovement.X = finalVelocity.X;
+            prevMovement.Z = finalVelocity.Z;
+        }
 
-            prevMovement = finalVelocity;
+        void MoveY(GameTime gameTime)
+        {
+            yVelocity = yVelocity + gravity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            Vector3 jumpVector=new Vector3();
+            if (foot.IsActivated())
+            {
+                if(Input.isPressed(Keys.Space))
+                {
+                    jumpVector.Y=100;
+                }
+            }
+            Vector3 yVector = new Vector3(0, yVelocity, 0);
+            yVector += jumpVector;
+            SetPosition(transform.position + yVector);
+            prevMovement.Y = yVector.Y;
         }
 
         void SpawnReplicant()
         {
             Transform replicantTransform = transform;
-            replicantTransform.position = transform.position + transform.forward*boundSize.Length();
-            Replicant replicant = new Replicant(replicantTransform, model, boundSize, entities, lvl);
+            replicantTransform.position = transform.position + transform.forward*boundsSize.Length();
+            Replicant replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, model);
             bool spawning = true;
             foreach (Entity entity in entities)
             {
