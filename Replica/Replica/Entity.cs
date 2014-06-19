@@ -13,6 +13,7 @@ namespace Replica
         {
             Block,
             Player,
+            FootSensor,
             Replicant,
             Door,
             Switch,
@@ -24,24 +25,24 @@ namespace Replica
         protected EntityType type;
 
         protected Transform transform;
+        protected Vector3 boundsSize;
+        protected Color boundsColor; //For testing purposes
         protected BoundingBox bounds;
 
         protected bool solid;
         
 
-        protected Color boundsColor; //For testing purposes
-
-        public Entity(List<Entity> entities, Level lvl , EntityType type)
+        public Entity(List<Entity> entities, Level lvl, EntityType type, Transform transform, Vector3 boundsSize)
         {
             this.entities = entities;
             this.lvl = lvl;
             this.type = type;
-            
 
-            transform = new Transform();
-            bounds = new BoundingBox();
 
+            this.transform = transform;
+            this.boundsSize = boundsSize;
             boundsColor = Color.White;
+            GenerateBounds();
         }
 
         public virtual void Update(GameTime gameTime)
@@ -94,6 +95,19 @@ namespace Replica
         public BoundingBox GetBounds()
         {
             return bounds;
+        }
+
+        public virtual void SetPosition(Vector3 position)
+        {
+            transform.position = position;
+            GenerateBounds();
+        }
+
+        void GenerateBounds()
+        {
+            bounds = new BoundingBox();
+            bounds.Min = transform.position - boundsSize / 2.0f;
+            bounds.Max = transform.position + boundsSize / 2.0f;
         }
 
         public bool isSolid()

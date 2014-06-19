@@ -67,7 +67,7 @@ namespace Replica
 
             entities = new List<Entity>();
             lvl = new Level(entities);
-            player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model, entities, lvl);
+            player = new Player(entities, lvl, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model);
             entities.Add(player);
         }
 
@@ -83,23 +83,7 @@ namespace Replica
 
             Globals.currentState = gamestate.update();
 
-            /*if(Input.isClicked(Keys.F1))
-            {
-                currentLvl = "01_OneButton";
-                entities.Clear();
-                lvl = new Level(entities, currentLvl);
-                player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model, entities, lvl);
-                entities.Add(player);
-            }
 
-            if (Input.isClicked(Keys.F2))
-            {
-                currentLvl = "02_TwoButtons";
-                entities.Clear();
-                lvl = new Level(entities, currentLvl);
-                player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model, entities, lvl);
-                entities.Add(player);
-            }*/
 
             switch (Globals.currentState)
             {

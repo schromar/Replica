@@ -67,7 +67,7 @@ namespace Replica
                             currentEntity = null;
                             break;
                         case 1:
-                            currentEntity = new Block(t, blockSize, entities,this);
+                            currentEntity = new Block(entities, this, t, blockSize);
                             break;
                         case 2:
                             currentEntity = null;
@@ -76,25 +76,25 @@ namespace Replica
                             currentEntity = new Goal(t, blockSize, entities, this);    
                             break;
                         case 4:
-                            currentEntity = new Switch(t, blockSize, "red", entities, this);
+                            currentEntity = new Switch(entities, this, t, blockSize, "red");
                             redSwitches.Add((Switch)currentEntity);
                             break;
                         case 5:
-                            currentEntity = new Switch(t, blockSize, "green", entities, this);
+                            currentEntity = new Switch(entities, this, t, blockSize, "green");
                             greenSwitches.Add((Switch)currentEntity);
                             break;
                         case 6:
-                            currentEntity = new Switch(t, blockSize, "blue", entities, this);
+                            currentEntity = new Switch(entities, this, t, blockSize, "blue");
                             blueSwitches.Add((Switch)currentEntity);
                             break;
                         case 7:
-                            currentEntity = new Door(t, blockSize, "red", entities, this);
+                            currentEntity = new Door(entities, this, t, blockSize, "red");
                             break;
                         case 8:
-                            currentEntity = new Door(t, blockSize, "green", entities, this);
+                            currentEntity = new Door(entities, this, t, blockSize, "green");
                             break;
                         case 9:
-                            currentEntity = new Door(t, blockSize, "blue", entities, this);
+                            currentEntity = new Door(entities, this, t, blockSize, "blue");
                             break;
                         //TODO: remaining EntityTypes
                         default:
