@@ -9,32 +9,27 @@ namespace Replica.Entities.Blocks
     class Door : Block
     {
         List<Switch> requirements;
-        bool open;
         string color;
-        public static bool done;
 
         public Door(Transform transform, Vector3 boundSize, String color, List<Entity> entities, Level lvl)
             : base(transform, boundSize, entities, lvl, EntityType.Door)
         {
-
+            solid = true;
             requirements = lvl.getSwitches(color);
             this.color = color;
-            open = false;
 
             boundsColor = Color.Yellow;
         }
 
         public override void Update(GameTime gameTime)
         {
-            open = true;
-
-           
+            solid = false;
 
             foreach(Switch requirement in requirements)
             {
                 if (!requirement.isActivated())
                 {
-                    open = false;
+                    solid = true;
                     break;
                 }
             }
@@ -42,14 +37,6 @@ namespace Replica.Entities.Blocks
 
         public override void OnCollision(Entity entity)
         {
-            if (entity.GetEntityType() == EntityType.Player) //TODO: Testing
-            {
-                done = false;
-                if (open)
-                {
-                    done = true;
-                }
-            }
         }
     }
 }

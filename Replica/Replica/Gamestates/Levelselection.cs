@@ -29,7 +29,7 @@ namespace Replica
             lvl01button.setPosition(new Vector2(350, 200));
 
             lvl02button = new Button(Assets.lvl02, Game1.graphics.GraphicsDevice);
-            lvl02button.setPosition(new Vector2(350, 300));
+            lvl02button.setPosition(new Vector2(350, 400));
         }
 
         public eGamestates update()
@@ -37,6 +37,23 @@ namespace Replica
             lvl00button.Update(Mouse.GetState());
             lvl01button.Update(Mouse.GetState());
             lvl02button.Update(Mouse.GetState());
+
+            if (lvl00button.isClicked)
+            {
+                Globals.currentLvl = "01_OneButton";
+                return eGamestates.InGame;
+            }
+            if (lvl01button.isClicked)
+            {
+                Globals.currentLvl = "02_TwoButtons";
+                return eGamestates.InGame;
+            }
+
+            if (lvl02button.isClicked)
+            {
+                Globals.currentLvl = "03_Leapfrogging";
+                return eGamestates.InGame;
+            }
 
             if(Input.isClicked(Keys.Escape))
                 return eGamestates.MainMenu;

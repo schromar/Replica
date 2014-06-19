@@ -15,6 +15,8 @@ namespace Replica.Entities.Blocks
         public Switch(Transform transform, Vector3 boundSize, String color, List<Entity> entities, Level lvl)
             : base(transform, boundSize, entities, lvl, EntityType.Switch)
         {
+            solid = false;
+
             collided = false;
             activated = false;
             this.color = color;

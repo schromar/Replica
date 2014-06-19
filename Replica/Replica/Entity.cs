@@ -25,6 +25,8 @@ namespace Replica
 
         protected Transform transform;
         protected BoundingBox bounds;
+
+        protected bool solid;
         
 
         protected Color boundsColor; //For testing purposes
@@ -93,5 +95,11 @@ namespace Replica
         {
             return bounds;
         }
+
+        public bool isSolid()
+        {
+            return solid;
+        }
+
     }
 }

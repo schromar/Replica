@@ -61,7 +61,8 @@ namespace Replica.Entities
 
         public override void OnCollision(Entity entity)
         {
-            if (entity.GetEntityType() == EntityType.Block || entity.GetEntityType() == EntityType.Replicant)
+            if (entity.isSolid())
+            //if (entity.GetEntityType() == EntityType.Block || entity.GetEntityType() == EntityType.Replicant)
             {
                 //TODO: Less duplication
                 transform.position -= prevMovement;
@@ -143,7 +144,8 @@ namespace Replica.Entities
             bool spawning = true;
             foreach (Entity entity in entities)
             {
-                if (replicant.GetBounds().Intersects(entity.GetBounds()) && entity.GetEntityType() == EntityType.Block)
+                if (replicant.GetBounds().Intersects(entity.GetBounds()))
+                    if (entity.GetEntityType() == EntityType.Block || entity.GetEntityType() == EntityType.Door || entity.GetEntityType() == EntityType.Goal)
                 {
                     spawning = false;
                     break;

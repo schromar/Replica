@@ -7,6 +7,7 @@ using TiledSharp;
 
 using Replica.Entities;
 using Replica.Entities.Blocks;
+using Replica.Statics;
 
 namespace Replica
 {
@@ -34,9 +35,9 @@ namespace Replica
         
         
 
-        public Level(List<Entity> entities, string mapName)
+        public Level(List<Entity> entities)
         {
-            TmxMap map = new TmxMap("Levels/" + mapName + ".tmx"); //TODO: Check if file even exists
+            TmxMap map = new TmxMap("Levels/" + Globals.currentLvl + ".tmx"); //TODO: Check if file even exists
             
             Vector3 size = new Vector3(map.Width, map.Layers.Count, map.Height);
 
@@ -72,7 +73,7 @@ namespace Replica
                             currentEntity = null;
                             break;
                         case 3:
-                            currentEntity = null;    
+                            currentEntity = new Goal(t, blockSize, entities, this);    
                             break;
                         case 4:
                             currentEntity = new Switch(t, blockSize, "red", entities, this);

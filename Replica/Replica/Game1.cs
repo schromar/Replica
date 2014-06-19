@@ -28,15 +28,10 @@ namespace Replica
         Player player;
         Level lvl;
 
-        String currentLvl;
-
         //AUDIO TESTING
         /*SoundEffectInstance soundEffectInstance;
         AudioEmitter emitter = new AudioEmitter();
         AudioListener listener = new AudioListener();*/
-                
-        eGamestates currentState = eGamestates.MainMenu;
-        eGamestates prevState = eGamestates.MainMenu;
 
         Gamestate gamestate = new Mainmenu();
 
@@ -46,13 +41,11 @@ namespace Replica
             Content.RootDirectory = "Content";
         }
 
-
         protected override void Initialize()
         {
             Assets.loadcontent(Content);
             gamestate.init();
-            IsMouseVisible = true;
-            currentLvl = "01_OneButton";
+            Globals.currentLvl = "01_OneButton";
 
             defaultEffect = new BasicEffect(GraphicsDevice);
             defaultEffect.VertexColorEnabled = true;
@@ -73,7 +66,7 @@ namespace Replica
             soundEffectInstance.Play();*/
 
             entities = new List<Entity>();
-            lvl = new Level(entities, currentLvl);
+            lvl = new Level(entities);
             player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model, entities, lvl);
             entities.Add(player);
         }
@@ -88,9 +81,9 @@ namespace Replica
             Input.prevKeyboard = Input.currentKeyboard;
             Input.currentKeyboard = Keyboard.GetState();
 
-            currentState = gamestate.update();
+            Globals.currentState = gamestate.update();
 
-            if(Input.isClicked(Keys.F1))
+            /*if(Input.isClicked(Keys.F1))
             {
                 currentLvl = "01_OneButton";
                 entities.Clear();
@@ -106,9 +99,9 @@ namespace Replica
                 lvl = new Level(entities, currentLvl);
                 player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model, entities, lvl);
                 entities.Add(player);
-            }
+            }*/
 
-            switch (currentState)
+            switch (Globals.currentState)
             {
                 case eGamestates.MainMenu:
 
@@ -130,25 +123,29 @@ namespace Replica
                     }
 
                     CollisionSystem.CheckCollisions(entities);
-                    if (Door.done == true)
+
+                    if (Globals.reachedGoal == true)
                     {
-                        currentState = eGamestates.Credits;
-                            
+                        Globals.reachedGoal = false;
+                        Globals.currentState = eGamestates.Credits;
                     }
+                           
                     //AUDIO TESTING
                     /*listener.Position = player.GetTransform().position;
                     listener.Forward = player.GetTransform().forward;
                     listener.Up = player.GetTransform().up;
                     soundEffectInstance.Apply3D(listener, emitter);*/
+
                     break;
+
                 default:
                     break;
             };
 
-            if (currentState != prevState)
+            if (Globals.currentState != Globals.prevState)
                 handleNewGameState();
 
-            prevState = currentState;
+            Globals.prevState = Globals.currentState;
 
             base.Update(gameTime);
         }
@@ -161,7 +158,7 @@ namespace Replica
            
             gamestate.draw();
             
-            switch (currentState)
+            switch (Globals.currentState)
             {                
                 case eGamestates.InGame:
                     defaultEffect.World = Matrix.Identity;
@@ -187,7 +184,7 @@ namespace Replica
 
         private void handleNewGameState()
         {
-            switch (currentState)
+            switch (Globals.currentState)
             {
 
                 case eGamestates.LeaveGame:
@@ -195,6 +192,11 @@ namespace Replica
                     break;
 
                 case eGamestates.InGame:
+
+                    entities.Clear();
+                    lvl = new Level(entities);
+                    player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model, entities, lvl);
+                    entities.Add(player);
 
                     gamestate = new Ingame();
 
@@ -251,12 +253,7 @@ namespace Replica
                     break;
             }
         }
-
-        public String getLevel()
-        {
-            return currentLvl;
-        }
-
+        
         public void epicFuncttionOfHell(String woooooohoo)
         {
             Console.WriteLine("Gerd was here");
