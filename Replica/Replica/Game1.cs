@@ -179,7 +179,7 @@ namespace Replica
 
                     entities.Clear();
                     lvl = new Level(entities);
-                    player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model, entities, lvl);
+                    player = new Player(entities, lvl,GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model); 
                     entities.Add(player);
 
                     gamestate = new Ingame();

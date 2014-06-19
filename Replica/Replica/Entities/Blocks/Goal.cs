@@ -12,7 +12,7 @@ namespace Replica.Entities.Blocks
         
 
         public Goal(Transform transform, Vector3 boundSize, List<Entity> entities, Level lvl)
-            : base(transform, boundSize, entities, lvl, EntityType.Goal)
+            : base(entities, lvl, transform, boundSize, EntityType.Goal)
         {
             boundsColor = Color.DarkOrange;
             solid = false;
