@@ -141,7 +141,6 @@
   <ItemGroup>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
-    <Content Include="Reference\TiledSharp.dll" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ReplicaContent\ReplicaContent.contentproj">
