@@ -24,10 +24,7 @@ namespace Replica
 
         public void init()
         {
-           /* entities = new List<Entity>();
-            lvl = new Level(entities);
-            player = new Player(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model, entities, lvl);
-            entities.Add(player);*/
+          
 
         }
 
