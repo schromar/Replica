@@ -14,6 +14,8 @@ namespace Replica.Entities
         public Replicant(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, Model model)
             : base(entities, lvl, EntityType.Replicant, transform, boundsSize)
         {
+            solid = true;
+
             this.model = model;
         }
 
