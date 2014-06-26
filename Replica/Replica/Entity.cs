@@ -92,6 +92,11 @@ namespace Replica
             return transform;
         }
 
+        public Vector3 GetBoundsSize()
+        {
+            return boundsSize;
+        }
+
         public BoundingBox GetBounds()
         {
             return bounds;
