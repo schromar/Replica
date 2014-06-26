@@ -20,10 +20,12 @@ namespace Replica.Entities
         Model model;
 
         Vector3 prevMovement;
+        Vector3 footBoundsSize;
         FootSensor foot;
 
         float yVelocity;
         float gravity;
+        float jumpVelocity;
 
         public Player(List<Entity> entities, Level lvl, Transform transform,  int windowWidth, int windowHeight, Model model)
             : base(entities, lvl, EntityType.Player, transform, new Vector3(2, 2, 2))
@@ -40,14 +42,15 @@ namespace Replica.Entities
             this.model = model;
 
             prevMovement = Vector3.Zero;
-            Vector3 footBoundsSize = new Vector3(0.5f);
+            footBoundsSize = new Vector3(1.75f, 0.2f, 1.75f); //Slightly smaller boundsSize than player
             Transform footTransform=new Transform();
-            footTransform.position=new Vector3(transform.position.X, bounds.Min.Y/*+footBoundsSize.Y/2.0f*/, transform.position.Z);
+            footTransform.position=new Vector3(transform.position.X, bounds.Min.Y-footBoundsSize.Y/2.0f, transform.position.Z);
             foot = new FootSensor(entities, lvl, footTransform, footBoundsSize);
             entities.Add(foot);
 
             yVelocity = -20;
             gravity = -0.25f;
+            jumpVelocity = 10;
         }
 
         public override void Update(GameTime gameTime)
@@ -76,69 +79,12 @@ namespace Replica.Entities
         public override void OnCollision(Entity entity)
         {
             if (entity.isSolid() && prevMovement!=Vector3.Zero)
-            //if (entity.GetEntityType() == EntityType.Block || entity.GetEntityType() == EntityType.Replicant)
             {
                 ///Simple version
                 Vector3 backwards = prevMovement;
 
-                ///Intersectionbox combined with prevMovement
-                /*BoundingBox intersection=CollisionSystem.Intersection(bounds, entity.GetBounds());
-                Vector3 intersectionVec = new Vector3(intersection.Max.X - intersection.Min.X, intersection.Max.Y - intersection.Min.Y, intersection.Max.Z - intersection.Min.Z);
-                Vector3 backwards = prevMovement;
-                backwards.Normalize();
-                backwards *= intersectionVec;*/
-
-                ///Moving towards smaller side of Intersectionbox (least likely to work)
-                /*Vector3 backwards=new Vector3();
-                BoundingBox intersection = CollisionSystem.Intersection(bounds, entity.GetBounds());
-                Vector3 intersectionVec = new Vector3(intersection.Max.X - intersection.Min.X, intersection.Max.Y - intersection.Min.Y, intersection.Max.Z - intersection.Min.Z);
-                if (intersectionVec.X < intersectionVec.Y)
-                {
-                    if (intersectionVec.X < intersectionVec.Z)
-                    {
-                        backwards.X = intersectionVec.X;
-                    }
-                    else
-                    {
-                        backwards.Z = intersectionVec.Z;
-                    }
-                }
-                else
-                {
-                    if (intersectionVec.Y < intersectionVec.Z)
-                    {
-                        backwards.Y = intersectionVec.Y;
-                    }
-                    else
-                    {
-                        backwards.Z = intersectionVec.Z;
-                    }
-                }*/
-
-                ///Using point from Intersectionbox and ray from that point towards box face
-                /*Vector3 backwards = prevMovement;
-                backwards.Normalize();
-                Vector3 point = CollisionSystem.OverlappingPoint(bounds, entity.GetBounds());
-                Ray ray = new Ray(point, -backwards);
-
-                List<Plane> planes=CollisionSystem.PlanesFromBox(entity.GetBounds());
-                List<float> distances = new List<float>();
-                foreach (Plane plane in planes)
-                {
-                    float? distance = ray.Intersects(plane);
-                    if (distance != null)
-                    {
-                        distances.Add((float)distance);
-                    }
-                }
-                backwards *= distances.Min();*/
-
                 SetPosition(transform.position - backwards);
                 //prevMovement = -backwards;
-                if (foot.IsActivated())
-                {
-                    yVelocity = 0;
-                }
             }
         }
 
@@ -146,7 +92,7 @@ namespace Replica.Entities
         {
             base.SetPosition(position);
             camera.SetTransform(transform);
-            foot.SetPosition(new Vector3(transform.position.X, bounds.Min.Y, transform.position.Z));
+            foot.SetPosition(new Vector3(transform.position.X, bounds.Min.Y-footBoundsSize.Y/2.0f, transform.position.Z));
         }
 
         public Camera GetCamera()
@@ -216,9 +162,16 @@ namespace Replica.Entities
             Vector3 jumpVector=new Vector3();
             if (foot.IsActivated())
             {
+                //Landing
+                Entity collider = foot.GetCollider();
+                Vector3 newPosition = transform.position;
+                newPosition.Y = collider.GetTransform().position.Y + collider.GetBoundsSize().Y / 2 + boundsSize.Y / 2 + 0.05f; //Setting player slightly above ground
+                SetPosition(newPosition);
+                yVelocity = 0;
+
                 if (Input.isPressed(Keys.Space))
                 {
-                    jumpVector.Y = 100;
+                    yVelocity = jumpVelocity;
                 }
             }
             Vector3 yVector = new Vector3(0, yVelocity, 0);

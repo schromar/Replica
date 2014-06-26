@@ -10,6 +10,7 @@ namespace Replica.Entities
     {
         bool collided;
         bool activated;
+        Entity collider;
    
         public FootSensor(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize)
             :   base(entities, lvl, EntityType.FootSensor, transform, boundsSize)
@@ -26,15 +27,21 @@ namespace Replica.Entities
 
         public override void OnCollision(Entity entity)
         {
-            if (entity.GetEntityType() == EntityType.Block || entity.GetEntityType() == EntityType.Replicant)
+            if (entity.isSolid())
             {
                 collided = true;
+                collider = entity;
             }
         }
 
         public bool IsActivated()
         {
             return activated;
+        }
+
+        public Entity GetCollider()
+        {
+            return collider;
         }
     }
 }
