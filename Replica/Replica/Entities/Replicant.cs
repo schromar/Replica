@@ -5,18 +5,16 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using Replica.Statics;
+
 namespace Replica.Entities
 {
     class Replicant : Entity
     {
-        Model model;
-
-        public Replicant(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, Model model)
+        public Replicant(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize)
             : base(entities, lvl, EntityType.Replicant, transform, boundsSize)
         {
             solid = true;
-
-            this.model = model;
         }
 
         public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
@@ -26,6 +24,7 @@ namespace Replica.Entities
             rotation.Right = transform.right;
             rotation.Up = transform.up;
 
+            Model model = Assets.model;
             Matrix[] transforms = new Matrix[model.Bones.Count];
             model.CopyAbsoluteBoneTransformsTo(transforms);
 

@@ -13,7 +13,7 @@ namespace Replica
         {
             Block,
             Player,
-            FootSensor,
+            Trigger,
             Replicant,
             Door,
             Switch,
@@ -102,9 +102,9 @@ namespace Replica
             return bounds;
         }
 
-        public virtual void SetPosition(Vector3 position)
+        public virtual void Move(Vector3 velocity)
         {
-            transform.position = position;
+            transform.position+=velocity;
             GenerateBounds();
         }
 

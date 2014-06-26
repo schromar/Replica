@@ -12,8 +12,6 @@ namespace Replica.Entities.Blocks
 
         string color;
 
-
-
         public Door(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, String color)
             : base(entities, lvl, transform, boundsSize, EntityType.Door)
         {

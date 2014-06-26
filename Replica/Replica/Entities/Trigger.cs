@@ -6,14 +6,14 @@ using System.Text;
 
 namespace Replica.Entities
 {
-    class FootSensor : Entity
+    class Trigger : Entity
     {
         bool collided;
         bool activated;
         Entity collider;
    
-        public FootSensor(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize)
-            :   base(entities, lvl, EntityType.FootSensor, transform, boundsSize)
+        public Trigger(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize)
+            :   base(entities, lvl, EntityType.Trigger, transform, boundsSize)
         {
             collided = false;
             activated = false;

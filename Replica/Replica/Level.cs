@@ -80,7 +80,7 @@ namespace Replica
                             currentEntity = new Block(entities, this, t, blockSize);
                             break;
                         case 2:
-                            player = new Player(entities, this, t, Globals.windowwidth, Globals.windowheight, Assets.model);
+                            player = new Player(entities, this, t, Globals.windowwidth, Globals.windowheight);
                             currentEntity = player;
                             break;
                         case 3:

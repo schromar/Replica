@@ -17,21 +17,18 @@ namespace Replica.Entities
         Vector2 rotation;
 
         Camera camera;
-        Model model;
 
         Vector3 prevMovement;
-        Vector3 footBoundsSize;
-        FootSensor foot;
+        Vector3 movementBoundsSize;
+        List<Trigger> movementBounds;
 
         float yVelocity;
         float gravity;
         float jumpVelocity;
 
-        public Player(List<Entity> entities, Level lvl, Transform transform,  int windowWidth, int windowHeight, Model model)
+        public Player(List<Entity> entities, Level lvl, Transform transform,  int windowWidth, int windowHeight)
             : base(entities, lvl, EntityType.Player, transform, new Vector3(2, 2, 2))
         {
-           // transform.position = new Vector3(5, 100, 5);
-
             resolution = new Vector2(windowWidth, windowHeight);
 
             mouseSpeed = 0.1f;
@@ -39,14 +36,47 @@ namespace Replica.Entities
             rotation = Vector2.Zero;
 
             camera = new Camera(resolution);
-            this.model = model;
 
             prevMovement = Vector3.Zero;
-            footBoundsSize = new Vector3(1.75f, 0.2f, 1.75f); //Slightly smaller boundsSize than player
-            Transform footTransform=new Transform();
-            footTransform.position=new Vector3(transform.position.X, bounds.Min.Y-footBoundsSize.Y/2.0f, transform.position.Z);
-            foot = new FootSensor(entities, lvl, footTransform, footBoundsSize);
-            entities.Add(foot);
+            movementBoundsSize = new Vector3(1.75f, 0.2f, 1.75f); //in Y direction
+
+            Transform t=new Transform();
+            movementBounds = new List<Trigger>();
+            //Y-, Y+
+            Vector3 nextBoundsSize = movementBoundsSize;
+            t.position = new Vector3(transform.position.X, bounds.Min.Y - nextBoundsSize.Y / 2.0f, transform.position.Z);
+            Trigger trigger = new Trigger(entities, lvl, t, nextBoundsSize);
+            movementBounds.Add(trigger);
+            entities.Add(trigger);
+
+            t.position = new Vector3(transform.position.X, bounds.Max.Y + nextBoundsSize.Y / 2.0f, transform.position.Z);
+            trigger = new Trigger(entities, lvl, t, nextBoundsSize);
+            movementBounds.Add(trigger);
+            entities.Add(trigger);
+
+            //X-, X+
+            nextBoundsSize = new Vector3(movementBoundsSize.Y, movementBoundsSize.X, movementBoundsSize.Z);
+            t.position = new Vector3(bounds.Min.X - nextBoundsSize.X / 2.0f, transform.position.Y, transform.position.Z);
+            trigger = new Trigger(entities, lvl, t, nextBoundsSize);
+            movementBounds.Add(trigger);
+            entities.Add(trigger);
+
+            t.position = new Vector3(bounds.Max.X + nextBoundsSize.X / 2.0f, transform.position.Y, transform.position.Z);
+            trigger = new Trigger(entities, lvl, t, nextBoundsSize);
+            movementBounds.Add(trigger);
+            entities.Add(trigger);
+
+            //Z-, Z+
+            nextBoundsSize = new Vector3(movementBoundsSize.X, movementBoundsSize.Z, movementBoundsSize.Y);
+            t.position = new Vector3(transform.position.X, transform.position.Y, bounds.Min.Z - nextBoundsSize.Z / 2.0f);
+            trigger = new Trigger(entities, lvl, t, nextBoundsSize);
+            movementBounds.Add(trigger);
+            entities.Add(trigger);
+
+            t.position = new Vector3(transform.position.X, transform.position.Y, bounds.Max.Z + nextBoundsSize.Z / 2.0f);
+            trigger = new Trigger(entities, lvl, t, nextBoundsSize);
+            movementBounds.Add(trigger);
+            entities.Add(trigger);
 
             yVelocity = -20;
             gravity = -0.25f;
@@ -55,13 +85,12 @@ namespace Replica.Entities
 
         public override void Update(GameTime gameTime)
         {
+            HandleCollisions();
+
             Rotate(gameTime);
             MoveXZ(gameTime);
             MoveY(gameTime);
             camera.SetTransform(transform);
-
-            Console.WriteLine(lvl.numberOfReplicants);
-            Console.WriteLine(lvl.maxReplicants);
 
             //Spawn Replicant on mouseclick
             MouseState mState = Mouse.GetState();
@@ -78,21 +107,17 @@ namespace Replica.Entities
 
         public override void OnCollision(Entity entity)
         {
-            if (entity.isSolid() && prevMovement!=Vector3.Zero)
-            {
-                ///Simple version
-                Vector3 backwards = prevMovement;
 
-                SetPosition(transform.position - backwards);
-                //prevMovement = -backwards;
-            }
         }
 
-        public override void SetPosition(Vector3 position)
+        public override void Move(Vector3 velocity)
         {
-            base.SetPosition(position);
+            base.Move(velocity);
             camera.SetTransform(transform);
-            foot.SetPosition(new Vector3(transform.position.X, bounds.Min.Y-footBoundsSize.Y/2.0f, transform.position.Z));
+            foreach (Trigger trigger in movementBounds)
+            {
+                trigger.Move(velocity);
+            }
         }
 
         public Camera GetCamera()
@@ -150,7 +175,7 @@ namespace Replica.Entities
             forwardWithoutY.Y = 0;
             Vector3 finalVelocity = forwardWithoutY * movement.X + transform.right * movement.Y;
 
-            SetPosition(transform.position + finalVelocity);
+            Move(finalVelocity);
             prevMovement.X = finalVelocity.X;
             prevMovement.Z = finalVelocity.Z;
         }
@@ -158,35 +183,76 @@ namespace Replica.Entities
         void MoveY(GameTime gameTime)
         {
             yVelocity = yVelocity + gravity;
-
-            Vector3 jumpVector=new Vector3();
-            if (foot.IsActivated())
-            {
-                //Landing
-                Entity collider = foot.GetCollider();
-                Vector3 newPosition = transform.position;
-                newPosition.Y = collider.GetTransform().position.Y + collider.GetBoundsSize().Y / 2 + boundsSize.Y / 2 + 0.05f; //Setting player slightly above ground
-                SetPosition(newPosition);
-                yVelocity = 0;
-
-                if (Input.isPressed(Keys.Space))
-                {
-                    yVelocity = jumpVelocity;
-                }
-            }
             Vector3 yVector = new Vector3(0, yVelocity, 0);
-            yVector += jumpVector;
             yVector *= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            SetPosition(transform.position + yVector);
+            Move(yVector);
             prevMovement.Y = yVector.Y;
+        }
+
+        void HandleCollisions()
+        {
+            for (int i = 0; i < movementBounds.Count; i++)
+            {
+                if (movementBounds[i].IsActivated())
+                {
+                    float offset = 0.05f;
+                    Entity collider = movementBounds[i].GetCollider();
+                    Vector3 newPosition = transform.position;
+                    switch (i)
+                    {
+                        case 0:
+                            newPosition.Y = collider.GetTransform().position.Y + collider.GetBoundsSize().Y / 2 + boundsSize.Y / 2 + offset;
+                            yVelocity = 0;
+                            if(Input.isPressed(Keys.Space))
+                            {
+                                yVelocity = jumpVelocity;
+                            }
+                            break;
+                        case 1:
+                            if (prevMovement.Y > 0.0f)
+                            {
+                                newPosition.Y = collider.GetTransform().position.Y - collider.GetBoundsSize().Y / 2 - boundsSize.Y / 2 - offset;
+                                yVelocity = 0;
+                            }
+                            break;
+                        case 2:
+                            if (prevMovement.X < 0.0f)
+                            {
+                                newPosition.X = collider.GetTransform().position.X + collider.GetBoundsSize().X / 2 + boundsSize.X / 2 + offset;
+                            }
+                            break;
+                        case 3:
+                            if (prevMovement.X > 0.0f)
+                            {
+                                newPosition.X = collider.GetTransform().position.X - collider.GetBoundsSize().X / 2 - boundsSize.X / 2 - offset;
+                            }
+                            break;
+                        case 4:
+                            if (prevMovement.Z < 0.0f)
+                            {
+                                newPosition.Z = collider.GetTransform().position.Z + collider.GetBoundsSize().Z / 2 + boundsSize.Z / 2 + offset;
+                            }
+                            break;
+                        case 5:
+                            if (prevMovement.Z > 0.0f)
+                            {
+                                newPosition.Z = collider.GetTransform().position.Z - collider.GetBoundsSize().Z / 2 - boundsSize.Z / 2 - offset;
+                            }
+                            break;
+                        default:
+                            break;
+                    };
+                    Move(newPosition - transform.position);
+                }
+            }
         }
 
         void SpawnReplicant()
         {
             Transform replicantTransform = transform;
             replicantTransform.position = transform.position + transform.forward*boundsSize.Length();
-            Replicant replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, model);
+            Replicant replicant = new Replicant(entities, lvl, replicantTransform, boundsSize);
             bool spawning = true;
             foreach (Entity entity in entities)
             {
@@ -203,29 +269,6 @@ namespace Replica.Entities
                 lvl.numberOfReplicants++;
                 entities.Add(replicant);
             }
-
-            //ALTERNATIVE SPAWNING
-            //Create Ray from Player Transform to check if Player is looking at Entities
-            /*Ray ray = new Ray(transform.position, transform.forward);
-            List<KeyValuePair<float, Entity>> collisions = CollisionSystem.RayIntersection(entities, ray);
-
-            //Check whether looked at Entity is solid to spawn the Replicant on
-            int solidIndex = -1;
-            for (int i = 0; i < collisions.Count; i++)
-            {
-                if (collisions[i].Value.GetEntityType() == EntityType.Block)
-                {
-                    solidIndex = i;
-                    break;
-                }
-            }
-
-            if (solidIndex != -1) //Only spawn Replicant if we are not looking into infinity?
-            {
-                Transform replicantTransform = transform;
-                replicantTransform.position = transform.position + transform.forward * collisions[solidIndex].Key;
-                entities.Add(new Replicant(replicantTransform, model, entities, lvl));
-            }*/
         }
     }
 }
