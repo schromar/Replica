@@ -21,10 +21,11 @@ namespace Replica
 
         Player player;
         Level lvl;
+        GraphicsDevice gDevice;
+        BasicEffect defaultEffect;
 
         public void init()
         {
-          
 
         }
 

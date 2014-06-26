@@ -25,10 +25,10 @@ namespace Replica.Entities
         float yVelocity;
         float gravity;
 
-        public Player(List<Entity> entities, Level lvl, int windowWidth, int windowHeight, Model model)
-            : base(entities, lvl, EntityType.Player, new Transform(), new Vector3(2, 2, 2))
+        public Player(List<Entity> entities, Level lvl, Transform transform,  int windowWidth, int windowHeight, Model model)
+            : base(entities, lvl, EntityType.Player, transform, new Vector3(2, 2, 2))
         {
-            transform.position = new Vector3(5, 100, 5);
+           // transform.position = new Vector3(5, 100, 5);
 
             resolution = new Vector2(windowWidth, windowHeight);
 

@@ -22,6 +22,7 @@ namespace Replica.Statics
         public static eGamestates prevState = eGamestates.MainMenu;
         public static bool reachedGoal = false;
 
-        public static int maxReplicants;
+        public static int windowheight = 480;
+        public static int windowwidth = 800;
     }
 }

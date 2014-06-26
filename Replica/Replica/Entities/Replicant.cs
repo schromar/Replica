@@ -21,7 +21,7 @@ namespace Replica.Entities
 
         public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
         {
-            Matrix rotation=Matrix.Identity;
+            Matrix rotation = Matrix.Identity;
             rotation.Forward = transform.forward;
             rotation.Right = transform.right;
             rotation.Up = transform.up;

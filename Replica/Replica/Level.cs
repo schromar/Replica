@@ -29,19 +29,23 @@ namespace Replica
         List<Switch> redSwitches;
         List<Switch> greenSwitches;
         List<Switch> blueSwitches;
+        Player player;
 
         public int maxReplicants;
         public int numberOfReplicants;
 
-        Level[] levels = new Level[Enum.GetNames(typeof(eLevels)).Length];
+        //Level[] levels = new Level[Enum.GetNames(typeof(eLevels)).Length];
 
         
         
 
         public Level(List<Entity> entities)
         {
-            TmxMap map = new TmxMap("Levels/" + Globals.currentLvl + ".tmx"); //TODO: Check if file even exists
             
+            TmxMap map = new TmxMap("Levels/" + Globals.currentLvl + ".tmx"); //TODO: Check if file even exists
+
+            //player = new Player(entities, this, t, Globals.windowwidth, Globals.windowheight, Assets.model);
+
             maxReplicants = Convert.ToInt32(map.Properties["MaxR"]);
             numberOfReplicants = 0;
 
@@ -76,7 +80,8 @@ namespace Replica
                             currentEntity = new Block(entities, this, t, blockSize);
                             break;
                         case 2:
-                            currentEntity = null;
+                            player = new Player(entities, this, t, Globals.windowwidth, Globals.windowheight, Assets.model);
+                            currentEntity = player;
                             break;
                         case 3:
                             currentEntity = new Goal(t, blockSize, entities, this);    
@@ -127,6 +132,11 @@ namespace Replica
             else if (color.Equals("blue"))
                 return blueSwitches;
             else throw new NotSupportedException();
-        } 
+        }
+
+        public Player GetPlayer()
+        {
+            return player;
+        }
     }
 }

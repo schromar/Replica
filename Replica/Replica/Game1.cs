@@ -42,12 +42,11 @@ namespace Replica
         }
 
         protected override void Initialize()
-        {
-            Assets.loadcontent(Content);
-            gamestate.init();
+        {            
             Globals.currentLvl = "01_OneButton";
 
             defaultEffect = new BasicEffect(GraphicsDevice);
+            
             defaultEffect.VertexColorEnabled = true;
 
             base.Initialize();
@@ -58,6 +57,9 @@ namespace Replica
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            Assets.loadcontent(Content);
+            gamestate.init();
+
             //AUDIO TESTING
             /*SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
             soundEffectInstance = soundEffect.CreateInstance();
@@ -67,8 +69,10 @@ namespace Replica
 
             entities = new List<Entity>();
             lvl = new Level(entities);
-            player = new Player(entities, lvl, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model);
-            entities.Add(player);
+            //player = new Player(entities, lvl, Globals.windowwidth, Globals.windowheight, Assets.model);
+            Console.WriteLine(GraphicsDevice.Viewport.Width);
+            Console.WriteLine(GraphicsDevice.Viewport.Height);
+            //entities.Add(player);
         }
 
         protected override void UnloadContent()
@@ -83,18 +87,11 @@ namespace Replica
 
             Globals.currentState = gamestate.update();
 
-
-
             switch (Globals.currentState)
             {
                 case eGamestates.MainMenu:
 
                     IsMouseVisible = true;      
-                    break;
-
-                case eGamestates.LeaveGame:
-
-                    this.Exit();
                     break;
 
                 case eGamestates.InGame:
@@ -146,12 +143,13 @@ namespace Replica
             {                
                 case eGamestates.InGame:
                     defaultEffect.World = Matrix.Identity;
-                    defaultEffect.View = player.GetCamera().GetView();
-                    defaultEffect.Projection = player.GetCamera().GetProjection();
+                    defaultEffect.View = lvl.GetPlayer().GetCamera().GetView();
+
+                    defaultEffect.Projection = lvl.GetPlayer().GetCamera().GetProjection();
 
                     foreach (Entity entity in entities)
                     {
-                        entity.Draw(GraphicsDevice, gameTime, defaultEffect, player.GetCamera());
+                        entity.Draw(GraphicsDevice, gameTime, defaultEffect, lvl.GetPlayer().GetCamera());
                     }
 
                     Rectangle crosshairBounds = new Rectangle(GraphicsDevice.Viewport.Width / 2 - 2, GraphicsDevice.Viewport.Height / 2 - 2, 4, 4); //TODO: Replace with variables
@@ -179,8 +177,8 @@ namespace Replica
 
                     entities.Clear();
                     lvl = new Level(entities);
-                    player = new Player(entities, lvl,GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height, Assets.model); 
-                    entities.Add(player);
+                    //player = new Player(entities, lvl,Globals.windowwidth, Globals.windowheight, Assets.model); 
+                    //entities.Add(player);
 
                     gamestate = new Ingame();
 
@@ -241,6 +239,11 @@ namespace Replica
         public void epicFuncttionOfHell(String woooooohoo)
         {
             Console.WriteLine("Gerd was here");
+        }
+
+        public GraphicsDevice GetGraphicDevice()
+        {
+            return this.GraphicsDevice;
         }
     }
 }
