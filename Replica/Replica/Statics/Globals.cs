@@ -21,5 +21,7 @@ namespace Replica.Statics
         public static eGamestates currentState = eGamestates.MainMenu;
         public static eGamestates prevState = eGamestates.MainMenu;
         public static bool reachedGoal = false;
+
+        public static int maxReplicants;
     }
 }

@@ -30,6 +30,9 @@ namespace Replica
         List<Switch> greenSwitches;
         List<Switch> blueSwitches;
 
+        public int maxReplicants;
+        public int numberOfReplicants;
+
         Level[] levels = new Level[Enum.GetNames(typeof(eLevels)).Length];
 
         
@@ -39,6 +42,9 @@ namespace Replica
         {
             TmxMap map = new TmxMap("Levels/" + Globals.currentLvl + ".tmx"); //TODO: Check if file even exists
             
+            maxReplicants = Convert.ToInt32(map.Properties["MaxR"]);
+            numberOfReplicants = 0;
+
             Vector3 size = new Vector3(map.Width, map.Layers.Count, map.Height);
 
             lvl = new Entity[map.Width, map.Layers.Count, map.Height];

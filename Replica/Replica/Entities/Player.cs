@@ -57,11 +57,19 @@ namespace Replica.Entities
             MoveY(gameTime);
             camera.SetTransform(transform);
 
+            Console.WriteLine(lvl.numberOfReplicants);
+            Console.WriteLine(lvl.maxReplicants);
+
             //Spawn Replicant on mouseclick
             MouseState mState = Mouse.GetState();
-            if (mState.LeftButton == ButtonState.Pressed)
+
+            if (lvl.numberOfReplicants < lvl.maxReplicants)
             {
-                SpawnReplicant();
+                //if (mState.RightButton == ButtonState.Pressed)
+                if (Input.isClicked(Keys.F1))
+                {
+                    SpawnReplicant();
+                }
             }
         }
 
@@ -238,6 +246,8 @@ namespace Replica.Entities
             }
             if (spawning)
             {
+
+                lvl.numberOfReplicants++;
                 entities.Add(replicant);
             }
 
