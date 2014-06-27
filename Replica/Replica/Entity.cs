@@ -31,7 +31,6 @@ namespace Replica
 
         protected bool solid;
         
-
         public Entity(List<Entity> entities, Level lvl, EntityType type, Transform transform, Vector3 boundsSize)
         {
             this.entities = entities;

@@ -9,12 +9,12 @@ using Replica.Statics;
 
 namespace Replica.Entities
 {
-    class Replicant : Entity
+    class Replicant : PlayerBase
     {
         public Replicant(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize)
-            : base(entities, lvl, EntityType.Replicant, transform, boundsSize)
+            : base(entities, lvl, EntityType.Replicant, transform)
         {
-            solid = true;
+
         }
 
         public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)

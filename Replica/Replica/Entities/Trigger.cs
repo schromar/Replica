@@ -10,13 +10,14 @@ namespace Replica.Entities
     {
         bool collided;
         bool activated;
-        Entity collider;
+        List<Entity> colliders;
    
         public Trigger(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize)
             :   base(entities, lvl, EntityType.Trigger, transform, boundsSize)
         {
             collided = false;
             activated = false;
+            colliders = new List<Entity>();
         }
 
         public override void Update(GameTime gameTime)
@@ -30,7 +31,7 @@ namespace Replica.Entities
             if (entity.isSolid())
             {
                 collided = true;
-                collider = entity;
+                colliders.Add(entity);
             }
         }
 
@@ -39,9 +40,11 @@ namespace Replica.Entities
             return activated;
         }
 
-        public Entity GetCollider()
+        public List<Entity> GetCollider()
         {
-            return collider;
+            List<Entity> result = new List<Entity>(colliders);
+            colliders.Clear();
+            return result;
         }
     }
 }

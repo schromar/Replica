@@ -63,9 +63,11 @@ namespace Replica.Entities
 
             prevMovement = Vector3.Zero;
 
-            yVelocity = -20;
+            yVelocity = 0;
             gravity = -0.25f;
             jumpVelocity = 10;
+
+            solid = true;
         }
 
         public override void Update(GameTime gameTime)
@@ -90,52 +92,58 @@ namespace Replica.Entities
                 if (movementBounds[i].IsActivated())
                 {
                     float offset = 0.05f;
-                    Entity collider = movementBounds[i].GetCollider();
-                    Vector3 newPosition = transform.position;
-                    switch (i)
+                    List<Entity> colliders = movementBounds[i].GetCollider();
+                    foreach (Entity collider in colliders)
                     {
-                        case 0:
-                            if (prevMovement.Y < 0.0f)
+                        if (this != collider)
+                        {
+                            Vector3 newPosition = transform.position;
+                            switch (i)
                             {
-                                newPosition.Y = collider.GetTransform().position.Y + collider.GetBoundsSize().Y / 2 + boundsSize.Y / 2 + offset;
-                                yVelocity = 0;
-                            }
-                            break;
-                        case 1:
-                            if (prevMovement.Y > 0.0f)
-                            {
-                                newPosition.Y = collider.GetTransform().position.Y - collider.GetBoundsSize().Y / 2 - boundsSize.Y / 2 - offset;
-                                yVelocity = 0;
-                            }
-                            break;
-                        case 2:
-                            if (prevMovement.X < 0.0f)
-                            {
-                                newPosition.X = collider.GetTransform().position.X + collider.GetBoundsSize().X / 2 + boundsSize.X / 2 + offset;
-                            }
-                            break;
-                        case 3:
-                            if (prevMovement.X > 0.0f)
-                            {
-                                newPosition.X = collider.GetTransform().position.X - collider.GetBoundsSize().X / 2 - boundsSize.X / 2 - offset;
-                            }
-                            break;
-                        case 4:
-                            if (prevMovement.Z < 0.0f)
-                            {
-                                newPosition.Z = collider.GetTransform().position.Z + collider.GetBoundsSize().Z / 2 + boundsSize.Z / 2 + offset;
-                            }
-                            break;
-                        case 5:
-                            if (prevMovement.Z > 0.0f)
-                            {
-                                newPosition.Z = collider.GetTransform().position.Z - collider.GetBoundsSize().Z / 2 - boundsSize.Z / 2 - offset;
-                            }
-                            break;
-                        default:
-                            break;
-                    };
-                    Move(newPosition - transform.position);
+                                case 0:
+                                    if (prevMovement.Y < 0.0f)
+                                    {
+                                        newPosition.Y = collider.GetTransform().position.Y + collider.GetBoundsSize().Y / 2 + boundsSize.Y / 2 + offset;
+                                        yVelocity = 0;
+                                    }
+                                    break;
+                                case 1:
+                                    if (prevMovement.Y > 0.0f)
+                                    {
+                                        newPosition.Y = collider.GetTransform().position.Y - collider.GetBoundsSize().Y / 2 - boundsSize.Y / 2 - offset;
+                                        yVelocity = 0;
+                                    }
+                                    break;
+                                case 2:
+                                    if (prevMovement.X < 0.0f)
+                                    {
+                                        newPosition.X = collider.GetTransform().position.X + collider.GetBoundsSize().X / 2 + boundsSize.X / 2 + offset;
+                                    }
+                                    break;
+                                case 3:
+                                    if (prevMovement.X > 0.0f)
+                                    {
+                                        newPosition.X = collider.GetTransform().position.X - collider.GetBoundsSize().X / 2 - boundsSize.X / 2 - offset;
+                                    }
+                                    break;
+                                case 4:
+                                    if (prevMovement.Z < 0.0f)
+                                    {
+                                        newPosition.Z = collider.GetTransform().position.Z + collider.GetBoundsSize().Z / 2 + boundsSize.Z / 2 + offset;
+                                    }
+                                    break;
+                                case 5:
+                                    if (prevMovement.Z > 0.0f)
+                                    {
+                                        newPosition.Z = collider.GetTransform().position.Z - collider.GetBoundsSize().Z / 2 - boundsSize.Z / 2 - offset;
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            };
+                            Move(newPosition - transform.position);
+                        }
+                    }
                 }
             }
         }

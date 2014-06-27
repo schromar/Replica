@@ -132,12 +132,11 @@ namespace Replica.Entities
         {
             Transform replicantTransform = transform;
             replicantTransform.position = transform.position + transform.forward*boundsSize.Length();
-            Replicant replicant = new Replicant(entities, lvl, replicantTransform, boundsSize);
+            Trigger spawnTest = new Trigger(entities, lvl, replicantTransform, boundsSize);
             bool spawning = true;
             foreach (Entity entity in entities)
             {
-                if (replicant.GetBounds().Intersects(entity.GetBounds()))
-                    if (entity.GetEntityType() == EntityType.Block || entity.GetEntityType() == EntityType.Door || entity.GetEntityType() == EntityType.Goal)
+                if (spawnTest.GetBounds().Intersects(entity.GetBounds()) && entity.isSolid())
                 {
                     spawning = false;
                     break;
@@ -145,8 +144,8 @@ namespace Replica.Entities
             }
             if (spawning)
             {
-
                 lvl.numberOfReplicants++;
+                Replicant replicant = new Replicant(entities, lvl, replicantTransform, boundsSize);
                 entities.Add(replicant);
             }
         }
