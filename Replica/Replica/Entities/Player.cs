@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Replica.Entities
 {
-    class Player : Entity
+    class Player : PlayerBase
     {
         Vector2 resolution;
 
@@ -18,16 +18,8 @@ namespace Replica.Entities
 
         Camera camera;
 
-        Vector3 prevMovement;
-        Vector3 movementBoundsSize;
-        List<Trigger> movementBounds;
-
-        float yVelocity;
-        float gravity;
-        float jumpVelocity;
-
         public Player(List<Entity> entities, Level lvl, Transform transform,  int windowWidth, int windowHeight)
-            : base(entities, lvl, EntityType.Player, transform, new Vector3(2, 2, 2))
+            : base(entities, lvl, EntityType.Player, transform)
         {
             resolution = new Vector2(windowWidth, windowHeight);
 
@@ -36,60 +28,20 @@ namespace Replica.Entities
             rotation = Vector2.Zero;
 
             camera = new Camera(resolution);
-
-            prevMovement = Vector3.Zero;
-            movementBoundsSize = new Vector3(1.75f, 0.2f, 1.75f); //in Y direction
-
-            Transform t=new Transform();
-            movementBounds = new List<Trigger>();
-            //Y-, Y+
-            Vector3 nextBoundsSize = movementBoundsSize;
-            t.position = new Vector3(transform.position.X, bounds.Min.Y - nextBoundsSize.Y / 2.0f, transform.position.Z);
-            Trigger trigger = new Trigger(entities, lvl, t, nextBoundsSize);
-            movementBounds.Add(trigger);
-            entities.Add(trigger);
-
-            t.position = new Vector3(transform.position.X, bounds.Max.Y + nextBoundsSize.Y / 2.0f, transform.position.Z);
-            trigger = new Trigger(entities, lvl, t, nextBoundsSize);
-            movementBounds.Add(trigger);
-            entities.Add(trigger);
-
-            //X-, X+
-            nextBoundsSize = new Vector3(movementBoundsSize.Y, movementBoundsSize.X, movementBoundsSize.Z);
-            t.position = new Vector3(bounds.Min.X - nextBoundsSize.X / 2.0f, transform.position.Y, transform.position.Z);
-            trigger = new Trigger(entities, lvl, t, nextBoundsSize);
-            movementBounds.Add(trigger);
-            entities.Add(trigger);
-
-            t.position = new Vector3(bounds.Max.X + nextBoundsSize.X / 2.0f, transform.position.Y, transform.position.Z);
-            trigger = new Trigger(entities, lvl, t, nextBoundsSize);
-            movementBounds.Add(trigger);
-            entities.Add(trigger);
-
-            //Z-, Z+
-            nextBoundsSize = new Vector3(movementBoundsSize.X, movementBoundsSize.Z, movementBoundsSize.Y);
-            t.position = new Vector3(transform.position.X, transform.position.Y, bounds.Min.Z - nextBoundsSize.Z / 2.0f);
-            trigger = new Trigger(entities, lvl, t, nextBoundsSize);
-            movementBounds.Add(trigger);
-            entities.Add(trigger);
-
-            t.position = new Vector3(transform.position.X, transform.position.Y, bounds.Max.Z + nextBoundsSize.Z / 2.0f);
-            trigger = new Trigger(entities, lvl, t, nextBoundsSize);
-            movementBounds.Add(trigger);
-            entities.Add(trigger);
-
-            yVelocity = -20;
-            gravity = -0.25f;
-            jumpVelocity = 10;
         }
 
         public override void Update(GameTime gameTime)
         {
-            HandleCollisions();
-
+            base.Update(gameTime);
             Rotate(gameTime);
             MoveXZ(gameTime);
-            MoveY(gameTime);
+            if (movementBounds[0].IsActivated())
+            {
+                if (Input.isPressed(Keys.Space))
+                {
+                    yVelocity = jumpVelocity;
+                }
+            }
             camera.SetTransform(transform);
 
             //Spawn Replicant on mouseclick
@@ -114,10 +66,6 @@ namespace Replica.Entities
         {
             base.Move(velocity);
             camera.SetTransform(transform);
-            foreach (Trigger trigger in movementBounds)
-            {
-                trigger.Move(velocity);
-            }
         }
 
         public Camera GetCamera()
@@ -178,74 +126,6 @@ namespace Replica.Entities
             Move(finalVelocity);
             prevMovement.X = finalVelocity.X;
             prevMovement.Z = finalVelocity.Z;
-        }
-
-        void MoveY(GameTime gameTime)
-        {
-            yVelocity = yVelocity + gravity;
-            Vector3 yVector = new Vector3(0, yVelocity, 0);
-            yVector *= (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            Move(yVector);
-            prevMovement.Y = yVector.Y;
-        }
-
-        void HandleCollisions()
-        {
-            for (int i = 0; i < movementBounds.Count; i++)
-            {
-                if (movementBounds[i].IsActivated())
-                {
-                    float offset = 0.05f;
-                    Entity collider = movementBounds[i].GetCollider();
-                    Vector3 newPosition = transform.position;
-                    switch (i)
-                    {
-                        case 0:
-                            newPosition.Y = collider.GetTransform().position.Y + collider.GetBoundsSize().Y / 2 + boundsSize.Y / 2 + offset;
-                            yVelocity = 0;
-                            if(Input.isPressed(Keys.Space))
-                            {
-                                yVelocity = jumpVelocity;
-                            }
-                            break;
-                        case 1:
-                            if (prevMovement.Y > 0.0f)
-                            {
-                                newPosition.Y = collider.GetTransform().position.Y - collider.GetBoundsSize().Y / 2 - boundsSize.Y / 2 - offset;
-                                yVelocity = 0;
-                            }
-                            break;
-                        case 2:
-                            if (prevMovement.X < 0.0f)
-                            {
-                                newPosition.X = collider.GetTransform().position.X + collider.GetBoundsSize().X / 2 + boundsSize.X / 2 + offset;
-                            }
-                            break;
-                        case 3:
-                            if (prevMovement.X > 0.0f)
-                            {
-                                newPosition.X = collider.GetTransform().position.X - collider.GetBoundsSize().X / 2 - boundsSize.X / 2 - offset;
-                            }
-                            break;
-                        case 4:
-                            if (prevMovement.Z < 0.0f)
-                            {
-                                newPosition.Z = collider.GetTransform().position.Z + collider.GetBoundsSize().Z / 2 + boundsSize.Z / 2 + offset;
-                            }
-                            break;
-                        case 5:
-                            if (prevMovement.Z > 0.0f)
-                            {
-                                newPosition.Z = collider.GetTransform().position.Z - collider.GetBoundsSize().Z / 2 - boundsSize.Z / 2 - offset;
-                            }
-                            break;
-                        default:
-                            break;
-                    };
-                    Move(newPosition - transform.position);
-                }
-            }
         }
 
         void SpawnReplicant()

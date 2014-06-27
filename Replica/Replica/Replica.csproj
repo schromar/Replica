@@ -116,6 +116,7 @@
     <Compile Include="Entities\Blocks\Door.cs" />
     <Compile Include="Entities\Blocks\Goal.cs" />
     <Compile Include="Entities\Blocks\Switch.cs" />
+    <Compile Include="Entities\PlayerBase.cs" />
     <Compile Include="Entities\Trigger.cs" />
     <Compile Include="Gamestates\Credits.cs" />
     <Compile Include="Camera.cs" />
