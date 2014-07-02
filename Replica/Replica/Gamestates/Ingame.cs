@@ -13,7 +13,7 @@ using Replica.Entities;
 using Replica.Entities.Blocks;
 using Replica.Statics;
 
-namespace Replica
+namespace Replica.Gamestates
 {
     public class Ingame : Gamestate
     {
@@ -24,12 +24,12 @@ namespace Replica
         GraphicsDevice gDevice;
         BasicEffect defaultEffect;
 
-        public void init()
+        public void Init()
         {
 
         }
 
-        public eGamestates update()
+        public eGamestates Update()
         {
             if(Input.isClicked(Microsoft.Xna.Framework.Input.Keys.Escape))
                 return eGamestates.MainMenu;
@@ -37,7 +37,7 @@ namespace Replica
             return eGamestates.InGame;
         }
 
-        public void draw()
+        public void Draw()
         {
         }
     }

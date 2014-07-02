@@ -13,15 +13,15 @@ using Replica.Entities;
 using Replica.Entities.Blocks;
 using Replica.Statics;
 
-namespace Replica
+namespace Replica.Gamestates
 {
     public class Credits : Gamestate
     {
-        public void init()
+        public void Init()
         {
         }
 
-        public eGamestates update()
+        public eGamestates Update()
         {
             if (Input.isClicked(Keys.Escape) || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 return eGamestates.MainMenu;
@@ -29,7 +29,7 @@ namespace Replica
             return eGamestates.Credits;
         }
 
-        public void draw()
+        public void Draw()
         {
             Game1.spriteBatch.Draw(Assets.happy, new Rectangle(0, 0, Assets.happy.Width, Assets.happy.Height), Color.White);
 

@@ -13,7 +13,7 @@ using Replica.Entities;
 using Replica.Entities.Blocks;
 using Replica.Statics;
 
-namespace Replica
+namespace Replica.Gamestates
 {
     public class Mainmenu  : Gamestate 
 
@@ -22,7 +22,7 @@ namespace Replica
         Button exitbutton;
         Button loadbutton;
 
-        public void init()
+        public void Init()
         {           
             playbutton = new Button(Assets.play, Game1.graphics.GraphicsDevice);
             playbutton.setPosition(new Vector2(350, 100));
@@ -34,7 +34,7 @@ namespace Replica
             loadbutton.setPosition(new Vector2(350, 300));
         }
         
-        public eGamestates update()
+        public eGamestates Update()
         {        
             playbutton.Update(Mouse.GetState());
             exitbutton.Update(Mouse.GetState());
@@ -55,7 +55,7 @@ namespace Replica
             return eGamestates.MainMenu;
         }
 
-        public void draw()
+        public void Draw()
         {
             Game1.spriteBatch.Draw(Assets.dna, new Rectangle(0, 0, Assets.dna.Width, Assets.dna.Height), Color.White);
 

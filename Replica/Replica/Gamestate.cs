@@ -27,10 +27,10 @@ namespace Replica
 
     public interface Gamestate
     {
-        void init();
+        void Init();
 
-        eGamestates update();
+        eGamestates Update();
 
-        void draw();
+        void Draw();
     }
 }

@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 using Replica.Entities;
 using Replica.Entities.Blocks;
+using Replica.Gamestates;
 using Replica.Statics;
 
 namespace Replica
@@ -44,7 +45,6 @@ namespace Replica
             Globals.currentLvl = "01_OneButton";
 
             defaultEffect = new BasicEffect(GraphicsDevice);
-            
             defaultEffect.VertexColorEnabled = true;
 
             base.Initialize();
@@ -55,8 +55,8 @@ namespace Replica
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Assets.loadcontent(Content);
-            gamestate.init();
+            Assets.Loadcontent(Content);
+            gamestate.Init();
 
             //AUDIO TESTING
             /*SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
@@ -67,10 +67,6 @@ namespace Replica
 
             entities = new List<Entity>();
             lvl = new Level(entities);
-            //player = new Player(entities, lvl, Globals.windowwidth, Globals.windowheight, Assets.model);
-            Console.WriteLine(GraphicsDevice.Viewport.Width);
-            Console.WriteLine(GraphicsDevice.Viewport.Height);
-            //entities.Add(player);
         }
 
         protected override void UnloadContent()
@@ -83,7 +79,7 @@ namespace Replica
             Input.prevKeyboard = Input.currentKeyboard;
             Input.currentKeyboard = Keyboard.GetState();
 
-            Globals.currentState = gamestate.update();
+            Globals.currentState = gamestate.Update();
 
             switch (Globals.currentState)
             {
@@ -122,7 +118,7 @@ namespace Replica
             };
 
             if (Globals.currentState != Globals.prevState)
-                handleNewGameState();
+                HandleNewGameState();
 
             Globals.prevState = Globals.currentState;
 
@@ -135,8 +131,9 @@ namespace Replica
 
             spriteBatch.Begin();
            
-            gamestate.draw();
+            gamestate.Draw();
             
+            //TODO 1: Use Ingame's Draw method instead (what is the use of the eGamestates enum?)
             switch (Globals.currentState)
             {                
                 case eGamestates.InGame:
@@ -162,86 +159,55 @@ namespace Replica
             base.Draw(gameTime);
         }
 
-        private void handleNewGameState()
+        private void HandleNewGameState()
         {
             switch (Globals.currentState)
             {
-
                 case eGamestates.LeaveGame:
                     this.Exit();
                     break;
 
                 case eGamestates.InGame:
-
                     entities.Clear();
                     lvl = new Level(entities);
-                    //player = new Player(entities, lvl,Globals.windowwidth, Globals.windowheight, Assets.model); 
-                    //entities.Add(player);
 
                     gamestate = new Ingame();
-
-                    gamestate.init();
                     break;
 
                 case eGamestates.Levelselection:
-
                     gamestate = new Levelselection();
-
-                    gamestate.init();
                     break;
 
                 case eGamestates.Cutscene:
-
                     gamestate = new Cutscene();
-
-                    gamestate.init();
                     break;
 
                 case eGamestates.Options:
-
                     gamestate = new Options();
-
-                    gamestate.init();
                     break;
 
                 case eGamestates.MainMenu:
-
                     gamestate = new Mainmenu();
-
-                    gamestate.init();
-
                     break;
 
                 case eGamestates.GameOver:
-
                     gamestate = new Gameover();
-
-                    gamestate.init();
-
                     break;
 
                 case eGamestates.Credits:
-
                     gamestate = new Credits();
-
-                    gamestate.init();
-
                     break;
 
                 default:
                     System.Console.WriteLine("unknown gamestate in - handleNewGameState() - in Game1");
                     break;
             }
+            gamestate.Init();
         }
         
-        public void epicFuncttionOfHell(String woooooohoo)
+        public void EpicFuncttionOfHell(String woooooohoo)
         {
             Console.WriteLine("Gerd was here");
-        }
-
-        public GraphicsDevice GetGraphicDevice()
-        {
-            return this.GraphicsDevice;
         }
     }
 }

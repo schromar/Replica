@@ -14,7 +14,7 @@ using Replica.Entities.Blocks;
 
 namespace Replica.Statics
 {
-    public static class Assets
+    public class Assets
     {
         public static Texture2D dna;
         public static Texture2D happy;
@@ -29,7 +29,7 @@ namespace Replica.Statics
 
         public static Model model;
 
-        public static void loadcontent(ContentManager Manager)
+        public static void Loadcontent(ContentManager Manager)
         {
             play            = Manager.Load<Texture2D>("Textures\\game");
             exit            = Manager.Load<Texture2D>("Textures\\exit");
@@ -43,8 +43,6 @@ namespace Replica.Statics
             lvl02           = Manager.Load<Texture2D>("Textures\\lvl02");
 
             model           = Manager.Load<Model>("Models\\p1_wedge");
-
-
         }
     }
 }

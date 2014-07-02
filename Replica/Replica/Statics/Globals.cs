@@ -15,7 +15,7 @@ using Replica.Statics;
 
 namespace Replica.Statics
 {
-    public static class Globals
+    public class Globals
     {
         public static String currentLvl;
         public static eGamestates currentState = eGamestates.MainMenu;

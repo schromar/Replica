@@ -13,20 +13,20 @@ using Replica.Entities;
 using Replica.Entities.Blocks;
 using Replica.Statics;
 
-namespace Replica
+namespace Replica.Gamestates
 {
     public class Gameover : Gamestate
     {
-        public void init()
+        public void Init()
         {
         }
 
-        public eGamestates update()
+        public eGamestates Update()
         {           
             return eGamestates.GameOver;
         }
 
-        public void draw()
+        public void Draw()
         {
         }
     }

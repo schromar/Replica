@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Replica
+namespace Replica.Gamestates
 {
     public class Options : Gamestate
     {
-        public void init()
+        public void Init()
         {
         }
 
-        public eGamestates update()
+        public eGamestates Update()
         {
             return eGamestates.Options;
         }
 
-        public void draw()
+        public void Draw()
         {
         }
 
