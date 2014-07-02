@@ -20,7 +20,7 @@ namespace Replica.Entities.Blocks
 
         public override void OnCollision(Entity entity)
         {
-            if (entity.GetEntityType() == EntityType.Player) //TODO: Testing
+            if (entity.GetEntityType() == EntityType.Player)
             {
                 Globals.reachedGoal = true;
             }

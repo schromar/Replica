@@ -45,7 +45,7 @@ namespace Replica
 
         void UpdateView()
         {
-            view = Matrix.CreateLookAt(transform.position, transform.position + transform.forward, transform.up);
+            view = Matrix.CreateLookAt(transform.position, transform.position + transform.Forward, transform.Up);
         }
     }
 }

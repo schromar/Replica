@@ -107,7 +107,6 @@ namespace Replica
                         case 9:
                             currentEntity = new Door(entities, this, t, blockSize, "blue");
                             break;
-                        //TODO: remaining EntityTypes
                         default:
                             currentEntity = null;
                             break;

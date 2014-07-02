@@ -14,9 +14,11 @@ namespace Replica.Entities
 
         float mouseSpeed;
         float movementSpeed;
-        Vector2 rotation;
 
+        Vector2 prevRotationChange;
         Camera camera;
+
+        List<Replicant> replicants;
 
         public Player(List<Entity> entities, Level lvl, Transform transform,  int windowWidth, int windowHeight)
             : base(entities, lvl, EntityType.Player, transform)
@@ -25,9 +27,11 @@ namespace Replica.Entities
 
             mouseSpeed = 0.1f;
             movementSpeed = 5;
-            rotation = Vector2.Zero;
 
+            prevRotationChange = Vector2.Zero;
             camera = new Camera(resolution);
+
+            replicants = new List<Replicant>();
         }
 
         public override void Update(GameTime gameTime)
@@ -35,18 +39,24 @@ namespace Replica.Entities
             base.Update(gameTime);
             Rotate(gameTime);
             MoveXZ(gameTime);
-            if (movementBounds[0].IsActivated())
+            if (Input.isPressed(Keys.Space))
             {
-                if (Input.isPressed(Keys.Space))
+                jumping = true;
+            }
+
+            foreach (Replicant replicant in replicants)
+            {
+                if (replicant.GetEntityType() == EntityType.ImitatingReplicant)
                 {
-                    yVelocity = jumpVelocity;
+                    Vector3 prevVelocityWithoutY = prevVelocity;
+                    prevVelocityWithoutY.Y = 0;
+                    ImitatingReplicant iReplicant = (ImitatingReplicant)replicant;
+                    iReplicant.Imitate(prevVelocityWithoutY, prevRotationChange, jumping);
                 }
             }
-            camera.SetTransform(transform);
 
             //Spawn Replicant on mouseclick
             MouseState mState = Mouse.GetState();
-
             if (lvl.numberOfReplicants < lvl.maxReplicants)
             {
                 //if (mState.RightButton == ButtonState.Pressed)
@@ -80,16 +90,9 @@ namespace Replica.Entities
             Vector2 mouseMovement = resolution / 2 - new Vector2(mState.X, mState.Y);
             Mouse.SetPosition((int)resolution.X / 2, (int)resolution.Y / 2);
 
-            rotation += mouseMovement * mouseSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            //Math. It happens. Here.
-            transform.forward = new Vector3((float)Math.Cos(rotation.Y) * (float)Math.Sin(rotation.X),
-                                            (float)Math.Sin(rotation.Y),
-                                            (float)Math.Cos(rotation.Y) * (float)Math.Cos(rotation.X));
-            transform.right = new Vector3((float)Math.Sin(rotation.X - Math.PI / 2.0f),
-                                        0,
-                                        (float)Math.Cos(rotation.X - Math.PI / 2.0f));
-            transform.up = Vector3.Cross(transform.right, transform.forward);
+            prevRotationChange = mouseMovement * mouseSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            transform.Rotation += prevRotationChange;
+            camera.SetTransform(transform);
         }
 
         void MoveXZ(GameTime gameTime)
@@ -119,19 +122,19 @@ namespace Replica.Entities
                 movement *= movementSpeed;
             }
             movement *= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector3 forwardWithoutY = transform.forward;
+            Vector3 forwardWithoutY = transform.Forward;
             forwardWithoutY.Y = 0;
-            Vector3 finalVelocity = forwardWithoutY * movement.X + transform.right * movement.Y;
 
+            Vector3 finalVelocity = forwardWithoutY * movement.X + transform.Right * movement.Y;
             Move(finalVelocity);
-            prevMovement.X = finalVelocity.X;
-            prevMovement.Z = finalVelocity.Z;
+            prevVelocity.X = finalVelocity.X;
+            prevVelocity.Z = finalVelocity.Z;
         }
 
         void SpawnReplicant()
         {
             Transform replicantTransform = transform;
-            replicantTransform.position = transform.position + transform.forward*boundsSize.Length();
+            replicantTransform.position = transform.position + transform.Forward*boundsSize.Length();
             Trigger spawnTest = new Trigger(entities, lvl, replicantTransform, boundsSize);
             bool spawning = true;
             foreach (Entity entity in entities)
@@ -144,9 +147,11 @@ namespace Replica.Entities
             }
             if (spawning)
             {
+                //TODO 1: Get rid of lvl.numberOfReplicants
                 lvl.numberOfReplicants++;
-                Replicant replicant = new Replicant(entities, lvl, replicantTransform, boundsSize);
+                ImitatingReplicant replicant = new ImitatingReplicant(entities, lvl, replicantTransform, boundsSize);
                 entities.Add(replicant);
+                replicants.Add(replicant);
             }
         }
     }

@@ -15,6 +15,7 @@ namespace Replica
             Player,
             Trigger,
             Replicant,
+            ImitatingReplicant,
             Door,
             Switch,
             Goal 

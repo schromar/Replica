@@ -8,6 +8,8 @@ namespace Replica.Entities
 {
     class Trigger : Entity
     {
+        public List<Entity> excluded;
+
         bool collided;
         bool activated;
         List<Entity> colliders;
@@ -15,6 +17,8 @@ namespace Replica.Entities
         public Trigger(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize)
             :   base(entities, lvl, EntityType.Trigger, transform, boundsSize)
         {
+            excluded = new List<Entity>();
+
             collided = false;
             activated = false;
             colliders = new List<Entity>();
@@ -28,7 +32,7 @@ namespace Replica.Entities
 
         public override void OnCollision(Entity entity)
         {
-            if (entity.isSolid())
+            if (entity.isSolid() && !excluded.Contains(entity))
             {
                 collided = true;
                 colliders.Add(entity);

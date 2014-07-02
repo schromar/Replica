@@ -24,8 +24,6 @@ namespace Replica
         BasicEffect defaultEffect;
         
         List<Entity> entities;
-        
-        Player player;
         Level lvl;
 
         //AUDIO TESTING

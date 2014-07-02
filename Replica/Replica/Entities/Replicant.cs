@@ -11,8 +11,8 @@ namespace Replica.Entities
 {
     class Replicant : PlayerBase
     {
-        public Replicant(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize)
-            : base(entities, lvl, EntityType.Replicant, transform)
+        public Replicant(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, EntityType type=EntityType.Replicant)
+            : base(entities, lvl, type, transform)
         {
 
         }
@@ -20,9 +20,9 @@ namespace Replica.Entities
         public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
         {
             Matrix rotation = Matrix.Identity;
-            rotation.Forward = transform.forward;
-            rotation.Right = transform.right;
-            rotation.Up = transform.up;
+            rotation.Forward = transform.Forward;
+            rotation.Right = transform.Right;
+            rotation.Up = transform.Up;
 
             Model model = Assets.model;
             Matrix[] transforms = new Matrix[model.Bones.Count];
