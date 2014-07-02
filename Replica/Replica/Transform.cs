@@ -6,13 +6,17 @@ using Microsoft.Xna.Framework;
 
 namespace Replica
 {
-    //class Transform instead?
+    /// <summary>
+    /// Holds all the data required to place an Entity in the World.
+    /// </summary>
     public struct Transform
     {
-        //What if an entity returns the transform and it is changed? (reference?)
         public Vector3 position;
 
         private Vector2 rotation;
+        /// <summary>
+        /// Currently fairly limited way to access rotation, but we don't require much more.
+        /// </summary>
         public Vector2 Rotation
         {
             get
@@ -40,16 +44,5 @@ namespace Replica
         public Vector3 Right { get { return right; } }
         public Vector3 Up { get { return up; } }
         //TODO: Add size attribute?
-
-        /*public Transform()
-        {
-            position = Vector3.Zero;
-
-            rotation = Vector2.Zero;
-
-            forward = Vector3.Forward;
-            right = Vector3.Right;
-            up = Vector3.Up;
-        }*/
     }
 }

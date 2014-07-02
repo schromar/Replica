@@ -24,7 +24,7 @@ namespace Replica.Entities
         {
             solid = true;
 
-            movementBoundsSize = new Vector3(1.75f, 0.2f, 1.75f); //TODO: Use bounds variable instead, less copypasta
+            movementBoundsSize = new Vector3(1.75f, 0.2f, 1.75f); //TODO 2: Use bounds variable instead, less copypasta
 
             Transform t = new Transform();
             movementBounds = new List<Trigger>();

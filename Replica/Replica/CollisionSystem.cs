@@ -9,7 +9,7 @@ namespace Replica
     class CollisionSystem
     {
         /// <summary>
-        /// Checks for each entity in the List whether it collides with each other entity.
+        /// Checks for each Entity in the List whether it collides with each other Entity.
         /// In case they do we call OnCollision of both entities.
         /// </summary>
         /// <param name="entities">The List of entities in which we want to look for collisions</param>
@@ -19,7 +19,7 @@ namespace Replica
             {
                 for (int j = i + 1; j < entities.Count; j++)
                 {
-                    if (entities[i].GetBounds().Intersects(entities[j].GetBounds())) //TODO 1: Proper collision optimization
+                    if (entities[i].GetBounds().Intersects(entities[j].GetBounds())) //TODO 2: Proper collision optimization
                     {
                         entities[i].OnCollision(entities[j]);
                         entities[j].OnCollision(entities[i]);
@@ -28,7 +28,6 @@ namespace Replica
             }
         }
 
-        
         /// <summary>
         /// Checks whether a ray intersects one or more entities.
         /// </summary>
@@ -50,7 +49,12 @@ namespace Replica
             return res;
         }
 
-        //Have to define own comparison for the KeyValuePair
+        /// <summary>
+        /// Have to define own comparison for the KeyValuePair
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         private static int Compare(KeyValuePair<float, Entity> a, KeyValuePair<float, Entity> b)
         {
             return a.Key.CompareTo(b.Key);

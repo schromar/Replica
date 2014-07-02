@@ -21,13 +21,24 @@ namespace Replica
             Goal 
         }
         
+        /// <summary>
+        /// Each Entity needs a List of entities to be able to modify other entities
+        /// </summary>
         protected List<Entity> entities;
         protected Level lvl;
         protected EntityType type;
 
         protected Transform transform;
+
         protected Vector3 boundsSize;
-        protected Color boundsColor; //For testing purposes
+        /// <summary>
+        /// Used for testing purposes.
+        /// </summary>
+        protected Color boundsColor;
+
+        /// <summary>
+        /// The BoundingBox for this Entity. The position of the transform is its midpoint.
+        /// </summary>
         protected BoundingBox bounds;
 
         protected bool solid;
@@ -51,6 +62,14 @@ namespace Replica
         }
 
         //Thinking about removing the GraphicsDevice/BasicEffect again?
+        //TODO 1: Make drawing the BoundingBoxes optional
+        /// <summary>
+        /// To be defined by children. At base level it just draws the bounds of the Entity
+        /// </summary>
+        /// <param name="graphics"></param>
+        /// <param name="gameTime"></param>
+        /// <param name="effect"></param>
+        /// <param name="camera"></param>
         public virtual void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
         {
             //Copypasta is strong on this one
@@ -102,6 +121,10 @@ namespace Replica
             return bounds;
         }
 
+        /// <summary>
+        /// Universal Move Method that moves all of an Entity's components at once.
+        /// </summary>
+        /// <param name="velocity"></param>
         public virtual void Move(Vector3 velocity)
         {
             transform.position+=velocity;
@@ -119,6 +142,5 @@ namespace Replica
         {
             return solid;
         }
-
     }
 }

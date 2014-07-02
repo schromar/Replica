@@ -24,27 +24,22 @@ namespace Replica
 
     class Level
     {
-        
-        Entity[, ,] lvl;
-        List<Switch> redSwitches;
-        List<Switch> greenSwitches;
-        List<Switch> blueSwitches;
-        Player player;
+        /// <summary>
+        /// Threedimensional array of Entity tiles. Not used yet.
+        /// </summary>
+        private Entity[, ,] lvl;
+        private List<Switch> redSwitches;
+        private List<Switch> greenSwitches;
+        private List<Switch> blueSwitches;
+        private Player player;
 
         public int maxReplicants;
         public int numberOfReplicants;
 
-        //Level[] levels = new Level[Enum.GetNames(typeof(eLevels)).Length];
-
-        
-        
-
         public Level(List<Entity> entities)
         {
-            
-            TmxMap map = new TmxMap("Levels/" + Globals.currentLvl + ".tmx"); //TODO: Check if file even exists
-
-            //player = new Player(entities, this, t, Globals.windowwidth, Globals.windowheight, Assets.model);
+            //Load map with TiledSharp
+            TmxMap map = new TmxMap("Levels/" + Globals.currentLvl + ".tmx"); //TODO 1: Check if file even exists
 
             maxReplicants = Convert.ToInt32(map.Properties["MaxR"]);
             numberOfReplicants = 0;
@@ -59,20 +54,21 @@ namespace Replica
 
             Vector3 blockSize = new Vector3(4, 4, 4);
 
+            //Iterate through map and create Entity for each tile
             for (int y = 0; y < map.Layers.Count; y++)
             {
                 for (int index = 0; index < map.Layers[y].Tiles.Count; index++)
                 {
                     TmxLayerTile currentTile = map.Layers[y].Tiles[index];
                     
-                    Vector3 position=new Vector3(currentTile.X, y, currentTile.Y);
+                    Vector3 position=new Vector3(currentTile.X, y, currentTile.Y); //The Y coordinate in Tiled is our Z coordinate
                     Entity currentEntity;
                     Transform t = new Transform();
                     t.position = position * blockSize;
 
+                    //Depending on the id of our Tile we create a different type of Entity
                     switch (currentTile.Gid)
                     {
-
                         case 0:
                             currentEntity = null;
                             break;
@@ -110,8 +106,6 @@ namespace Replica
                         default:
                             currentEntity = null;
                             break;
-
-
                     };
                     lvl[(int)position.X, (int)position.Y, (int)position.Z] = currentEntity;
                     if(currentEntity != null)
@@ -119,8 +113,6 @@ namespace Replica
                 }
             }
         }
-
-          
 
         public List<Switch> getSwitches(String color)
         {

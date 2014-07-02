@@ -133,18 +133,18 @@ namespace Replica
            
             gamestate.Draw();
             
-            //TODO 1: Use Ingame's Draw method instead (what is the use of the eGamestates enum?)
+            //TODO 2: Use Ingame's Draw method instead (what is the use of the eGamestates enum?)
             switch (Globals.currentState)
             {                
                 case eGamestates.InGame:
+                    Camera camera = lvl.GetPlayer().GetCamera();
                     defaultEffect.World = Matrix.Identity;
-                    defaultEffect.View = lvl.GetPlayer().GetCamera().GetView();
-
-                    defaultEffect.Projection = lvl.GetPlayer().GetCamera().GetProjection();
+                    defaultEffect.View = camera.GetView();
+                    defaultEffect.Projection = camera.GetProjection();
 
                     foreach (Entity entity in entities)
                     {
-                        entity.Draw(GraphicsDevice, gameTime, defaultEffect, lvl.GetPlayer().GetCamera());
+                        entity.Draw(GraphicsDevice, gameTime, defaultEffect, camera);
                     }
 
                     Rectangle crosshairBounds = new Rectangle(GraphicsDevice.Viewport.Width / 2 - 2, GraphicsDevice.Viewport.Height / 2 - 2, 4, 4); //TODO: Replace with variables
@@ -197,7 +197,6 @@ namespace Replica
                 case eGamestates.Credits:
                     gamestate = new Credits();
                     break;
-
                 default:
                     System.Console.WriteLine("unknown gamestate in - handleNewGameState() - in Game1");
                     break;
