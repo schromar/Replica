@@ -30,6 +30,7 @@ namespace Replica.Entities
         public PlayerBase(List<Entity> entities, Level lvl, EntityType type, Transform transform)
             : base(entities, lvl, type, transform, new Vector3(2, 2, 2))
         {
+            drawBounds = false;
             solid = true;
 
             movementBoundsSize = new Vector3(1.75f, 0.2f, 1.75f); //TODO 2: Use bounds variable instead, less copypasta
@@ -96,6 +97,15 @@ namespace Replica.Entities
             {
                 trigger.Move(velocity);
             }
+        }
+
+        public override void Destroy()
+        {
+            for (int i = 0; i < movementBounds.Count; i++)
+            {
+                entities.Remove(movementBounds[i]);
+            }
+            base.Destroy();
         }
 
         /// <summary>

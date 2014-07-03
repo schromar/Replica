@@ -10,14 +10,23 @@ using Replica.Statics;
 namespace Replica.Entities
 {
     /// <summary>
-    /// Currently has no different behaviour from Entity apart from drawing its model.
+    /// Drawing a model and disappearing once existenceTime has passed.
     /// </summary>
     class Replicant : PlayerBase
     {
-        public Replicant(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, EntityType type=EntityType.Replicant)
+        float existenceTime;
+        public float ExistenceTime { get { return existenceTime; } }
+
+        public Replicant(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, float existenceTime, EntityType type=EntityType.Replicant)
             : base(entities, lvl, type, transform)
         {
+            this.existenceTime = existenceTime;
+        }
 
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+            existenceTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 
         public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)

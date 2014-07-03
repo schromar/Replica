@@ -46,13 +46,13 @@ namespace Replica.Gamestates
             }
             if (lvl01button.isClicked)
             {
-                Globals.currentLvl = "02_TwoButtons";
+                Globals.currentLvl = "01_OneButton";
                 return eGamestates.InGame;
             }
 
             if (lvl02button.isClicked)
             {
-                Globals.currentLvl = "03_Leapfrogging";
+                Globals.currentLvl = "01_OneButton";
                 return eGamestates.InGame;
             }
 

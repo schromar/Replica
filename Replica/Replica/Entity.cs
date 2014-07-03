@@ -40,6 +40,7 @@ namespace Replica
         /// The BoundingBox for this Entity. The position of the transform is its midpoint.
         /// </summary>
         protected BoundingBox bounds;
+        protected bool drawBounds = true;
 
         protected bool solid;
         
@@ -61,7 +62,6 @@ namespace Replica
         }
 
         //Thinking about removing the GraphicsDevice/BasicEffect again?
-        //TODO 1: Make drawing the BoundingBoxes optional
         /// <summary>
         /// To be defined by children. At base level it just draws the bounds of the Entity
         /// </summary>
@@ -71,27 +71,30 @@ namespace Replica
         /// <param name="camera"></param>
         public virtual void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
         {
-            //Copypasta is strong on this one
-            short[] bBoxIndices = {
-                0, 1, 1, 2, 2, 3, 3, 0, // Front edges
-                4, 5, 5, 6, 6, 7, 7, 4, // Back edges
-                0, 4, 1, 5, 2, 6, 3, 7 // Side edges connecting front and back
-                                  };
-
-            Vector3[] corners = bounds.GetCorners();
-            VertexPositionColor[] primitiveList = new VertexPositionColor[corners.Length];
-
-            // Assign the 8 box vertices
-            for (int i = 0; i < corners.Length; i++)
+            if (drawBounds)
             {
-                primitiveList[i] = new VertexPositionColor(corners[i], boundsColor);
-            }
+                //Copypasta is strong on this one
+                short[] bBoxIndices = {
+                    0, 1, 1, 2, 2, 3, 3, 0, // Front edges
+                    4, 5, 5, 6, 6, 7, 7, 4, // Back edges
+                    0, 4, 1, 5, 2, 6, 3, 7 // Side edges connecting front and back
+                                      };
 
-            // Draw the box with a LineList
-            foreach (EffectPass pass in effect.CurrentTechnique.Passes)
-            {
-                pass.Apply();
-                graphics.DrawUserIndexedPrimitives(PrimitiveType.LineList, primitiveList, 0, 8, bBoxIndices, 0, 12);
+                Vector3[] corners = bounds.GetCorners();
+                VertexPositionColor[] primitiveList = new VertexPositionColor[corners.Length];
+
+                // Assign the 8 box vertices
+                for (int i = 0; i < corners.Length; i++)
+                {
+                    primitiveList[i] = new VertexPositionColor(corners[i], boundsColor);
+                }
+
+                // Draw the box with a LineList
+                foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+                {
+                    pass.Apply();
+                    graphics.DrawUserIndexedPrimitives(PrimitiveType.LineList, primitiveList, 0, 8, bBoxIndices, 0, 12);
+                }
             }
         }
 
@@ -100,6 +103,7 @@ namespace Replica
 
         }
 
+        //TODO 2: Create properties instead of getter/setters (not only in Entity.cs, in general)
         public EntityType GetEntityType()
         {
             return type;
@@ -128,6 +132,14 @@ namespace Replica
         {
             transform.position+=velocity;
             GenerateBounds();
+        }
+
+        /// <summary>
+        /// Workaround for a design error (having just a List of entities without encapsulation).
+        /// </summary>
+        public virtual void Destroy()
+        {
+
         }
 
         void GenerateBounds()

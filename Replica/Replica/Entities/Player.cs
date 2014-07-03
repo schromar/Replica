@@ -45,19 +45,27 @@ namespace Replica.Entities
             }
 
             //Update every ImitatingReplicant
-            foreach (Replicant replicant in replicants)
+            for(int i=0; i<replicants.Count; i++)
             {
-                if (replicant.GetEntityType() == EntityType.ImitatingReplicant)
+                if (replicants[i].GetEntityType() == EntityType.ImitatingReplicant)
                 {
                     Vector3 prevVelocityWithoutY = prevVelocity;
                     prevVelocityWithoutY.Y = 0;
-                    ImitatingReplicant iReplicant = (ImitatingReplicant)replicant;
+                    ImitatingReplicant iReplicant = (ImitatingReplicant)replicants[i];
                     iReplicant.Imitate(prevVelocityWithoutY, prevRotationChange, jumping);
+                }
+
+                //Destroy Replicant once he has run out of time
+                if (replicants[i].ExistenceTime <= 0)
+                {
+                    replicants[i].Destroy();
+                    entities.Remove(replicants[i]);
+                    replicants.RemoveAt(i);
                 }
             }
 
             MouseState mState = Mouse.GetState();
-            if (lvl.numberOfReplicants < lvl.maxReplicants)
+            if (replicants.Count < lvl.maxReplicants)
             {
                 if (mState.RightButton == ButtonState.Pressed)
                 {
@@ -82,7 +90,7 @@ namespace Replica.Entities
             return camera; //What happens if camera is changed after getter was used?
         }
 
-        //TODO 1: Create universal rotation method?
+        //TODO 2: Create universal rotation method?
         /// <summary>
         /// Rotates the player and his camera in case the mouse was moved.
         /// </summary>
@@ -140,15 +148,15 @@ namespace Replica.Entities
         {
             Transform replicantTransform = transform;
             replicantTransform.position = transform.position + transform.Forward*boundsSize.Length(); //Position of the Replicant will currently be slightly in front of the Player
-            //Using a Trigger to test whether we are not trying to spawn Replicant inside a wall
-            //TODO 1: Change to Replicant once proper deletion methods are implemented
-            Trigger spawnTest = new Trigger(entities, lvl, replicantTransform, boundsSize);
+            //TODO 1: Switch between Replicant types, define how long a Replicant will exist
+            Replicant replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 5);
             bool spawning = true;
             foreach (Entity entity in entities)
             {
-                if (spawnTest.GetBounds().Intersects(entity.GetBounds()) && entity.isSolid())
+                if (replicant.GetBounds().Intersects(entity.GetBounds()) && entity.isSolid())
                 {
                     spawning = false;
+                    replicant.Destroy();
                     break;
                 }
             }
@@ -156,9 +164,6 @@ namespace Replica.Entities
             //Not spawning inside a wall so we create the Replicant
             if (spawning)
             {
-                //TODO 1: Get rid of lvl.numberOfReplicants
-                lvl.numberOfReplicants++;
-                ImitatingReplicant replicant = new ImitatingReplicant(entities, lvl, replicantTransform, boundsSize);
                 entities.Add(replicant);
                 replicants.Add(replicant);
             }

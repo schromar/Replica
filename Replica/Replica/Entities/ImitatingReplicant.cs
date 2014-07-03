@@ -13,8 +13,8 @@ namespace Replica.Entities
     /// </summary>
     class ImitatingReplicant : Replicant
     {
-        public ImitatingReplicant(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize)
-            : base(entities, lvl, transform, boundsSize, EntityType.ImitatingReplicant)
+        public ImitatingReplicant(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, float existenceTime)
+            : base(entities, lvl, transform, boundsSize, existenceTime, EntityType.ImitatingReplicant)
         {
 
         }

@@ -24,7 +24,7 @@ namespace Replica.Entities
         public Trigger(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize)
             :   base(entities, lvl, EntityType.Trigger, transform, boundsSize)
         {
-
+            drawBounds = false;
         }
 
         public override void Update(GameTime gameTime)
@@ -35,7 +35,7 @@ namespace Replica.Entities
 
         public override void OnCollision(Entity entity)
         {
-            if (entity.isSolid() && !excluded.Contains(entity)) //TODO 1: Let users handle solid check
+            if (entity.isSolid() && !excluded.Contains(entity)) //TODO 2: Let users handle solid check
             {
                 collided = true;
                 colliders.Add(entity);

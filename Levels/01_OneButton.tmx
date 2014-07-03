@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="5" height="5" tilewidth="32" tileheight="32">
  <properties>
-  <property name="MaxR" value="5"/>
+  <property name="MaxReplicants" value="2"/>
  </properties>
  <tileset firstgid="1" name="ReplicaTileset" tilewidth="32" tileheight="32">
   <image source="ReplicaTileset.png" width="320" height="32"/>
@@ -35,7 +35,7 @@
    <tile gid="1"/>
   </data>
  </layer>
- <layer name="Kachelebene 2" width="5" height="5">
+ <layer name="Kachelebene 2" width="5" height="5" visible="0">
   <data>
    <tile gid="1"/>
    <tile gid="1"/>
@@ -55,6 +55,35 @@
    <tile gid="1"/>
    <tile gid="4"/>
    <tile gid="0"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+  </data>
+ </layer>
+ <layer name="Tile Layer 3" width="5" height="5" visible="0">
+  <data>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>
    <tile gid="1"/>

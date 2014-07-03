@@ -34,14 +34,13 @@ namespace Replica
         private Player player;
 
         public int maxReplicants;
-        public int numberOfReplicants;
 
         public Level(List<Entity> entities)
         {
             //Load map with TiledSharp
-            TmxMap map = new TmxMap("Levels/" + Globals.currentLvl + ".tmx"); //TODO 1: Check if file even exists
+            TmxMap map = new TmxMap("Levels/" + Globals.currentLvl + ".tmx"); //TODO 2: Check if file even exists
 
-            maxReplicants = Convert.ToInt32(map.Properties["MaxR"]);
+            maxReplicants = Convert.ToInt32(map.Properties["MaxReplicants"]);
 
             Vector3 size = new Vector3(map.Width, map.Layers.Count, map.Height);
 
