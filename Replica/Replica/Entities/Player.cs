@@ -25,6 +25,7 @@ namespace Replica.Entities
         /// All the replicants that currently exist.
         /// </summary>
         List<Replicant> replicants = new List<Replicant>();
+        EntityType spawnType = EntityType.Replicant;
 
         public Player(List<Entity> entities, Level lvl, Transform transform,  int windowWidth, int windowHeight)
             : base(entities, lvl, EntityType.Player, transform)
@@ -62,6 +63,15 @@ namespace Replica.Entities
                     entities.Remove(replicants[i]);
                     replicants.RemoveAt(i);
                 }
+            }
+
+            if (Input.isPressed(Keys.D1))
+            {
+                spawnType = EntityType.Replicant;
+            }
+            if (Input.isPressed(Keys.D2))
+            {
+                spawnType = EntityType.ImitatingReplicant;
             }
 
             MouseState mState = Mouse.GetState();
@@ -149,7 +159,19 @@ namespace Replica.Entities
             Transform replicantTransform = transform;
             replicantTransform.position = transform.position + transform.Forward*boundsSize.Length(); //Position of the Replicant will currently be slightly in front of the Player
             //TODO 1: Switch between Replicant types, define how long a Replicant will exist
-            Replicant replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 5);
+            Replicant replicant;
+            switch (spawnType)
+            {
+                case EntityType.Replicant:
+                    replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 5);
+                    break;
+                case EntityType.ImitatingReplicant:
+                    replicant = new ImitatingReplicant(entities, lvl, replicantTransform, boundsSize, 5);
+                    break;
+                default:
+                    replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 5);
+                    break;
+            };
             bool spawning = true;
             foreach (Entity entity in entities)
             {

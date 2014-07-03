@@ -41,8 +41,8 @@ namespace Replica
         }
 
         protected override void Initialize()
-        {            
-            Globals.currentLvl = "01_OneButton";
+        {
+            Globals.currentLvl = "04_ReverseLeapfrogging";
 
             defaultEffect = new BasicEffect(GraphicsDevice);
             defaultEffect.VertexColorEnabled = true;

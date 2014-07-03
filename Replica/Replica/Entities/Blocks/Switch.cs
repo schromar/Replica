@@ -37,7 +37,7 @@ namespace Replica.Entities.Blocks
 
         public override void OnCollision(Entity entity)
         {
-            if (entity.GetEntityType() == EntityType.Player || entity.GetEntityType() == EntityType.Replicant)
+            if (entity.GetEntityType() == EntityType.Player || entity.GetEntityType() == EntityType.Replicant || entity.GetEntityType() == EntityType.ImitatingReplicant)
             {
                 collided = true;
             }
