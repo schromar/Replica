@@ -10,17 +10,10 @@ namespace Replica.Entities.Blocks
     {
         bool collided;
         bool activated; //Not that easy since we can't check whether Switch is NOT colliding
-        String color;
 
         public Switch(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, String color)
             : base(entities, lvl, transform, boundsSize, EntityType.Switch)
         {
-            solid = false;
-
-            collided = false;
-            activated = false;
-            this.color = color;
-
             if (color == "green")
             {
                 boundsColor = Color.Green;
@@ -33,7 +26,7 @@ namespace Replica.Entities.Blocks
             {
                 boundsColor = Color.Blue;
             }
-            
+            solid = false;
         }
 
         public override void Update(GameTime gameTime)

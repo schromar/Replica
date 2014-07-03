@@ -24,7 +24,7 @@ namespace Replica
 
         BasicEffect defaultEffect;
         
-        List<Entity> entities;
+        List<Entity> entities = new List<Entity>();
         Level lvl;
 
         //AUDIO TESTING
@@ -65,7 +65,6 @@ namespace Replica
             soundEffectInstance.Apply3D(listener, emitter);
             soundEffectInstance.Play();*/
 
-            entities = new List<Entity>();
             lvl = new Level(entities);
         }
 

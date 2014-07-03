@@ -42,7 +42,6 @@ namespace Replica
             TmxMap map = new TmxMap("Levels/" + Globals.currentLvl + ".tmx"); //TODO 1: Check if file even exists
 
             maxReplicants = Convert.ToInt32(map.Properties["MaxR"]);
-            numberOfReplicants = 0;
 
             Vector3 size = new Vector3(map.Width, map.Layers.Count, map.Height);
 

@@ -19,11 +19,8 @@ namespace Replica
 
         public Button(Texture2D newTexture, GraphicsDevice gdevice)
         {
-
             texture = newTexture;
             size = new Vector2(gdevice.Viewport.Width / 8, gdevice.Viewport.Height / 15);
-
-
         }
 
         bool down;

@@ -7,16 +7,24 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Replica.Entities
 {
+    /// <summary>
+    /// Both Player and Replicant derive from this.
+    /// Handles mostly Y movement and collision.
+    /// </summary>
     class PlayerBase : Entity
     {
         protected Vector3 movementBoundsSize;
-        protected List<Trigger> movementBounds;
+        /// <summary>
+        /// Triggers for each side of the Player in the following order:
+        /// Bottom, Top, Left, Right, Front, Back
+        /// </summary>
+        protected List<Trigger> movementBounds = new List<Trigger>();
 
         protected Vector3 prevVelocity;
 
         protected float yVelocity;
-        protected float gravity;
-        protected float jumpVelocity;
+        protected float gravity = -0.25f;
+        protected float jumpVelocity = 10;
         protected bool jumping;
 
         public PlayerBase(List<Entity> entities, Level lvl, EntityType type, Transform transform)
@@ -27,8 +35,7 @@ namespace Replica.Entities
             movementBoundsSize = new Vector3(1.75f, 0.2f, 1.75f); //TODO 2: Use bounds variable instead, less copypasta
 
             Transform t = new Transform();
-            movementBounds = new List<Trigger>();
-            //Y-, Y+
+            //Bottom, Top (Y-, Y+)
             Vector3 nextBoundsSize = movementBoundsSize;
             t.position = new Vector3(transform.position.X, bounds.Min.Y - nextBoundsSize.Y / 2.0f, transform.position.Z);
             Trigger trigger = new Trigger(entities, lvl, t, nextBoundsSize);
@@ -42,7 +49,7 @@ namespace Replica.Entities
             movementBounds.Add(trigger);
             entities.Add(trigger);
 
-            //X-, X+
+            //Left, Right (X-, X+)
             nextBoundsSize = new Vector3(movementBoundsSize.Y, movementBoundsSize.X, movementBoundsSize.Z);
             t.position = new Vector3(bounds.Min.X - nextBoundsSize.X / 2.0f, transform.position.Y, transform.position.Z);
             trigger = new Trigger(entities, lvl, t, nextBoundsSize);
@@ -56,7 +63,7 @@ namespace Replica.Entities
             movementBounds.Add(trigger);
             entities.Add(trigger);
 
-            //Z-, Z+
+            //Front, Back (Z-, Z+)
             nextBoundsSize = new Vector3(movementBoundsSize.X, movementBoundsSize.Z, movementBoundsSize.Y);
             t.position = new Vector3(transform.position.X, transform.position.Y, bounds.Min.Z - nextBoundsSize.Z / 2.0f);
             trigger = new Trigger(entities, lvl, t, nextBoundsSize);
@@ -69,13 +76,6 @@ namespace Replica.Entities
             trigger.excluded.Add(this);
             movementBounds.Add(trigger);
             entities.Add(trigger);
-
-            prevVelocity = Vector3.Zero;
-
-            yVelocity = 0;
-            gravity = -0.25f;
-            jumpVelocity = 10;
-            jumping = false;
         }
 
         public override void Update(GameTime gameTime)
@@ -85,6 +85,10 @@ namespace Replica.Entities
             HandleCollisions();
         }
 
+        /// <summary>
+        /// Adding the movementBounds to the components that Move with a Player
+        /// </summary>
+        /// <param name="velocity"></param>
         public override void Move(Vector3 velocity)
         {
             base.Move(velocity);
@@ -94,6 +98,9 @@ namespace Replica.Entities
             }
         }
 
+        /// <summary>
+        /// If a side of the Player collides with a solid object, we push him out of said object (only so far that he touches its bounds).
+        /// </summary>
         void HandleCollisions()
         {
             for (int i = 0; i < movementBounds.Count; i++)
@@ -101,7 +108,7 @@ namespace Replica.Entities
                 if (movementBounds[i].IsActivated())
                 {
                     float offset = 0.05f;
-                    List<Entity> colliders = movementBounds[i].GetCollider();
+                    List<Entity> colliders = movementBounds[i].GetColliders();
                     foreach (Entity collider in colliders)
                     {
                         Vector3 newPosition = transform.position;
@@ -162,7 +169,7 @@ namespace Replica.Entities
             }
             jumping = false;
 
-            yVelocity = yVelocity + gravity;
+            yVelocity += gravity; //Pulling Player down
             Vector3 yVector = new Vector3(0, yVelocity, 0);
             yVector *= (float)gameTime.ElapsedGameTime.TotalSeconds;
 

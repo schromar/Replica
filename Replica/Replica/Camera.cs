@@ -8,10 +8,10 @@ namespace Replica
 {
     class Camera
     {
-        //TODO 1: Do we even need resolution/transform attributes?
+        //TODO 2: Do we even need resolution/transform attributes?
         Vector2 resolution;
 
-        Transform transform;
+        Transform transform = new Transform();
 
         Matrix view;
         Matrix projection;
@@ -22,14 +22,12 @@ namespace Replica
         {
             this.resolution = resolution;
 
-            transform = new Transform();
-
             UpdateView();
             projection = Matrix.CreatePerspectiveFieldOfView(MathHelper.ToRadians(90), resolution.X / resolution.Y, 0.5f, 1000.0f);
         }
 
         /// <summary>
-        /// Used by Replica.Entities.Player to update the camera.
+        /// Used by Entities.Player to update the camera.
         /// </summary>
         /// <param name="transform"></param>
         public void SetTransform(Transform transform)

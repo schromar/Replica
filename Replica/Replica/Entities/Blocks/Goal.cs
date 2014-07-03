@@ -7,10 +7,11 @@ using Replica.Statics;
 
 namespace Replica.Entities.Blocks
 {
+    /// <summary>
+    /// Block that causes the Player to win once he enters it.
+    /// </summary>
     class Goal : Block
     {
-        
-
         public Goal(Transform transform, Vector3 boundSize, List<Entity> entities, Level lvl)
             : base(entities, lvl, transform, boundSize, EntityType.Goal)
         {

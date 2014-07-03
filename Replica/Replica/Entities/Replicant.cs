@@ -9,6 +9,9 @@ using Replica.Statics;
 
 namespace Replica.Entities
 {
+    /// <summary>
+    /// Currently has no different behaviour from Entity apart from drawing its model.
+    /// </summary>
     class Replicant : PlayerBase
     {
         public Replicant(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, EntityType type=EntityType.Replicant)
@@ -33,7 +36,7 @@ namespace Replica.Entities
                 foreach (BasicEffect mEffect in mesh.Effects)
                 {
                     mEffect.EnableDefaultLighting();
-                    mEffect.World = transforms[mesh.ParentBone.Index] * rotation * Matrix.CreateScale(0.001f) * Matrix.CreateTranslation(transform.position);
+                    mEffect.World = transforms[mesh.ParentBone.Index] * rotation * Matrix.CreateScale(0.001f) * Matrix.CreateTranslation(transform.position); //TODO 1: Proper scaling for Replicant once Model is added
                     mEffect.View = camera.GetView();
                     mEffect.Projection = camera.GetProjection();
                 }

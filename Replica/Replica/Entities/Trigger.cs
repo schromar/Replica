@@ -6,22 +6,25 @@ using System.Text;
 
 namespace Replica.Entities
 {
+    //TODO 2: Resolve similarities between Trigger and Switch
     class Trigger : Entity
     {
-        public List<Entity> excluded;
+        /// <summary>
+        /// Can exclude entities from registering collision.
+        /// </summary>
+        public List<Entity> excluded = new List<Entity>();
 
         bool collided;
         bool activated;
-        List<Entity> colliders;
+        /// <summary>
+        /// Holds all of the objects that have collided since last time GetColliders() was called.
+        /// </summary>
+        List<Entity> colliders = new List<Entity>();
    
         public Trigger(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize)
             :   base(entities, lvl, EntityType.Trigger, transform, boundsSize)
         {
-            excluded = new List<Entity>();
 
-            collided = false;
-            activated = false;
-            colliders = new List<Entity>();
         }
 
         public override void Update(GameTime gameTime)
@@ -32,7 +35,7 @@ namespace Replica.Entities
 
         public override void OnCollision(Entity entity)
         {
-            if (entity.isSolid() && !excluded.Contains(entity))
+            if (entity.isSolid() && !excluded.Contains(entity)) //TODO 1: Let users handle solid check
             {
                 collided = true;
                 colliders.Add(entity);
@@ -44,7 +47,7 @@ namespace Replica.Entities
             return activated;
         }
 
-        public List<Entity> GetCollider()
+        public List<Entity> GetColliders()
         {
             List<Entity> result = new List<Entity>(colliders);
             colliders.Clear();

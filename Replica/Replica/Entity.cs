@@ -34,7 +34,7 @@ namespace Replica
         /// <summary>
         /// Used for testing purposes.
         /// </summary>
-        protected Color boundsColor;
+        protected Color boundsColor = Color.White;
 
         /// <summary>
         /// The BoundingBox for this Entity. The position of the transform is its midpoint.
@@ -49,10 +49,9 @@ namespace Replica
             this.lvl = lvl;
             this.type = type;
 
-
             this.transform = transform;
+
             this.boundsSize = boundsSize;
-            boundsColor = Color.White;
             GenerateBounds();
         }
 
