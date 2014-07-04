@@ -15,6 +15,11 @@ namespace Replica.Entities.Blocks
         /// The switches that need to be activated for the door to be open.
         /// </summary>
         List<Switch> requirements;
+        bool playerCollided = false;
+        /// <summary>
+        /// Status on the previous frame. This attribute is needed to keep the door open if the Player is still inside.
+        /// </summary>
+        bool prevSolid;
 
         string color;
 
@@ -25,6 +30,7 @@ namespace Replica.Entities.Blocks
             solid = true;
 
             requirements = lvl.getSwitches(color);
+            prevSolid = solid;
             this.color = color;
         }
 
@@ -38,6 +44,23 @@ namespace Replica.Entities.Blocks
                     solid = true;
                     break;
                 }
+            }
+
+            //If the door was open before and the player is still inside, keep it open
+            if (!prevSolid && solid && playerCollided)
+            {
+                solid = false;
+            }
+
+            playerCollided = false;
+            prevSolid = solid;
+        }
+
+        public override void OnCollision(Entity entity)
+        {
+            if (entity.GetEntityType() == EntityType.Player || entity.GetEntityType() == EntityType.Replicant || entity.GetEntityType() == EntityType.ImitatingReplicant)
+            {
+                playerCollided = true;
             }
         }
     }

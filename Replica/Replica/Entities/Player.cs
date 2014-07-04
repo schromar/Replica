@@ -25,6 +25,9 @@ namespace Replica.Entities
         /// All the replicants that currently exist.
         /// </summary>
         List<Replicant> replicants = new List<Replicant>();
+        /// <summary>
+        /// Determines which type of Replicant the Player wants to spawn.
+        /// </summary>
         EntityType spawnType = EntityType.Replicant;
 
         public Player(List<Entity> entities, Level lvl, Transform transform,  int windowWidth, int windowHeight)
@@ -65,6 +68,7 @@ namespace Replica.Entities
                 }
             }
 
+            //Switching between Replicant types
             if (Input.isPressed(Keys.D1))
             {
                 spawnType = EntityType.Replicant;
@@ -158,7 +162,7 @@ namespace Replica.Entities
         {
             Transform replicantTransform = transform;
             replicantTransform.position = transform.position + transform.Forward*boundsSize.Length(); //Position of the Replicant will currently be slightly in front of the Player
-            //TODO 1: Switch between Replicant types, define how long a Replicant will exist
+            //TODO 1: Define how long a Replicant will exist
             Replicant replicant;
             switch (spawnType)
             {
@@ -172,6 +176,7 @@ namespace Replica.Entities
                     replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 5);
                     break;
             };
+
             bool spawning = true;
             foreach (Entity entity in entities)
             {
