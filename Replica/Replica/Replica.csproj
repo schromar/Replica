@@ -180,7 +180,8 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <PropertyGroup>
-    <PostBuildEvent>XCOPY "$(SolutionDir)Levels" "$(TargetDir)Levels\" /S /Y</PostBuildEvent>
+    <PostBuildEvent>DEL "$(TargetDir)Levels" /q
+XCOPY "$(SolutionDir)Levels" "$(TargetDir)Levels\" /S /Y</PostBuildEvent>
   </PropertyGroup>
   <!--
       To modify your build process, add your task inside one of the targets below and uncomment it. 
