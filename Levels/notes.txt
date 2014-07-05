@@ -1,9 +1,7 @@
-02_TwoButtons depends on:
-	movementSpeed
-	blockSize
-	existenceTime
+Stacking vs Bridge?!
+	Infinite existenceTime?
+
+Imitation:
+	Disallow regular Replicant?
 	
-04_ReverseLeapfrogging
-	ImitatingReplicant
-	
-	Can just jump up and place Replicant!
+spawn looking direction is currently downwards

@@ -52,6 +52,7 @@ namespace Replica.Entities
             camera = new Camera(resolution);
 
             spawnDistance = boundsSize.Length();
+            finalSpawnDistance = spawnDistance;
         }
 
         public override void Update(GameTime gameTime)
@@ -194,8 +195,9 @@ namespace Replica.Entities
 
         void UpdateSpawnDistance(MouseState mState)
         {
+
             int scrollWheelChange = mState.ScrollWheelValue - prevScrollWheel;
-            spawnDistance += scrollWheelChange / 200.0f;
+            spawnDistance += scrollWheelChange / 200.0f; //TODO 2: Remove constant
             prevScrollWheel = mState.ScrollWheelValue;
 
             //Minimum
@@ -206,16 +208,21 @@ namespace Replica.Entities
 
             //Maximum
             List<KeyValuePair<float, Entity>> rayIntersections = CollisionSystem.RayIntersection(entities, new Ray(transform.position, transform.Forward));
-            foreach (KeyValuePair<float, Entity> rayIntersection in rayIntersections)
+            for(int i=0; i<rayIntersections.Count; i++)
             {
-                if (rayIntersection.Value != this)
+                if (rayIntersections[i].Value == this || !rayIntersections[i].Value.isSolid()) //We don't care if ray intersected with Player or a non-solid Block
                 {
-                    if (rayIntersection.Key < spawnDistance)
+                    rayIntersections.RemoveAt(i);
+                    i--;
+                }
+                else
+                {
+                    if (rayIntersections[i].Key < spawnDistance)
                     {
                         //Found closest point with solid block
-                        if (rayIntersection.Value.isSolid()/* && rayIntersection.Key >= boundsSize.Length()*/)
+                        if (rayIntersections[i].Value.isSolid())
                         {
-                            finalSpawnDistance = rayIntersection.Key;
+                            finalSpawnDistance = rayIntersections[i].Key;
                             break;
                         }
                     }
@@ -226,6 +233,11 @@ namespace Replica.Entities
                         break;
                     }
                 }
+            }
+            //We are not looking at any solid Block
+            if (rayIntersections.Count == 0)
+            {
+                finalSpawnDistance = spawnDistance;
             }
         }
 

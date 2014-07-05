@@ -24,7 +24,7 @@ namespace Replica.Entities
 
         protected float yVelocity;
         protected float gravity = -0.25f;
-        protected float jumpVelocity = 10;
+        protected float jumpVelocity = 10.5f;
         protected bool jumping;
 
         public PlayerBase(List<Entity> entities, Level lvl, EntityType type, Transform transform)
