@@ -5,6 +5,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using Replica.Statics;
+
 namespace Replica
 {
     class Entity
@@ -53,7 +55,7 @@ namespace Replica
             this.transform = transform;
 
             this.boundsSize = boundsSize;
-            GenerateBounds();
+            bounds=Globals.GenerateBounds(transform, boundsSize);
         }
 
         public virtual void Update(GameTime gameTime)
@@ -73,28 +75,7 @@ namespace Replica
         {
             if (drawBounds)
             {
-                //Copypasta is strong on this one
-                short[] bBoxIndices = {
-                    0, 1, 1, 2, 2, 3, 3, 0, // Front edges
-                    4, 5, 5, 6, 6, 7, 7, 4, // Back edges
-                    0, 4, 1, 5, 2, 6, 3, 7 // Side edges connecting front and back
-                                      };
-
-                Vector3[] corners = bounds.GetCorners();
-                VertexPositionColor[] primitiveList = new VertexPositionColor[corners.Length];
-
-                // Assign the 8 box vertices
-                for (int i = 0; i < corners.Length; i++)
-                {
-                    primitiveList[i] = new VertexPositionColor(corners[i], boundsColor);
-                }
-
-                // Draw the box with a LineList
-                foreach (EffectPass pass in effect.CurrentTechnique.Passes)
-                {
-                    pass.Apply();
-                    graphics.DrawUserIndexedPrimitives(PrimitiveType.LineList, primitiveList, 0, 8, bBoxIndices, 0, 12);
-                }
+                Globals.DrawBounds(bounds, boundsColor, graphics, effect);
             }
         }
 
@@ -131,7 +112,7 @@ namespace Replica
         public virtual void Move(Vector3 velocity)
         {
             transform.position+=velocity;
-            GenerateBounds();
+            bounds = Globals.GenerateBounds(transform, boundsSize);
         }
 
         /// <summary>
@@ -140,13 +121,6 @@ namespace Replica
         public virtual void Destroy()
         {
 
-        }
-
-        void GenerateBounds()
-        {
-            bounds = new BoundingBox();
-            bounds.Min = transform.position - boundsSize / 2.0f;
-            bounds.Max = transform.position + boundsSize / 2.0f;
         }
 
         public bool isSolid()
