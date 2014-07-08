@@ -44,8 +44,8 @@ namespace Replica
         {
             Globals.currentLvl = "04_ReverseLeapfrogging";
 
-            defaultEffect = new BasicEffect(GraphicsDevice);
-            defaultEffect.VertexColorEnabled = true;
+            //defaultEffect = new BasicEffect(GraphicsDevice);
+            //defaultEffect.VertexColorEnabled = true;
 
             base.Initialize();
         }
@@ -56,7 +56,7 @@ namespace Replica
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             Assets.Loadcontent(Content);
-            gamestate.Init();
+            gamestate.Init(GraphicsDevice);
 
             //AUDIO TESTING
             /*SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
@@ -91,19 +91,13 @@ namespace Replica
 
                     IsMouseVisible = false;
 
-                    for (int i = 0; i < entities.Count; i++) //Certain entities will create/delete other entities in their Update, foreach does not work
+                    /*for (int i = 0; i < entities.Count; i++) //Certain entities will create/delete other entities in their Update, foreach does not work
                     {
                         entities[i].Update(gameTime);
-                    }
+                    */}
 
                     CollisionSystem.CheckCollisions(entities);
-
-                    if (Globals.reachedGoal == true)
-                    {
-                        Globals.reachedGoal = false;
-                        Globals.currentState = eGamestates.Credits;
-                    }
-                           
+       
                     //AUDIO TESTING
                     /*listener.Position = player.GetTransform().position;
                     listener.Forward = player.GetTransform().forward;

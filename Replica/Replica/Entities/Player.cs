@@ -90,7 +90,6 @@ namespace Replica.Entities
 
         public override void OnCollision(Entity entity)
         {
-
         }
 
         public override void Move(Vector3 velocity)

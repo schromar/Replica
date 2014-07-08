@@ -24,15 +24,33 @@ namespace Replica.Gamestates
         GraphicsDevice gDevice;
         BasicEffect defaultEffect;
 
-        public void Init()
+        public void Init(GraphicsDevice gDevice)
         {
+            this.gDevice = gDevice;
+            defaultEffect = new BasicEffect(gDevice);
+            defaultEffect.VertexColorEnabled = true;
 
+            entities = new List<Entity>();
+
+            lvl = new Level(entities);
         }
 
-        public eGamestates Update()
+        public eGamestates Update(GameTime gameTime)
         {
+            for (int i = 0; i < entities.Count; i++) //Certain entities will create/delete other entities in their Update, foreach does not work
+            {
+                entities[i].Update(gameTime);
+            }
+
+
             if(Input.isClicked(Microsoft.Xna.Framework.Input.Keys.Escape))
                 return eGamestates.MainMenu;
+
+            if (Globals.reachedGoal == true)
+            {
+                Globals.reachedGoal = false;
+                return eGamestates.Credits;
+            }
 
             return eGamestates.InGame;
         }

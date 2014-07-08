@@ -27,6 +27,8 @@ namespace Replica
 
     public interface Gamestate
     {
+        void Init(GraphicsDevice gDevice);
+
         void Init();
 
         eGamestates Update();

@@ -16,7 +16,6 @@ namespace Replica.Entities
         public ImitatingReplicant(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, float existenceTime)
             : base(entities, lvl, transform, boundsSize, existenceTime, EntityType.ImitatingReplicant)
         {
-
         }
 
         //TODO 2: Make actions into its own class (once it has to be stored in a list)
