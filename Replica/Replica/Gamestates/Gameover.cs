@@ -17,16 +17,16 @@ namespace Replica.Gamestates
 {
     public class Gameover : Gamestate
     {
-        public void Init()
+        public void Init(GraphicsDevice gDevice)
         {
         }
 
-        public eGamestates Update()
+        public eGamestates Update(GameTime gameTime)
         {           
             return eGamestates.GameOver;
         }
 
-        public void Draw()
+        public void Draw(GraphicsDevice graphicDevice, GameTime gameTime)
         {
         }
     }

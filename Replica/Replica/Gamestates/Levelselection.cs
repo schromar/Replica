@@ -21,7 +21,7 @@ namespace Replica.Gamestates
         Button lvl01button;
         Button lvl02button;
 
-        public void Init()
+        public void Init(GraphicsDevice gDevice)
         {
             lvl00button = new Button(Assets.lvl00, Game1.graphics.GraphicsDevice);
             lvl00button.setPosition(new Vector2(350, 100));
@@ -33,7 +33,7 @@ namespace Replica.Gamestates
             lvl02button.setPosition(new Vector2(350, 400));
         }
 
-        public eGamestates Update()
+        public eGamestates Update(GameTime gameTime)
         {
             lvl00button.Update(Mouse.GetState());
             lvl01button.Update(Mouse.GetState());
@@ -62,7 +62,7 @@ namespace Replica.Gamestates
             return eGamestates.Levelselection;
         }
 
-        public void Draw()
+        public void Draw(GraphicsDevice graphicDevice, GameTime gameTime)
         {
             Game1.spriteBatch.Draw(Assets.dna, new Rectangle(0, 0, Assets.dna.Width, Assets.dna.Height), Color.White);
 

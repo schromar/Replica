@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace Replica
 {
-    class Camera
+    public class Camera
     {
         //TODO 2: Do we even need resolution/transform attributes?
         Vector2 resolution;

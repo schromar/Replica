@@ -29,10 +29,10 @@ namespace Replica
     {
         void Init(GraphicsDevice gDevice);
 
-        void Init();
+        
 
-        eGamestates Update();
+        eGamestates Update(GameTime gameTime);
 
-        void Draw();
+        void Draw(GraphicsDevice graphicDevice, GameTime gameTime);       
     }
 }

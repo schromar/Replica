@@ -22,11 +22,6 @@ namespace Replica
         public static GraphicsDeviceManager graphics;
         public static SpriteBatch spriteBatch;
 
-        BasicEffect defaultEffect;
-        
-        List<Entity> entities = new List<Entity>();
-        Level lvl;
-
         //AUDIO TESTING
         /*SoundEffectInstance soundEffectInstance;
         AudioEmitter emitter = new AudioEmitter();
@@ -43,9 +38,6 @@ namespace Replica
         protected override void Initialize()
         {
             Globals.currentLvl = "06_Bridge";
-
-            //defaultEffect = new BasicEffect(GraphicsDevice);
-            //defaultEffect.VertexColorEnabled = true;
 
             base.Initialize();
         }
@@ -64,8 +56,6 @@ namespace Replica
             emitter.Position = Vector3.Zero;
             soundEffectInstance.Apply3D(listener, emitter);
             soundEffectInstance.Play();*/
-
-            lvl = new Level(entities);
         }
 
         protected override void UnloadContent()
@@ -78,7 +68,7 @@ namespace Replica
             Input.prevKeyboard = Input.currentKeyboard;
             Input.currentKeyboard = Keyboard.GetState();
 
-            Globals.currentState = gamestate.Update();
+            Globals.currentState = gamestate.Update(gameTime);
 
             switch (Globals.currentState)
             {
@@ -90,23 +80,10 @@ namespace Replica
                 case eGamestates.InGame:
 
                     IsMouseVisible = false;
-
-                    /*for (int i = 0; i < entities.Count; i++) //Certain entities will create/delete other entities in their Update, foreach does not work
-                    {
-                        entities[i].Update(gameTime);
-                    */}
-
-                    CollisionSystem.CheckCollisions(entities);
-       
-                    //AUDIO TESTING
-                    /*listener.Position = player.GetTransform().position;
-                    listener.Forward = player.GetTransform().forward;
-                    listener.Up = player.GetTransform().up;
-                    soundEffectInstance.Apply3D(listener, emitter);*/
-
                     break;
 
                 default:
+
                     break;
             };
 
@@ -124,29 +101,8 @@ namespace Replica
 
             spriteBatch.Begin();
            
-            gamestate.Draw();
+            gamestate.Draw(GraphicsDevice, gameTime);
             
-            //TODO 2: Use Ingame's Draw method instead (what is the use of the eGamestates enum?)
-            switch (Globals.currentState)
-            {                
-                case eGamestates.InGame:
-                    Camera camera = lvl.GetPlayer().GetCamera();
-                    defaultEffect.World = Matrix.Identity;
-                    defaultEffect.View = camera.GetView();
-                    defaultEffect.Projection = camera.GetProjection();
-
-                    foreach (Entity entity in entities)
-                    {
-                        entity.Draw(GraphicsDevice, gameTime, defaultEffect, camera);
-                    }
-
-                    Rectangle crosshairBounds = new Rectangle(GraphicsDevice.Viewport.Width / 2 - 2, GraphicsDevice.Viewport.Height / 2 - 2, 4, 4); //TODO: Replace with variables
-                    spriteBatch.Draw(Assets.pix, crosshairBounds, Color.Red);
-                    break;
-                
-                default:
-                    break;
-            };
             spriteBatch.End();
 
             base.Draw(gameTime);
@@ -161,9 +117,6 @@ namespace Replica
                     break;
 
                 case eGamestates.InGame:
-                    entities.Clear();
-                    lvl = new Level(entities);
-
                     gamestate = new Ingame();
                     break;
 
@@ -194,7 +147,7 @@ namespace Replica
                     System.Console.WriteLine("unknown gamestate in - handleNewGameState() - in Game1");
                     break;
             }
-            gamestate.Init();
+            gamestate.Init(GraphicsDevice);
         }
         
         public void EpicFuncttionOfHell(String woooooohoo)

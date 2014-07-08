@@ -19,7 +19,6 @@ namespace Replica.Gamestates
     {
         List<Entity> entities;
 
-        Player player;
         Level lvl;
         GraphicsDevice gDevice;
         BasicEffect defaultEffect;
@@ -32,7 +31,7 @@ namespace Replica.Gamestates
 
             entities = new List<Entity>();
 
-            lvl = new Level(entities);
+            lvl = new Level(entities);   
         }
 
         public eGamestates Update(GameTime gameTime)
@@ -41,6 +40,9 @@ namespace Replica.Gamestates
             {
                 entities[i].Update(gameTime);
             }
+
+            CollisionSystem.CheckCollisions(entities);
+
 
 
             if(Input.isClicked(Microsoft.Xna.Framework.Input.Keys.Escape))
@@ -55,8 +57,22 @@ namespace Replica.Gamestates
             return eGamestates.InGame;
         }
 
-        public void Draw()
+        public void Draw(GraphicsDevice graphicDevice, GameTime gameTime)
         {
+            Camera camera = lvl.GetPlayer().GetCamera();
+            defaultEffect.World = Matrix.Identity;
+            defaultEffect.View = camera.GetView();
+            defaultEffect.Projection = camera.GetProjection();
+
+            foreach (Entity entity in entities)
+            {
+                entity.Draw(graphicDevice, gameTime, defaultEffect, camera);
+            }
+
+            Rectangle crosshairBounds = new Rectangle(graphicDevice.Viewport.Width / 2 - 2, graphicDevice.Viewport.Height / 2 - 2, 4, 4); //TODO: Replace with variables
+            Game1.spriteBatch.Draw(Assets.pix, crosshairBounds, Color.Red);
+
+
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Replica.Gamestates
         Button exitbutton;
         Button loadbutton;
 
-        public void Init()
+        public void Init(GraphicsDevice gDevice)
         {           
             playbutton = new Button(Assets.play, Game1.graphics.GraphicsDevice);
             playbutton.setPosition(new Vector2(350, 100));
@@ -33,8 +33,8 @@ namespace Replica.Gamestates
             loadbutton = new Button(Assets.levelselection, Game1.graphics.GraphicsDevice);
             loadbutton.setPosition(new Vector2(350, 300));
         }
-        
-        public eGamestates Update()
+
+        public eGamestates Update(GameTime gameTime)
         {        
             playbutton.Update(Mouse.GetState());
             exitbutton.Update(Mouse.GetState());
@@ -55,7 +55,7 @@ namespace Replica.Gamestates
             return eGamestates.MainMenu;
         }
 
-        public void Draw()
+        public void Draw(GraphicsDevice graphicDevice, GameTime gameTime)
         {
             Game1.spriteBatch.Draw(Assets.dna, new Rectangle(0, 0, Assets.dna.Width, Assets.dna.Height), Color.White);
 

@@ -57,5 +57,29 @@ namespace Replica.Statics
                 graphics.DrawUserIndexedPrimitives(PrimitiveType.LineList, primitiveList, 0, 8, bBoxIndices, 0, 12);
             }
         }
+    
+        public static void DrawModel(Model model,Transform t,float scale,Camera camera)
+        {
+            Matrix rotation = Matrix.Identity;
+            rotation.Forward = t.Forward;
+            rotation.Right = t.Right;
+            rotation.Up = t.Up;
+
+            Matrix[] transforms = new Matrix[model.Bones.Count];
+            model.CopyAbsoluteBoneTransformsTo(transforms);
+
+            foreach (ModelMesh mesh in model.Meshes)
+            {
+                foreach (BasicEffect mEffect in mesh.Effects)
+                {
+                    mEffect.EnableDefaultLighting();
+                    mEffect.World = transforms[mesh.ParentBone.Index] * rotation * Matrix.CreateScale(scale) * Matrix.CreateTranslation(t.position); //TODO 1: Proper scaling for Replicant once Model is added
+                    mEffect.View = camera.GetView();
+                    mEffect.Projection = camera.GetProjection();
+                }
+                mesh.Draw();
+            }
+        }
     }
+
 }

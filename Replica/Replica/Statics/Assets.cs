@@ -28,6 +28,8 @@ namespace Replica.Statics
         public static Texture2D lvl02;
 
         public static Model model;
+        public static Model wallModel;
+        public static Model testModel;
 
         public static void Loadcontent(ContentManager Manager)
         {
@@ -43,6 +45,8 @@ namespace Replica.Statics
             lvl02           = Manager.Load<Texture2D>("Textures\\lvl02");
 
             model           = Manager.Load<Model>("Models\\p1_wedge");
+            wallModel       = Manager.Load<Model>("Models\\wallcube");
+            
         }
     }
 }

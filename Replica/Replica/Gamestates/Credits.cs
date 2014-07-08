@@ -17,11 +17,11 @@ namespace Replica.Gamestates
 {
     public class Credits : Gamestate
     {
-        public void Init()
+        public void Init(GraphicsDevice gDevice)
         {
         }
 
-        public eGamestates Update()
+        public eGamestates Update(GameTime gameTime)
         {
             if (Input.isClicked(Keys.Escape) || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 return eGamestates.MainMenu;
@@ -29,7 +29,7 @@ namespace Replica.Gamestates
             return eGamestates.Credits;
         }
 
-        public void Draw()
+        public void Draw(GraphicsDevice graphicDevice, GameTime gameTime)
         {
             Game1.spriteBatch.Draw(Assets.happy, new Rectangle(0, 0, Assets.happy.Width, Assets.happy.Height), Color.White);
 
