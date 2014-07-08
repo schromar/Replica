@@ -6,6 +6,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+using Replica.Statics;
+
 namespace Replica.Entities
 {
     class Player : PlayerBase
@@ -25,10 +27,22 @@ namespace Replica.Entities
         /// All the replicants that currently exist.
         /// </summary>
         List<Replicant> replicants = new List<Replicant>();
+
         /// <summary>
         /// Determines which type of Replicant the Player wants to spawn.
         /// </summary>
         EntityType spawnType = EntityType.Replicant;
+        float spawnDistance;
+        float finalSpawnDistance;
+        int prevScrollWheel;
+        /// <summary>
+        /// The transform of the Replicant we are about to spawn.
+        /// </summary>
+        Transform replicantTransform;
+        /// <summary>
+        /// The bounds of the Replicant we are about to spawn.
+        /// </summary>
+        BoundingBox replicantBounds;
 
         public Player(List<Entity> entities, Level lvl, Transform transform,  int windowWidth, int windowHeight)
             : base(entities, lvl, EntityType.Player, transform)
@@ -36,6 +50,9 @@ namespace Replica.Entities
             resolution = new Vector2(windowWidth, windowHeight);
 
             camera = new Camera(resolution);
+
+            spawnDistance = boundsSize.Length();
+            finalSpawnDistance = spawnDistance;
         }
 
         public override void Update(GameTime gameTime)
@@ -47,26 +64,8 @@ namespace Replica.Entities
             {
                 jumping = true; //PlayerBase will react to this attribute in MoveY()
             }
-
-            //Update every ImitatingReplicant
-            for(int i=0; i<replicants.Count; i++)
-            {
-                if (replicants[i].GetEntityType() == EntityType.ImitatingReplicant)
-                {
-                    Vector3 prevVelocityWithoutY = prevVelocity;
-                    prevVelocityWithoutY.Y = 0;
-                    ImitatingReplicant iReplicant = (ImitatingReplicant)replicants[i];
-                    iReplicant.Imitate(prevVelocityWithoutY, prevRotationChange, jumping);
-                }
-
-                //Destroy Replicant once he has run out of time
-                if (replicants[i].ExistenceTime <= 0)
-                {
-                    replicants[i].Destroy();
-                    entities.Remove(replicants[i]);
-                    replicants.RemoveAt(i);
-                }
-            }
+            UpdateReplicants();
+            
 
             //Switching between Replicant types
             if (Input.isPressed(Keys.D1))
@@ -79,13 +78,26 @@ namespace Replica.Entities
             }
 
             MouseState mState = Mouse.GetState();
-            if (replicants.Count < lvl.maxReplicants)
+            UpdateSpawnDistance(mState);
+
+            replicantTransform = transform;
+            replicantTransform.position = transform.position + transform.Forward * finalSpawnDistance;
+            replicantBounds = Globals.GenerateBounds(replicantTransform, boundsSize);
+            if (mState.RightButton == ButtonState.Pressed && CanSpawn())
             {
-                if (mState.RightButton == ButtonState.Pressed)
-                {
-                    SpawnReplicant();
-                }
+                SpawnReplicant();
             }
+        }
+
+        public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
+        {
+            Color color=Color.Green;
+            if (!CanSpawn())
+            {
+                color = Color.Red;
+            }
+            Globals.DrawBounds(replicantBounds, color, graphics, effect);
+            base.Draw(graphics, gameTime, effect, camera);
         }
 
         public override void OnCollision(Entity entity)
@@ -157,10 +169,100 @@ namespace Replica.Entities
             prevVelocity.Z = finalVelocity.Z;
         }
 
+        void UpdateReplicants()
+        {
+            //Update every ImitatingReplicant
+            for (int i = 0; i < replicants.Count; i++)
+            {
+                if (replicants[i].GetEntityType() == EntityType.ImitatingReplicant)
+                {
+                    Vector3 prevVelocityWithoutY = prevVelocity;
+                    prevVelocityWithoutY.Y = 0;
+                    ImitatingReplicant iReplicant = (ImitatingReplicant)replicants[i];
+                    iReplicant.Imitate(prevVelocityWithoutY, prevRotationChange, jumping);
+                }
+
+                //Destroy Replicant once he has run out of time
+                if (replicants[i].ExistenceTime <= 0)
+                {
+                    replicants[i].Destroy();
+                    entities.Remove(replicants[i]);
+                    replicants.RemoveAt(i);
+                }
+            }
+        }
+
+        void UpdateSpawnDistance(MouseState mState)
+        {
+
+            int scrollWheelChange = mState.ScrollWheelValue - prevScrollWheel;
+            spawnDistance += scrollWheelChange / 200.0f; //TODO 2: Remove constant
+            prevScrollWheel = mState.ScrollWheelValue;
+
+            //Minimum
+            if (spawnDistance < boundsSize.Length())
+            {
+                spawnDistance = boundsSize.Length();
+            }
+
+            //Maximum
+            List<KeyValuePair<float, Entity>> rayIntersections = CollisionSystem.RayIntersection(entities, new Ray(transform.position, transform.Forward));
+            for(int i=0; i<rayIntersections.Count; i++)
+            {
+                if (rayIntersections[i].Value == this || !rayIntersections[i].Value.isSolid()) //We don't care if ray intersected with Player or a non-solid Block
+                {
+                    rayIntersections.RemoveAt(i);
+                    i--;
+                }
+                else
+                {
+                    if (rayIntersections[i].Key < spawnDistance)
+                    {
+                        //Found closest point with solid block
+                        if (rayIntersections[i].Value.isSolid())
+                        {
+                            finalSpawnDistance = rayIntersections[i].Key;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        //User-picked point is closest (since rayIntersections is sorted by distance)
+                        finalSpawnDistance = spawnDistance;
+                        break;
+                    }
+                }
+            }
+            //We are not looking at any solid Block
+            if (rayIntersections.Count == 0)
+            {
+                finalSpawnDistance = spawnDistance;
+            }
+        }
+
+        /// <summary>
+        /// Use Level.maxReplicants to check whether we have already spawned enough Replicants.
+        /// Then we use precalculated replicantBounds to check whether we are trying to spawn a Replicant inside a solid Entity.
+        /// </summary>
+        /// <returns></returns>
+        bool CanSpawn()
+        {
+            if (replicants.Count < lvl.maxReplicants)
+            {
+                foreach (Entity entity in entities)
+                {
+                    if (replicantBounds.Intersects(entity.GetBounds()) && entity.isSolid())
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
         void SpawnReplicant()
         {
-            Transform replicantTransform = transform;
-            replicantTransform.position = transform.position + transform.Forward*boundsSize.Length(); //Position of the Replicant will currently be slightly in front of the Player
             //TODO 1: Define how long a Replicant will exist
             Replicant replicant;
             switch (spawnType)
@@ -176,23 +278,8 @@ namespace Replica.Entities
                     break;
             };
 
-            bool spawning = true;
-            foreach (Entity entity in entities)
-            {
-                if (replicant.GetBounds().Intersects(entity.GetBounds()) && entity.isSolid())
-                {
-                    spawning = false;
-                    replicant.Destroy();
-                    break;
-                }
-            }
-
-            //Not spawning inside a wall so we create the Replicant
-            if (spawning)
-            {
-                entities.Add(replicant);
-                replicants.Add(replicant);
-            }
+            entities.Add(replicant);
+            replicants.Add(replicant);
         }
     }
 }
