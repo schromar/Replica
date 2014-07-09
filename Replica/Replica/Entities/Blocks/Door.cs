@@ -25,8 +25,8 @@ namespace Replica.Entities.Blocks
 
         string color;
 
-        SoundEffectInstance doorClosing;
-        SoundEffectInstance doorOpening;
+        SoundEffectInstance closingSound;
+        SoundEffectInstance openingSound;
         AudioEmitter emitter = new AudioEmitter();
 
         public Door(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, String color)
@@ -42,15 +42,15 @@ namespace Replica.Entities.Blocks
             prevSolid = solid;
             this.color = color;
 
-            doorClosing = Assets.doorClosing.CreateInstance();
-            doorOpening = Assets.doorOpening.CreateInstance();
+            closingSound = Assets.doorClosing.CreateInstance();
+            openingSound = Assets.doorOpening.CreateInstance();
             emitter.Position = transform.position;
         }
 
         public override void Update(GameTime gameTime, AudioListener listener)
         {
-            doorOpening.Apply3D(listener, emitter);
-            doorClosing.Apply3D(listener, emitter);
+            openingSound.Apply3D(listener, emitter);
+            closingSound.Apply3D(listener, emitter);
 
             solid = false;
             foreach(Switch requirement in requirements)
@@ -71,11 +71,11 @@ namespace Replica.Entities.Blocks
             //Door Open/Close events
             if (!prevSolid && solid)
             {
-                doorClosing.Play();
+                closingSound.Play();
             }
             if (prevSolid && !solid)
             {
-                doorOpening.Play();
+                openingSound.Play();
             }
 
             playerCollided = false;

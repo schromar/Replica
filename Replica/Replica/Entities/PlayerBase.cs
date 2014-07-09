@@ -93,7 +93,6 @@ namespace Replica.Entities
 
         public override void Update(GameTime gameTime, AudioListener listener)
         {
-            Console.WriteLine(jumpingSounds.Count);
             for(int i=0; i<jumpingSounds.Count; i++)
             {
                 jumpingSounds[i].Apply3D(listener, emitter);
@@ -202,7 +201,7 @@ namespace Replica.Entities
                 yVelocity = jumpVelocity;
 
                 SoundEffectInstance jumpingSound = Assets.jumping.CreateInstance();
-                jumpingSound.Volume = 0.2f;
+                jumpingSound.Volume = 0.1f;
                 jumpingSound.Apply3D(listener, emitter);
                 jumpingSound.Play();
                 jumpingSounds.Add(jumpingSound);

@@ -23,8 +23,6 @@ namespace Replica.Gamestates
         GraphicsDevice gDevice;
         BasicEffect defaultEffect;
 
-        /*SoundEffectInstance soundEffectInstance;
-        AudioEmitter emitter=new AudioEmitter();*/
         AudioListener listener=new AudioListener();
 
         public void Init(GraphicsDevice gDevice)
@@ -76,9 +74,6 @@ namespace Replica.Gamestates
             {
                 entity.Draw(graphicDevice, gameTime, defaultEffect, camera);
             }
-
-            Rectangle crosshairBounds = new Rectangle(graphicDevice.Viewport.Width / 2 - 2, graphicDevice.Viewport.Height / 2 - 2, 4, 4); //TODO: Replace with variables
-            Game1.spriteBatch.Draw(Assets.pix, crosshairBounds, Color.Red);
         }
     }
 }
