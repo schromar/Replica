@@ -45,7 +45,7 @@ namespace Replica.Statics
             lvl02           = Manager.Load<Texture2D>("Textures\\lvl02");
 
             model           = Manager.Load<Model>("Models\\p1_wedge");
-            wallModel       = Manager.Load<Model>("Models\\wallcube");
+            wallModel       = Manager.Load<Model>("Models\\test");
             
         }
     }

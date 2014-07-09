@@ -71,8 +71,6 @@ namespace Replica.Gamestates
 
             Rectangle crosshairBounds = new Rectangle(graphicDevice.Viewport.Width / 2 - 2, graphicDevice.Viewport.Height / 2 - 2, 4, 4); //TODO: Replace with variables
             Game1.spriteBatch.Draw(Assets.pix, crosshairBounds, Color.Red);
-
-
         }
     }
 }

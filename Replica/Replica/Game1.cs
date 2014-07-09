@@ -105,6 +105,8 @@ namespace Replica
             
             spriteBatch.End();
 
+            graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+
             base.Draw(gameTime);
         }
 

@@ -26,7 +26,10 @@ namespace Replica.Entities.Blocks
             {
                 boundsColor = Color.Blue;
             }
+            drawBounds = true;
             solid = false;
+
+            draw = false;
         }
 
         public override void Update(GameTime gameTime)

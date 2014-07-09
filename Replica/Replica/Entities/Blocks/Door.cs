@@ -27,7 +27,10 @@ namespace Replica.Entities.Blocks
             : base(entities, lvl, transform, boundsSize, EntityType.Door)
         {
             boundsColor = Color.Yellow;
+            drawBounds = true;
             solid = true;
+
+            draw = false;
 
             requirements = lvl.getSwitches(color);
             prevSolid = solid;

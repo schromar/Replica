@@ -16,7 +16,10 @@ namespace Replica.Entities.Blocks
             : base(entities, lvl, transform, boundSize, EntityType.Goal)
         {
             boundsColor = Color.DarkOrange;
+            drawBounds = true;
             solid = false;
+
+            draw = false;
         }
 
         public override void OnCollision(Entity entity)
