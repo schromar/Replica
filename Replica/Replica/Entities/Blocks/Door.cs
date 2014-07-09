@@ -23,8 +23,6 @@ namespace Replica.Entities.Blocks
         /// </summary>
         bool prevSolid;
 
-        string color;
-
         SoundEffectInstance closingSound;
         SoundEffectInstance openingSound;
         AudioEmitter emitter = new AudioEmitter();
@@ -32,7 +30,18 @@ namespace Replica.Entities.Blocks
         public Door(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, String color)
             : base(entities, lvl, transform, boundsSize, EntityType.Door)
         {
-            boundsColor = Color.Yellow;
+            if (color == "green")
+            {
+                boundsColor = Color.Green;
+            }
+            if (color == "red")
+            {
+                boundsColor = Color.Red;
+            }
+            if (color == "blue")
+            {
+                boundsColor = Color.Blue;
+            }
             drawBounds = true;
             solid = true;
 
@@ -40,7 +49,6 @@ namespace Replica.Entities.Blocks
 
             requirements = lvl.getSwitches(color);
             prevSolid = solid;
-            this.color = color;
 
             closingSound = Assets.doorClosing.CreateInstance();
             openingSound = Assets.doorOpening.CreateInstance();

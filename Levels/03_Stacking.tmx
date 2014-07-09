@@ -1,72 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" width="5" height="5" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" width="5" height="4" tilewidth="32" tileheight="32">
  <properties>
   <property name="MaxReplicants" value="1000"/>
  </properties>
  <tileset firstgid="1" name="ReplicaTileset" tilewidth="32" tileheight="32">
   <image source="ReplicaTileset.png" width="320" height="32"/>
  </tileset>
- <layer name="Tile Layer 1" width="5" height="5" visible="0">
+ <layer name="Tile Layer 6" width="5" height="4" visible="0">
   <data encoding="csv">
-1,1,1,1,1,
-1,1,1,1,1,
-1,1,1,1,1,
-1,1,1,1,1,
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,1,0,0
+</data>
+ </layer>
+ <layer name="Tile Layer 2" width="5" height="4" visible="0">
+  <data encoding="csv">
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,1,0,0
+</data>
+ </layer>
+ <layer name="Tile Layer 1" width="5" height="4" visible="0">
+  <data encoding="csv">
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,1,0,0
+</data>
+ </layer>
+ <layer name="Tile Layer 3" width="5" height="4" visible="0">
+  <data encoding="csv">
+0,0,2,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
 1,1,1,1,1
 </data>
  </layer>
- <layer name="Kachelebene 2" width="5" height="5" visible="0">
+ <layer name="Tile Layer 4" width="5" height="4" visible="0">
   <data encoding="csv">
-1,1,1,1,1,
-1,0,2,0,1,
-1,0,0,0,1,
-1,0,0,0,1,
-1,1,1,1,1
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+0,1,1,1,0
 </data>
  </layer>
- <layer name="Copy of Kachelebene 2" width="5" height="5">
+ <layer name="Tile Layer 5" width="5" height="4" visible="0">
   <data encoding="csv">
-1,1,1,1,1,
-1,0,0,0,1,
-1,0,0,0,1,
-1,0,0,0,1,
-1,1,1,1,1
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,1,0,0
 </data>
  </layer>
- <layer name="Copy of Copy of Kachelebene 2" width="5" height="5">
+ <layer name="Tile Layer 7" width="5" height="4" visible="0">
   <data encoding="csv">
-1,1,1,1,1,
-1,0,0,0,1,
-1,0,0,0,1,
-1,0,0,0,1,
-1,1,1,1,1
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0,
+0,0,0,0,0
 </data>
  </layer>
- <layer name="Copy of Copy of Copy of Kachelebene 2" width="5" height="5">
+ <layer name="Tile Layer 8" width="5" height="4" visible="0">
   <data encoding="csv">
-1,1,1,1,1,
-1,0,0,0,1,
-1,0,0,0,1,
-1,0,0,0,1,
-1,1,1,1,1
-</data>
- </layer>
- <layer name="Copy of Copy of Copy of Copy of Kachelebene 2" width="5" height="5" visible="0">
-  <data encoding="csv">
-1,1,1,1,1,
-1,0,0,0,1,
-1,0,3,0,1,
-1,0,0,0,1,
-1,1,1,1,1
-</data>
- </layer>
- <layer name="Tile Layer 3" width="5" height="5" visible="0">
-  <data encoding="csv">
-1,1,1,1,1,
-1,1,1,1,1,
-1,1,1,1,1,
-1,1,1,1,1,
-1,1,1,1,1
+0,0,0,0,0,
+0,0,3,0,0,
+0,0,0,0,0,
+0,0,0,0,0
 </data>
  </layer>
 </map>
