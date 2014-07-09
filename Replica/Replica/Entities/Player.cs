@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
 using Replica.Statics;
 
 namespace Replica.Entities
@@ -55,9 +55,9 @@ namespace Replica.Entities
             finalSpawnDistance = spawnDistance;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, AudioListener listener)
         {
-            base.Update(gameTime); //PlayerBase is taking over Y movement and collisions, so that Replicant can behave in the same way
+            base.Update(gameTime, listener); //PlayerBase is taking over Y movement and collisions, so that Replicant can behave in the same way
             Rotate(gameTime);
             MoveXZ(gameTime);
             if (Input.isPressed(Keys.Space))

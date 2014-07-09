@@ -23,6 +23,10 @@ namespace Replica.Gamestates
         GraphicsDevice gDevice;
         BasicEffect defaultEffect;
 
+        /*SoundEffectInstance soundEffectInstance;
+        AudioEmitter emitter=new AudioEmitter();*/
+        AudioListener listener=new AudioListener();
+
         public void Init(GraphicsDevice gDevice)
         {
             this.gDevice = gDevice;
@@ -31,18 +35,22 @@ namespace Replica.Gamestates
 
             entities = new List<Entity>();
 
-            lvl = new Level(entities);   
+            lvl = new Level(entities);
         }
 
         public eGamestates Update(GameTime gameTime)
         {
+            Transform playerTransform=lvl.GetPlayer().GetTransform();
+            listener.Position = playerTransform.position;
+            listener.Forward = playerTransform.Forward;
+            listener.Up = playerTransform.Up;
+
             for (int i = 0; i < entities.Count; i++) //Certain entities will create/delete other entities in their Update, foreach does not work
             {
-                entities[i].Update(gameTime);
+                entities[i].Update(gameTime, listener);
             }
 
             CollisionSystem.CheckCollisions(entities);
-
 
 
             if(Input.isClicked(Microsoft.Xna.Framework.Input.Keys.Escape))

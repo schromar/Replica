@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-
 using Replica.Statics;
 
 namespace Replica
@@ -58,7 +58,7 @@ namespace Replica
             bounds=Globals.GenerateBounds(transform, boundsSize);
         }
 
-        public virtual void Update(GameTime gameTime)
+        public virtual void Update(GameTime gameTime, AudioListener listener)
         {
 
         }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Replica.Statics;
 
 namespace Replica.Entities.Blocks
 {
@@ -23,6 +25,10 @@ namespace Replica.Entities.Blocks
 
         string color;
 
+        SoundEffectInstance doorClosing;
+        SoundEffectInstance doorOpening;
+        AudioEmitter emitter = new AudioEmitter();
+
         public Door(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, String color)
             : base(entities, lvl, transform, boundsSize, EntityType.Door)
         {
@@ -35,10 +41,17 @@ namespace Replica.Entities.Blocks
             requirements = lvl.getSwitches(color);
             prevSolid = solid;
             this.color = color;
+
+            doorClosing = Assets.doorClosing.CreateInstance();
+            doorOpening = Assets.doorOpening.CreateInstance();
+            emitter.Position = transform.position;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, AudioListener listener)
         {
+            doorOpening.Apply3D(listener, emitter);
+            doorClosing.Apply3D(listener, emitter);
+
             solid = false;
             foreach(Switch requirement in requirements)
             {
@@ -53,6 +66,16 @@ namespace Replica.Entities.Blocks
             if (!prevSolid && solid && playerCollided)
             {
                 solid = false;
+            }
+
+            //Door Open/Close events
+            if (!prevSolid && solid)
+            {
+                doorClosing.Play();
+            }
+            if (prevSolid && !solid)
+            {
+                doorOpening.Play();
             }
 
             playerCollided = false;

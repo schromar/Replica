@@ -22,11 +22,6 @@ namespace Replica
         public static GraphicsDeviceManager graphics;
         public static SpriteBatch spriteBatch;
 
-        //AUDIO TESTING
-        /*SoundEffectInstance soundEffectInstance;
-        AudioEmitter emitter = new AudioEmitter();
-        AudioListener listener = new AudioListener();*/
-
         Gamestate gamestate = new Mainmenu();
 
         int fpsCounter;
@@ -53,13 +48,6 @@ namespace Replica
 
             Assets.Loadcontent(Content);
             gamestate.Init(GraphicsDevice);
-
-            //AUDIO TESTING
-            /*SoundEffect soundEffect = Content.Load<SoundEffect>("Music\\Neolectrical");
-            soundEffectInstance = soundEffect.CreateInstance();
-            emitter.Position = Vector3.Zero;
-            soundEffectInstance.Apply3D(listener, emitter);
-            soundEffectInstance.Play();*/
         }
 
         protected override void UnloadContent()

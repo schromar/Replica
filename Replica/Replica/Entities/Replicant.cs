@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
-
 using Replica.Statics;
 
 namespace Replica.Entities
@@ -23,9 +23,9 @@ namespace Replica.Entities
             this.existenceTime = existenceTime;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, AudioListener listener)
         {
-            base.Update(gameTime);
+            base.Update(gameTime, listener);
             existenceTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 

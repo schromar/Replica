@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
+using Replica.Statics;
 
 namespace Replica.Entities
 {
@@ -26,6 +28,13 @@ namespace Replica.Entities
         protected float gravity = -0.25f;
         protected float jumpVelocity = 10.5f;
         protected bool jumping;
+
+        /// <summary>
+        /// Has to be a List because a single SoundEffectInstance can't be playing twice at the same time.
+        /// </summary>
+        List<SoundEffectInstance> jumpingSounds;
+        //TODO 1: Emitter should be part of entity?
+        AudioEmitter emitter = new AudioEmitter();
 
         public PlayerBase(List<Entity> entities, Level lvl, EntityType type, Transform transform)
             : base(entities, lvl, type, transform, new Vector3(2, 2, 2))
@@ -77,12 +86,26 @@ namespace Replica.Entities
             trigger.excluded.Add(this);
             movementBounds.Add(trigger);
             entities.Add(trigger);
+
+            jumpingSounds = new List<SoundEffectInstance>();
+            emitter.Position = transform.position;
         }
 
-        public override void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime, AudioListener listener)
         {
+            Console.WriteLine(jumpingSounds.Count);
+            for(int i=0; i<jumpingSounds.Count; i++)
+            {
+                jumpingSounds[i].Apply3D(listener, emitter);
+                if (jumpingSounds[i].State == SoundState.Stopped)
+                {
+                    jumpingSounds.RemoveAt(i);
+                    i--;
+                }
+            }
+
             //Sequence is important
-            MoveY(gameTime);
+            MoveY(gameTime, listener);
             HandleCollisions();
         }
 
@@ -97,6 +120,7 @@ namespace Replica.Entities
             {
                 trigger.Move(velocity);
             }
+            emitter.Position += velocity;
         }
 
         public override void Destroy()
@@ -171,11 +195,17 @@ namespace Replica.Entities
             }
         }
 
-        void MoveY(GameTime gameTime)
+        void MoveY(GameTime gameTime, AudioListener listener)
         {
             if (movementBounds[0].IsActivated() && jumping)
             {
                 yVelocity = jumpVelocity;
+
+                SoundEffectInstance jumpingSound = Assets.jumping.CreateInstance();
+                jumpingSound.Volume = 0.2f;
+                jumpingSound.Apply3D(listener, emitter);
+                jumpingSound.Play();
+                jumpingSounds.Add(jumpingSound);
             }
             jumping = false;
 

@@ -31,6 +31,10 @@ namespace Replica.Statics
         public static Model wallModel;
         public static Model testModel;
 
+        public static SoundEffect doorClosing;
+        public static SoundEffect doorOpening;
+        public static SoundEffect jumping;
+
         public static void Loadcontent(ContentManager Manager)
         {
             play            = Manager.Load<Texture2D>("Textures\\game");
@@ -46,7 +50,10 @@ namespace Replica.Statics
 
             model           = Manager.Load<Model>("Models\\p1_wedge");
             wallModel       = Manager.Load<Model>("Models\\test");
-            
+
+            doorClosing = Manager.Load<SoundEffect>("Sounds\\doorClosing");
+            doorOpening = Manager.Load<SoundEffect>("Sounds\\doorOpening");
+            jumping = Manager.Load<SoundEffect>("Sounds\\jumping");
         }
     }
 }
