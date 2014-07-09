@@ -29,8 +29,12 @@ namespace Replica
 
         Gamestate gamestate = new Mainmenu();
 
+        int fpsCounter;
+        float fpsTimer;
+
         public Game1()
         {
+            //TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 120.0f);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
@@ -64,6 +68,14 @@ namespace Replica
 
         protected override void Update(GameTime gameTime)
         {
+            fpsCounter++;
+            fpsTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (fpsTimer >= 1)
+            {
+                Window.Title = "" +fpsCounter;
+                fpsCounter = 0;
+                fpsTimer = 0;
+            }
 
             Input.prevKeyboard = Input.currentKeyboard;
             Input.currentKeyboard = Keyboard.GetState();
