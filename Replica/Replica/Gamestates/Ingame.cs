@@ -12,12 +12,15 @@ using Microsoft.Xna.Framework.Media;
 using Replica.Entities;
 using Replica.Entities.Blocks;
 using Replica.Statics;
+using Replica.Drawables;
 
 namespace Replica.Gamestates
 {
     public class Ingame : Gamestate
     {
         List<Entity> entities;
+
+        List<Drawable> drawables;
 
         Level lvl;
         GraphicsDevice gDevice;
@@ -32,6 +35,15 @@ namespace Replica.Gamestates
             defaultEffect.VertexColorEnabled = true;
 
             entities = new List<Entity>();
+
+            drawables = new List<Drawable>();
+
+            drawables.Add(new Skillbar());
+
+            foreach (Drawable drawable in drawables)
+            {
+                drawable.Initialize();
+            }
 
             lvl = new Level(entities);
         }
@@ -60,6 +72,11 @@ namespace Replica.Gamestates
                 return eGamestates.Credits;
             }
 
+            foreach (Drawable drawable in drawables)
+            {
+                drawable.Update();
+            }
+
             return eGamestates.InGame;
         }
 
@@ -70,9 +87,18 @@ namespace Replica.Gamestates
             defaultEffect.View = camera.GetView();
             defaultEffect.Projection = camera.GetProjection();
 
+            
+
             foreach (Entity entity in entities)
             {
                 entity.Draw(graphicDevice, gameTime, defaultEffect, camera);
+            }
+
+            
+
+            foreach (Drawable drawable in drawables)
+            {
+                drawable.Draw();
             }
         }
     }

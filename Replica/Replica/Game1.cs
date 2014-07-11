@@ -36,7 +36,7 @@ namespace Replica
 
         protected override void Initialize()
         {
-            Globals.currentLvl = "03_Stacking";
+            Globals.currentLvl = "01_OneButton";
 
             base.Initialize();
         }
@@ -102,7 +102,7 @@ namespace Replica
             spriteBatch.Begin();
            
             gamestate.Draw(GraphicsDevice, gameTime);
-            
+
             spriteBatch.End();
 
             graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;

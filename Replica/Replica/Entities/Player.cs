@@ -70,11 +70,11 @@ namespace Replica.Entities
             //Switching between Replicant types
             if (Input.isPressed(Keys.D1))
             {
-                spawnType = EntityType.Replicant;
+                Globals.spawnType = EntityType.Replicant;
             }
             if (Input.isPressed(Keys.D2))
             {
-                spawnType = EntityType.ImitatingReplicant;
+                Globals.spawnType = EntityType.ImitatingReplicant;
             }
 
             MouseState mState = Mouse.GetState();
@@ -265,7 +265,7 @@ namespace Replica.Entities
         {
             //TODO 1: Define how long a Replicant will exist
             Replicant replicant;
-            switch (spawnType)
+            switch (Globals.spawnType)
             {
                 case EntityType.Replicant:
                     replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 5);

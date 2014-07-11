@@ -112,6 +112,9 @@
   <ItemGroup>
     <Compile Include="Button.cs" />
     <Compile Include="CollisionSystem.cs" />
+    <Compile Include="Drawable.cs" />
+    <Compile Include="Drawables\Skillbar.cs" />
+    <Compile Include="Drawables\SkillButton.cs" />
     <Compile Include="Entities\Block.cs" />
     <Compile Include="Entities\Blocks\Door.cs" />
     <Compile Include="Entities\Blocks\Goal.cs" />

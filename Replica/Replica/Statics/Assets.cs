@@ -27,6 +27,11 @@ namespace Replica.Statics
         public static Texture2D lvl01;
         public static Texture2D lvl02;
 
+        public static Texture2D simpleReplicantButton;
+        public static Texture2D simpleReplicantButton2;
+        public static Texture2D imitatingReplicantButton;
+        public static Texture2D clearSkill;
+
         public static Model model;
         public static Model wallModel;
         public static Model testModel;
@@ -37,23 +42,29 @@ namespace Replica.Statics
 
         public static void Loadcontent(ContentManager Manager)
         {
-            play            = Manager.Load<Texture2D>("Textures\\game");
-            exit            = Manager.Load<Texture2D>("Textures\\exit");
-            levelselection  = Manager.Load<Texture2D>("Textures\\levelselection");
-            dna             = Manager.Load<Texture2D>("Textures\\dna");
-            happy           = Manager.Load<Texture2D>("Textures\\happy");
-            pix             = Manager.Load<Texture2D>("Textures\\pix");
+            play                        = Manager.Load<Texture2D>("Textures\\game");
+            exit                        = Manager.Load<Texture2D>("Textures\\exit");
+            levelselection              = Manager.Load<Texture2D>("Textures\\levelselection");
+            dna                         = Manager.Load<Texture2D>("Textures\\dna");
+            happy                       = Manager.Load<Texture2D>("Textures\\happy");
+            pix                         = Manager.Load<Texture2D>("Textures\\pix");
 
-            lvl00           = Manager.Load<Texture2D>("Textures\\lvl00");
-            lvl01           = Manager.Load<Texture2D>("Textures\\lvl01");
-            lvl02           = Manager.Load<Texture2D>("Textures\\lvl02");
+            lvl00                       = Manager.Load<Texture2D>("Textures\\lvl00");
+            lvl01                       = Manager.Load<Texture2D>("Textures\\lvl01");
+            lvl02                       = Manager.Load<Texture2D>("Textures\\lvl02");
 
-            model           = Manager.Load<Model>("Models\\p1_wedge");
-            wallModel       = Manager.Load<Model>("Models\\test");
+            simpleReplicantButton       = Manager.Load<Texture2D>("Textures\\simpleReplicant");
+            simpleReplicantButton2      = Manager.Load<Texture2D>("Textures\\simpleReplicantV2");
+            imitatingReplicantButton    = Manager.Load<Texture2D>("Textures\\imitate");
+            clearSkill                  = Manager.Load<Texture2D>("Textures\\clearSkill");
+            
 
-            doorClosing = Manager.Load<SoundEffect>("Sounds\\doorClosing");
-            doorOpening = Manager.Load<SoundEffect>("Sounds\\doorOpening");
-            jumping = Manager.Load<SoundEffect>("Sounds\\jumping");
+            model                       = Manager.Load<Model>("Models\\p1_wedge");
+            wallModel                   = Manager.Load<Model>("Models\\test");
+
+            doorClosing                 = Manager.Load<SoundEffect>("Sounds\\doorClosing");
+            doorOpening                 = Manager.Load<SoundEffect>("Sounds\\doorOpening");
+            jumping                     = Manager.Load<SoundEffect>("Sounds\\jumping");
         }
     }
 }

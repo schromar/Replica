@@ -9,19 +9,21 @@ using Replica.Statics;
 
 namespace Replica
 {
+    public enum EntityType
+    {
+        Block,
+        Player,
+        Trigger,
+        Replicant,
+        ImitatingReplicant,
+        Door,
+        Switch,
+        Goal
+    }
+
     class Entity
     {
-        public enum EntityType
-        {
-            Block,
-            Player,
-            Trigger,
-            Replicant,
-            ImitatingReplicant,
-            Door,
-            Switch,
-            Goal 
-        }
+        
         
         /// <summary>
         /// Each Entity needs a List of entities to be able to modify other entities
