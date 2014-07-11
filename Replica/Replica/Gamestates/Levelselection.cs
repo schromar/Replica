@@ -20,6 +20,8 @@ namespace Replica.Gamestates
         Button lvl00button;
         Button lvl01button;
         Button lvl02button;
+        Button lvl03button;
+        Button lvl04button;
 
         public void Init(GraphicsDevice gDevice)
         {
@@ -27,10 +29,16 @@ namespace Replica.Gamestates
             lvl00button.setPosition(new Vector2(350, 100));
 
             lvl01button = new Button(Assets.lvl01, Game1.graphics.GraphicsDevice);
-            lvl01button.setPosition(new Vector2(350, 200));
+            lvl01button.setPosition(new Vector2(350, 175));
 
             lvl02button = new Button(Assets.lvl02, Game1.graphics.GraphicsDevice);
-            lvl02button.setPosition(new Vector2(350, 400));
+            lvl02button.setPosition(new Vector2(350, 250));
+
+            lvl03button = new Button(Assets.lvl02, Game1.graphics.GraphicsDevice);
+            lvl03button.setPosition(new Vector2(350, 325));
+
+            lvl04button = new Button(Assets.lvl02, Game1.graphics.GraphicsDevice);
+            lvl04button.setPosition(new Vector2(350, 400));
         }
 
         public eGamestates Update(GameTime gameTime)
@@ -38,6 +46,8 @@ namespace Replica.Gamestates
             lvl00button.Update(Mouse.GetState());
             lvl01button.Update(Mouse.GetState());
             lvl02button.Update(Mouse.GetState());
+            lvl03button.Update(Mouse.GetState());
+            lvl04button.Update(Mouse.GetState());
 
             if (lvl00button.isClicked)
             {
@@ -46,13 +56,25 @@ namespace Replica.Gamestates
             }
             if (lvl01button.isClicked)
             {
-                Globals.currentLvl = "01_OneButton";
+                Globals.currentLvl = "02_TwoButtons";
                 return eGamestates.InGame;
             }
 
             if (lvl02button.isClicked)
             {
-                Globals.currentLvl = "01_OneButton";
+                Globals.currentLvl = "05_LockedIn";
+                return eGamestates.InGame;
+            }
+
+            if (lvl03button.isClicked)
+            {
+                Globals.currentLvl = "06_Bridge";
+                return eGamestates.InGame;
+            }
+
+            if (lvl04button.isClicked)
+            {
+                Globals.currentLvl = "07_TwoReplicantsThreeButtons";
                 return eGamestates.InGame;
             }
 
@@ -69,6 +91,8 @@ namespace Replica.Gamestates
             lvl00button.Draw(Game1.spriteBatch);
             lvl01button.Draw(Game1.spriteBatch);
             lvl02button.Draw(Game1.spriteBatch);
+            lvl03button.Draw(Game1.spriteBatch);
+            lvl04button.Draw(Game1.spriteBatch);
         }
 
     }
