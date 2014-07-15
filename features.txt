@@ -1,0 +1,9 @@
+conveyor belt				3
+jumppad						3
+ammo						9
+kill block					9
+replicant teleport block	10
+swapper replicant			12
+switch toggle/dependency	12
+reverse replicant			15
+pushing boxes				16
