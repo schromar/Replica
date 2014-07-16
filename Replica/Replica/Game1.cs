@@ -36,7 +36,7 @@ namespace Replica
 
         protected override void Initialize()
         {
-            Globals.currentLvl = "02_TwoButtons";
+            Globals.currentLvl = "01_OneButton";
 
             base.Initialize();
         }

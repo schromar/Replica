@@ -116,8 +116,10 @@
     <Compile Include="Drawables\Skillbar.cs" />
     <Compile Include="Drawables\SkillButton.cs" />
     <Compile Include="Entities\Block.cs" />
+    <Compile Include="Entities\Blocks\Conveyor.cs" />
     <Compile Include="Entities\Blocks\Door.cs" />
     <Compile Include="Entities\Blocks\Goal.cs" />
+    <Compile Include="Entities\Blocks\JumpPad.cs" />
     <Compile Include="Entities\Blocks\Switch.cs" />
     <Compile Include="Entities\ImitatingReplicant.cs" />
     <Compile Include="Entities\PlayerBase.cs" />

@@ -12,13 +12,15 @@ namespace Replica
     public enum EntityType
     {
         Block,
-        Player,
-        Trigger,
-        Replicant,
+            Conveyor,
+            Door,
+            Goal,
+            JumpPad,
+            Switch,
         ImitatingReplicant,
-        Door,
-        Switch,
-        Goal
+        Player,
+        Replicant,
+        Trigger
     }
 
     class Entity

@@ -60,7 +60,7 @@ namespace Replica
                     TmxLayerTile currentTile = map.Layers[y].Tiles[index];
                     
                     Vector3 position=new Vector3(currentTile.X, y, currentTile.Y); //The Y coordinate in Tiled is our Z coordinate
-                    Entity currentEntity;
+                    Entity currentEntity = null;
                     Transform t = new Transform();
                     t.position = position * blockSize;
 
@@ -68,7 +68,6 @@ namespace Replica
                     switch (currentTile.Gid)
                     {
                         case 0:
-                            currentEntity = null;
                             break;
                         case 1:
                             currentEntity = new Block(entities, this, t, blockSize);
@@ -101,8 +100,34 @@ namespace Replica
                         case 9:
                             currentEntity = new Door(entities, this, t, blockSize, "blue");
                             break;
+                        case 10:
+                            if (currentTile.DiagonalFlip)
+                            {
+                                if (currentTile.VerticalFlip)
+                                {
+                                    currentEntity = new Conveyor(entities, this, t, blockSize, new Vector3(1, 0, 0));
+                                }
+                                else
+                                {
+                                    currentEntity = new Conveyor(entities, this, t, blockSize, new Vector3(-1, 0, 0));
+                                }
+                            }
+                            else
+                            {
+                                if (currentTile.HorizontalFlip)
+                                {
+                                    currentEntity = new Conveyor(entities, this, t, blockSize, new Vector3(0, 0, -1));
+                                }
+                                else
+                                {
+                                    currentEntity = new Conveyor(entities, this, t, blockSize, new Vector3(0, 0, 1));
+                                }
+                            }
+                            break;
+                        case 11:
+                            currentEntity = new JumpPad(entities, this, t, blockSize);
+                            break;
                         default:
-                            currentEntity = null;
                             break;
                     };
                     lvl[(int)position.X, (int)position.Y, (int)position.Z] = currentEntity;

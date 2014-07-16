@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
+using Replica.Entities.Blocks;
 using Replica.Statics;
 
 namespace Replica.Entities
@@ -105,7 +106,7 @@ namespace Replica.Entities
 
             //Sequence is important
             MoveY(gameTime, listener);
-            HandleCollisions();
+            HandleCollisions(gameTime);
         }
 
         /// <summary>
@@ -134,7 +135,7 @@ namespace Replica.Entities
         /// <summary>
         /// If a side of the Player collides with a solid object, we push him out of said object (only so far that he touches its bounds).
         /// </summary>
-        void HandleCollisions()
+        void HandleCollisions(GameTime gameTime)
         {
             for (int i = 0; i < movementBounds.Count; i++)
             {
@@ -152,6 +153,19 @@ namespace Replica.Entities
                                 {
                                     newPosition.Y = collider.GetTransform().position.Y + collider.GetBoundsSize().Y / 2 + boundsSize.Y / 2 + offset;
                                     yVelocity = 0;
+
+                                    if (collider.GetEntityType() == EntityType.Conveyor)
+                                    {
+                                        Conveyor conveyor = (Conveyor)collider;
+                                        Vector3 velocity = conveyor.Direction * conveyor.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                                        prevVelocity += velocity;
+                                        newPosition += velocity;
+                                    }
+                                    if (collider.GetEntityType() == EntityType.JumpPad)
+                                    {
+                                        JumpPad jumpPad=(JumpPad)collider;
+                                        yVelocity = jumpPad.Velocity;
+                                    }
                                 }
                                 break;
                             case 1:
