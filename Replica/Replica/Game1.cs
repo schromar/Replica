@@ -36,7 +36,7 @@ namespace Replica
 
         protected override void Initialize()
         {
-            Globals.currentLvl = "Conveyor_JumpPad_Test";
+            Globals.currentLvl = "02_TwoButtons";
 
             base.Initialize();
         }
@@ -100,7 +100,7 @@ namespace Replica
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-           
+
             gamestate.Draw(GraphicsDevice, gameTime);
 
             spriteBatch.End();

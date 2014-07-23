@@ -48,7 +48,7 @@ namespace Replica.Drawables
             offsetY = 8;
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             skill1Size      = normalSize;
             skill2Size      = normalSize;

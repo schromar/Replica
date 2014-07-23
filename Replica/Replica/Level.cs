@@ -34,6 +34,8 @@ namespace Replica
         private Player player;
 
         public int maxReplicants;
+        string text;
+        public string Text { get { return text; } }
 
         public Level(List<Entity> entities)
         {
@@ -41,6 +43,7 @@ namespace Replica
             TmxMap map = new TmxMap("Levels/" + Globals.currentLvl + ".tmx"); //TODO 2: Check if file even exists
 
             maxReplicants = Convert.ToInt32(map.Properties["MaxReplicants"]);
+            text = map.Properties["Text"];
 
             Vector3 size = new Vector3(map.Width, map.Layers.Count, map.Height);
 

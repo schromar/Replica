@@ -21,6 +21,7 @@ namespace Replica.Gamestates
         List<Entity> entities;
 
         List<Drawable> drawables;
+        LevelText text;
 
         Level lvl;
         GraphicsDevice gDevice;
@@ -35,17 +36,18 @@ namespace Replica.Gamestates
             defaultEffect.VertexColorEnabled = true;
 
             entities = new List<Entity>();
+            lvl = new Level(entities);
 
             drawables = new List<Drawable>();
 
             drawables.Add(new Skillbar());
+            text = new LevelText(lvl.Text);
+            drawables.Add(text);
 
             foreach (Drawable drawable in drawables)
             {
                 drawable.Initialize();
             }
-
-            lvl = new Level(entities);
         }
 
         public eGamestates Update(GameTime gameTime)
@@ -74,7 +76,11 @@ namespace Replica.Gamestates
 
             foreach (Drawable drawable in drawables)
             {
-                drawable.Update();
+                drawable.Update(gameTime);
+            }
+            if (text.ExistenceTime < 0)
+            {
+                drawables.Remove(text);
             }
 
             return eGamestates.InGame;
