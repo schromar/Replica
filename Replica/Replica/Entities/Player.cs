@@ -20,6 +20,7 @@ namespace Replica.Entities
         float mouseSpeed = 0.1f;
         float movementSpeed = 5;
 
+        float maxRotation = 60;
         Vector2 prevRotationChange;
         Camera camera;
 
@@ -28,10 +29,6 @@ namespace Replica.Entities
         /// </summary>
         List<Replicant> replicants = new List<Replicant>();
 
-        /// <summary>
-        /// Determines which type of Replicant the Player wants to spawn.
-        /// </summary>
-        EntityType spawnType = EntityType.Replicant;
         float spawnDistance;
         float finalSpawnDistance;
         int prevScrollWheel;
@@ -127,8 +124,14 @@ namespace Replica.Entities
             Vector2 mouseMovement = resolution / 2 - new Vector2(mState.X, mState.Y);
             Mouse.SetPosition((int)resolution.X / 2, (int)resolution.Y / 2);
 
-            prevRotationChange = mouseMovement * mouseSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            transform.Rotation += prevRotationChange;
+            Vector2 rotationChange = mouseMovement * mouseSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            float yDegrees = MathHelper.ToDegrees(transform.Rotation.Y + rotationChange.Y);
+            if(yDegrees > maxRotation || yDegrees < -maxRotation)
+            {
+                rotationChange.Y = 0;
+            }
+            prevRotationChange = rotationChange;
+            transform.Rotation += rotationChange;
             camera.SetTransform(transform);
         }
 
@@ -162,6 +165,7 @@ namespace Replica.Entities
             //We are not supposed to be able to move up/down by pressing forwards
             Vector3 forwardWithoutY = transform.Forward;
             forwardWithoutY.Y = 0;
+            forwardWithoutY.Normalize();
 
             Vector3 finalVelocity = forwardWithoutY * movement.X + transform.Right * movement.Y;
             Move(finalVelocity);
