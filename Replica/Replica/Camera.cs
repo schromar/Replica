@@ -14,7 +14,9 @@ namespace Replica
         Transform transform = new Transform();
 
         Matrix view;
+        public Matrix View { get { return view; } }
         Matrix projection;
+        public Matrix Projection { get { return projection; } }
 
         //TODO: Add fov attribute?
 
@@ -34,16 +36,6 @@ namespace Replica
         {
             this.transform = transform;
             UpdateView();
-        }
-
-        public Matrix GetView()
-        {
-            return view;
-        }
-
-        public Matrix GetProjection()
-        {
-            return projection;
         }
 
         void UpdateView()

@@ -52,7 +52,7 @@ namespace Replica.Gamestates
 
         public eGamestates Update(GameTime gameTime)
         {
-            Transform playerTransform=lvl.GetPlayer().GetTransform();
+            Transform playerTransform=lvl.P.T;
             listener.Position = playerTransform.position;
             listener.Forward = playerTransform.Forward;
             listener.Up = playerTransform.Up;
@@ -88,10 +88,10 @@ namespace Replica.Gamestates
 
         public void Draw(GraphicsDevice graphicDevice, GameTime gameTime)
         {
-            Camera camera = lvl.GetPlayer().GetCamera();
+            Camera camera = lvl.P.Cam;
             defaultEffect.World = Matrix.Identity;
-            defaultEffect.View = camera.GetView();
-            defaultEffect.Projection = camera.GetProjection();
+            defaultEffect.View = camera.View;
+            defaultEffect.Projection = camera.Projection;
 
             
 

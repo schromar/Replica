@@ -19,10 +19,7 @@ namespace Replica
         /// </summary>
         public Vector2 Rotation
         {
-            get
-            {
-                return rotation;
-            }
+            get { return rotation; }
             set
             {
                 rotation = value;

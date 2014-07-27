@@ -42,7 +42,7 @@ namespace Replica.Entities.Blocks
         public override void OnCollision(Entity entity)
         {
             //TODO 2: Need universal expression for this (see Door)
-            if (entity.GetEntityType() == EntityType.Player || entity.GetEntityType() == EntityType.Replicant || entity.GetEntityType() == EntityType.ImitatingReplicant)
+            if (entity.Type == EntityType.Player || entity.Type == EntityType.Replicant || entity.Type == EntityType.ImitatingReplicant)
             {
                 collided = true;
             }

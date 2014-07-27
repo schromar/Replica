@@ -24,7 +24,7 @@ namespace Replica.Entities.Blocks
 
         public override void OnCollision(Entity entity)
         {
-            if (entity.GetEntityType() == EntityType.Player)
+            if (entity.Type == EntityType.Player)
             {
                 Globals.reachedGoal = true;
             }

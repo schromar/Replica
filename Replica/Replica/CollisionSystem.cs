@@ -19,7 +19,7 @@ namespace Replica
             {
                 for (int j = i + 1; j < entities.Count; j++)
                 {
-                    if (entities[i].GetBounds().Intersects(entities[j].GetBounds())) //TODO 2: Proper collision optimization
+                    if (entities[i].Bounds.Intersects(entities[j].Bounds)) //TODO 2: Proper collision optimization
                     {
                         entities[i].OnCollision(entities[j]);
                         entities[j].OnCollision(entities[i]);
@@ -39,7 +39,7 @@ namespace Replica
             List<KeyValuePair<float, Entity>> res = new List<KeyValuePair<float, Entity>>();
             for (int i = 0; i < entities.Count; i++)
             {
-                float? distance=ray.Intersects(entities[i].GetBounds());
+                float? distance = ray.Intersects(entities[i].Bounds);
                 if (distance!=null)
                 {
                     res.Add(new KeyValuePair<float, Entity>((float)distance, entities[i]));

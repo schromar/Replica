@@ -77,8 +77,8 @@ namespace Replica.Statics
                 {
                     mEffect.EnableDefaultLighting();
                     mEffect.World = transforms[mesh.ParentBone.Index] * rotation * Matrix.CreateScale(scale) * Matrix.CreateTranslation(t.position); //TODO 1: Proper scaling for Replicant once Model is added
-                    mEffect.View = camera.GetView();
-                    mEffect.Projection = camera.GetProjection();
+                    mEffect.View = camera.View;
+                    mEffect.Projection = camera.Projection;
                 }
                 mesh.Draw();
             }

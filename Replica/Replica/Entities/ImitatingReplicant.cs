@@ -23,7 +23,7 @@ namespace Replica.Entities
         {
             prevVelocity = velocity;
             Move(velocity);
-            transform.Rotation += rotation;
+            t.Rotation += rotation;
             this.jumping = jumping;
         }
     }

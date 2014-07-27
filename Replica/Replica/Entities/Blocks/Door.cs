@@ -47,7 +47,7 @@ namespace Replica.Entities.Blocks
 
             draw = false;
 
-            requirements = lvl.getSwitches(color);
+            requirements = lvl.GetSwitches(color);
             prevSolid = solid;
 
             closingSound = Assets.doorClosing.CreateInstance();
@@ -92,7 +92,7 @@ namespace Replica.Entities.Blocks
 
         public override void OnCollision(Entity entity)
         {
-            if (entity.GetEntityType() == EntityType.Player || entity.GetEntityType() == EntityType.Replicant || entity.GetEntityType() == EntityType.ImitatingReplicant)
+            if (entity.Type == EntityType.Player || entity.Type == EntityType.Replicant || entity.Type == EntityType.ImitatingReplicant)
             {
                 playerCollided = true;
             }

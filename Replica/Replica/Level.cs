@@ -31,7 +31,8 @@ namespace Replica
         private List<Switch> redSwitches;
         private List<Switch> greenSwitches;
         private List<Switch> blueSwitches;
-        private Player player;
+        private Player p;
+        public Player P { get { return p; } }
 
         public int maxReplicants;
         string text;
@@ -76,8 +77,8 @@ namespace Replica
                             currentEntity = new Block(entities, this, t, blockSize);
                             break;
                         case 2:
-                            player = new Player(entities, this, t, Globals.windowwidth, Globals.windowheight);
-                            currentEntity = player;
+                            p = new Player(entities, this, t, Globals.windowwidth, Globals.windowheight);
+                            currentEntity = p;
                             break;
                         case 3:
                             currentEntity = new Goal(t, blockSize, entities, this);    
@@ -140,7 +141,7 @@ namespace Replica
             }
         }
 
-        public List<Switch> getSwitches(String color)
+        public List<Switch> GetSwitches(String color)
         {
             if (color.Equals("red"))
                 return redSwitches;
@@ -149,11 +150,6 @@ namespace Replica
             else if (color.Equals("blue"))
                 return blueSwitches;
             else throw new NotSupportedException();
-        }
-
-        public Player GetPlayer()
-        {
-            return player;
         }
     }
 }

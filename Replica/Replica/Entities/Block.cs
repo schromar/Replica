@@ -29,8 +29,8 @@ namespace Replica.Entities
         {
             if (draw)
             {
-                transform.Rotation = new Vector2();
-                Globals.DrawModel(Assets.wallModel, transform, 2, camera);
+                t.Rotation = new Vector2();
+                Globals.DrawModel(Assets.wallModel, t, 2, camera);
             }
 
             base.Draw(graphics, gameTime, effect, camera);

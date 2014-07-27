@@ -9,7 +9,13 @@ namespace Replica.Drawables
 {
     class LevelText : Drawable
     {
+        /// <summary>
+        /// The text to be displayed. Will usually be passed in from the current lvl.
+        /// </summary>
         string text;
+        /// <summary>
+        /// How long the text will be drawn.
+        /// </summary>
         float existenceTime = 5;
         public float ExistenceTime { get { return existenceTime; } }
 
@@ -26,6 +32,7 @@ namespace Replica.Drawables
 
         public override void Draw()
         {
+            //The text will start to fade out once a certain amount of time is left
             if (existenceTime < 1.5f)
             {
                 Game1.spriteBatch.DrawString(Assets.font1, text, new Vector2(0, 375), Color.White * (existenceTime / 1.5f));

@@ -33,10 +33,13 @@ namespace Replica
         protected List<Entity> entities;
         protected Level lvl;
         protected EntityType type;
+        public EntityType Type { get { return type; } }
 
-        protected Transform transform;
+        protected Transform t;
+        public Transform T { get { return t; } }
 
         protected Vector3 boundsSize;
+        public Vector3 BoundsSize { get { return boundsSize; } }
         /// <summary>
         /// Used for testing purposes.
         /// </summary>
@@ -46,6 +49,7 @@ namespace Replica
         /// The BoundingBox for this Entity. The position of the transform is its midpoint.
         /// </summary>
         protected BoundingBox bounds;
+        public BoundingBox Bounds { get { return bounds; } }
         protected bool drawBounds = true;
 
         protected bool solid;
@@ -56,7 +60,7 @@ namespace Replica
             this.lvl = lvl;
             this.type = type;
 
-            this.transform = transform;
+            this.t = transform;
 
             this.boundsSize = boundsSize;
             bounds=Globals.GenerateBounds(transform, boundsSize);
@@ -88,35 +92,14 @@ namespace Replica
 
         }
 
-        //TODO 2: Create properties instead of getter/setters (not only in Entity.cs, in general)
-        public EntityType GetEntityType()
-        {
-            return type;
-        }
-
-        public Transform GetTransform()
-        {
-            return transform;
-        }
-
-        public Vector3 GetBoundsSize()
-        {
-            return boundsSize;
-        }
-
-        public BoundingBox GetBounds()
-        {
-            return bounds;
-        }
-
         /// <summary>
         /// Universal Move Method that moves all of an Entity's components at once.
         /// </summary>
         /// <param name="velocity"></param>
         public virtual void Move(Vector3 velocity)
         {
-            transform.position+=velocity;
-            bounds = Globals.GenerateBounds(transform, boundsSize);
+            t.position+=velocity;
+            bounds = Globals.GenerateBounds(t, boundsSize);
         }
 
         /// <summary>

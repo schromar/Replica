@@ -22,7 +22,8 @@ namespace Replica.Entities
 
         float maxRotation = 60;
         Vector2 prevRotationChange;
-        Camera camera;
+        Camera cam;
+        public Camera Cam { get { return cam; } }
 
         /// <summary>
         /// All the replicants that currently exist.
@@ -46,7 +47,7 @@ namespace Replica.Entities
         {
             resolution = new Vector2(windowWidth, windowHeight);
 
-            camera = new Camera(resolution);
+            cam = new Camera(resolution);
 
             spawnDistance = boundsSize.Length();
             finalSpawnDistance = spawnDistance;
@@ -77,8 +78,8 @@ namespace Replica.Entities
             MouseState mState = Mouse.GetState();
             UpdateSpawnDistance(mState);
 
-            replicantTransform = transform;
-            replicantTransform.position = transform.position + transform.Forward * finalSpawnDistance;
+            replicantTransform = t;
+            replicantTransform.position = t.position + t.Forward * finalSpawnDistance;
             replicantBounds = Globals.GenerateBounds(replicantTransform, boundsSize);
             if (mState.RightButton == ButtonState.Pressed && CanSpawn())
             {
@@ -104,12 +105,7 @@ namespace Replica.Entities
         public override void Move(Vector3 velocity)
         {
             base.Move(velocity);
-            camera.SetTransform(transform);
-        }
-
-        public Camera GetCamera()
-        {
-            return camera; //What happens if camera is changed after getter was used?
+            cam.SetTransform(t);
         }
 
         //TODO 2: Create universal rotation method?
@@ -125,14 +121,14 @@ namespace Replica.Entities
             Mouse.SetPosition((int)resolution.X / 2, (int)resolution.Y / 2);
 
             Vector2 rotationChange = mouseMovement * mouseSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
-            float yDegrees = MathHelper.ToDegrees(transform.Rotation.Y + rotationChange.Y);
+            float yDegrees = MathHelper.ToDegrees(t.Rotation.Y + rotationChange.Y);
             if(yDegrees > maxRotation || yDegrees < -maxRotation)
             {
                 rotationChange.Y = 0;
             }
             prevRotationChange = rotationChange;
-            transform.Rotation += rotationChange;
-            camera.SetTransform(transform);
+            t.Rotation += rotationChange;
+            cam.SetTransform(t);
         }
 
         void MoveXZ(GameTime gameTime)
@@ -163,11 +159,11 @@ namespace Replica.Entities
             }
             movement *= (float)gameTime.ElapsedGameTime.TotalSeconds;
             //We are not supposed to be able to move up/down by pressing forwards
-            Vector3 forwardWithoutY = transform.Forward;
+            Vector3 forwardWithoutY = t.Forward;
             forwardWithoutY.Y = 0;
             forwardWithoutY.Normalize();
 
-            Vector3 finalVelocity = forwardWithoutY * movement.X + transform.Right * movement.Y;
+            Vector3 finalVelocity = forwardWithoutY * movement.X + t.Right * movement.Y;
             Move(finalVelocity);
             prevVelocity.X = finalVelocity.X;
             prevVelocity.Z = finalVelocity.Z;
@@ -178,7 +174,7 @@ namespace Replica.Entities
             //Update every ImitatingReplicant
             for (int i = 0; i < replicants.Count; i++)
             {
-                if (replicants[i].GetEntityType() == EntityType.ImitatingReplicant)
+                if (replicants[i].Type == EntityType.ImitatingReplicant)
                 {
                     Vector3 prevVelocityWithoutY = prevVelocity;
                     prevVelocityWithoutY.Y = 0;
@@ -210,7 +206,7 @@ namespace Replica.Entities
             }
 
             //Maximum
-            List<KeyValuePair<float, Entity>> rayIntersections = CollisionSystem.RayIntersection(entities, new Ray(transform.position, transform.Forward));
+            List<KeyValuePair<float, Entity>> rayIntersections = CollisionSystem.RayIntersection(entities, new Ray(t.position, t.Forward));
             for(int i=0; i<rayIntersections.Count; i++)
             {
                 if (rayIntersections[i].Value == this || !rayIntersections[i].Value.isSolid()) //We don't care if ray intersected with Player or a non-solid Block
@@ -255,7 +251,7 @@ namespace Replica.Entities
             {
                 foreach (Entity entity in entities)
                 {
-                    if (replicantBounds.Intersects(entity.GetBounds()) && entity.isSolid())
+                    if (replicantBounds.Intersects(entity.Bounds) && entity.isSolid())
                     {
                         return false;
                     }
