@@ -100,12 +100,30 @@ namespace Replica.Gamestates
                 entity.Draw(graphicDevice, gameTime, defaultEffect, camera);
             }
 
-            
-
             foreach (Drawable drawable in drawables)
             {
                 drawable.Draw();
             }
+
+            //TESTING 3D TEXT
+            Game1.spriteBatch.End();
+            Matrix rotation = Matrix.Identity;
+            rotation.Right = -lvl.P.T.Right;
+            rotation.Up = lvl.P.T.Up;
+
+            BasicEffect effect = new BasicEffect(graphicDevice);
+            effect.World = rotation*Matrix.CreateScale(new Vector3(-0.5f))*Matrix.CreateTranslation(new Vector3(0, 4, 0));
+            effect.View = defaultEffect.View;
+            effect.Projection = defaultEffect.Projection;
+            effect.TextureEnabled = true;
+            effect.VertexColorEnabled = true;
+
+            Game1.spriteBatch.Begin(0, null, SamplerState.PointWrap, DepthStencilState.DepthRead, null, effect);
+            Vector2 test=Assets.font1.MeasureString("bla");
+            Game1.spriteBatch.DrawString(Assets.font1, "bla", -test/2.0f, Color.White);
+            Game1.spriteBatch.End();
+
+            Game1.spriteBatch.Begin();
         }
     }
 }

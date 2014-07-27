@@ -61,7 +61,7 @@ namespace Replica.Statics
             }
         }
     
-        public static void DrawModel(Model model,Transform t,float scale,Camera camera)
+        public static void DrawModel(Model model, Transform t, float scale, float alpha, Camera camera)
         {
             Matrix rotation = Matrix.Identity;
             rotation.Forward = t.Forward;
@@ -79,6 +79,7 @@ namespace Replica.Statics
                     mEffect.World = transforms[mesh.ParentBone.Index] * rotation * Matrix.CreateScale(scale) * Matrix.CreateTranslation(t.position); //TODO 1: Proper scaling for Replicant once Model is added
                     mEffect.View = camera.View;
                     mEffect.Projection = camera.Projection;
+                    mEffect.Alpha = alpha;
                 }
                 mesh.Draw();
             }

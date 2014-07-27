@@ -45,7 +45,7 @@ namespace Replica.Entities.Blocks
             drawBounds = true;
             solid = true;
 
-            draw = false;
+            draw = true;
 
             requirements = lvl.GetSwitches(color);
             prevSolid = solid;
@@ -88,6 +88,8 @@ namespace Replica.Entities.Blocks
 
             playerCollided = false;
             prevSolid = solid;
+
+            draw = solid;
         }
 
         public override void OnCollision(Entity entity)

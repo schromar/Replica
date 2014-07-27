@@ -55,6 +55,8 @@ namespace Replica.Entities
 
         public override void Update(GameTime gameTime, AudioListener listener)
         {
+            Console.WriteLine(t.position);
+
             base.Update(gameTime, listener); //PlayerBase is taking over Y movement and collisions, so that Replicant can behave in the same way
             Rotate(gameTime);
             MoveXZ(gameTime);

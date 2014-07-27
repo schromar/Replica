@@ -14,12 +14,14 @@ namespace Replica.Entities
     /// </summary>
     class Replicant : PlayerBase
     {
+        float maxTime;
         float existenceTime;
         public float ExistenceTime { get { return existenceTime; } }
 
         public Replicant(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, float existenceTime, EntityType type=EntityType.Replicant)
             : base(entities, lvl, type, transform)
         {
+            this.maxTime = existenceTime;
             this.existenceTime = existenceTime;
         }
 
@@ -32,7 +34,7 @@ namespace Replica.Entities
         public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
         {    
 
-            Globals.DrawModel(Assets.model, t, 0.001f, camera);
+            Globals.DrawModel(Assets.model, t, 0.001f, existenceTime/maxTime, camera);
 
             base.Draw(graphics, gameTime, effect, camera);
         }
