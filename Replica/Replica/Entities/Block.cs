@@ -17,7 +17,6 @@ namespace Replica.Entities
         /// </summary>
         protected bool draw = true;
 
-        //TODO 2: Is this class necessary?!
         public Block(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, EntityType type = EntityType.Block)
             : base(entities, lvl, type, transform, boundsSize)
         {

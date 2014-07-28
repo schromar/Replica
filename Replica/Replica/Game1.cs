@@ -36,7 +36,7 @@ namespace Replica
 
         protected override void Initialize()
         {
-            Globals.currentLvl = "Conveyor_JumpPad_Test";
+            Globals.currentLvl = "04_Imitation";
 
             base.Initialize();
         }
@@ -100,11 +100,8 @@ namespace Replica
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-
-            gamestate.Draw(GraphicsDevice, gameTime);
-
+            gamestate.Draw(gameTime);
             spriteBatch.End();
-
             graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             base.Draw(gameTime);

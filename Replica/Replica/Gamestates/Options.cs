@@ -18,7 +18,7 @@ namespace Replica.Gamestates
             return eGamestates.Options;
         }
 
-        public void Draw(GraphicsDevice graphicDevice, GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
         }
 

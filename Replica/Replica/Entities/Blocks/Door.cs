@@ -63,7 +63,7 @@ namespace Replica.Entities.Blocks
             solid = false;
             foreach(Switch requirement in requirements)
             {
-                if (!requirement.IsActivated()) //If only one switch in requirements is not activated the door is closed
+                if (!requirement.Activated) //If only one switch in requirements is not activated the door is closed
                 {
                     solid = true;
                     break;

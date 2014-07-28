@@ -86,18 +86,24 @@ namespace Replica.Gamestates
             return eGamestates.InGame;
         }
 
-        public void Draw(GraphicsDevice graphicDevice, GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
             Camera camera = lvl.P.Cam;
             defaultEffect.World = Matrix.Identity;
             defaultEffect.View = camera.View;
             defaultEffect.Projection = camera.Projection;
 
-            
-
+            List<Entity> switches=new List<Entity>();
             foreach (Entity entity in entities)
             {
-                entity.Draw(graphicDevice, gameTime, defaultEffect, camera);
+                if (entity.Type != EntityType.Switch)
+                {
+                    entity.Draw(Game1.graphics.GraphicsDevice, gameTime, defaultEffect, camera);
+                }
+                else
+                {
+                    switches.Add(entity);
+                }
             }
 
             foreach (Drawable drawable in drawables)
@@ -105,25 +111,11 @@ namespace Replica.Gamestates
                 drawable.Draw();
             }
 
-            //TESTING 3D TEXT
-            Game1.spriteBatch.End();
-            Matrix rotation = Matrix.Identity;
-            rotation.Right = -lvl.P.T.Right;
-            rotation.Up = lvl.P.T.Up;
-
-            BasicEffect effect = new BasicEffect(graphicDevice);
-            effect.World = rotation*Matrix.CreateScale(new Vector3(-0.5f))*Matrix.CreateTranslation(new Vector3(0, 4, 0));
-            effect.View = defaultEffect.View;
-            effect.Projection = defaultEffect.Projection;
-            effect.TextureEnabled = true;
-            effect.VertexColorEnabled = true;
-
-            Game1.spriteBatch.Begin(0, null, SamplerState.PointWrap, DepthStencilState.DepthRead, null, effect);
-            Vector2 test=Assets.font1.MeasureString("bla");
-            Game1.spriteBatch.DrawString(Assets.font1, "bla", -test/2.0f, Color.White);
-            Game1.spriteBatch.End();
-
-            Game1.spriteBatch.Begin();
+            //TODO 1: Find another way to draw 3D Text without drawing behind other objects
+            foreach (Entity s in switches)
+            {
+                s.Draw(Game1.graphics.GraphicsDevice, gameTime, defaultEffect, camera);
+            }
         }
     }
 }

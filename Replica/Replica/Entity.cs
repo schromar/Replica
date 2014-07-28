@@ -14,6 +14,7 @@ namespace Replica
         Block,
             Conveyor,
             Door,
+            Glass,
             Goal,
             JumpPad,
             Switch,
@@ -53,6 +54,7 @@ namespace Replica
         protected bool drawBounds = true;
 
         protected bool solid;
+        public bool Solid { get { return solid; } }
         
         public Entity(List<Entity> entities, Level lvl, EntityType type, Transform transform, Vector3 boundsSize)
         {
@@ -108,11 +110,6 @@ namespace Replica
         public virtual void Destroy()
         {
 
-        }
-
-        public bool isSolid()
-        {
-            return solid;
         }
     }
 }

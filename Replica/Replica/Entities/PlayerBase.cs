@@ -139,7 +139,7 @@ namespace Replica.Entities
         {
             for (int i = 0; i < movementBounds.Count; i++)
             {
-                if (movementBounds[i].IsActivated())
+                if (movementBounds[i].Activated)
                 {
                     float offset = 0.05f;
                     List<Entity> colliders = movementBounds[i].GetColliders();
@@ -211,7 +211,7 @@ namespace Replica.Entities
 
         void MoveY(GameTime gameTime, AudioListener listener)
         {
-            if (movementBounds[0].IsActivated() && jumping)
+            if (movementBounds[0].Activated && jumping)
             {
                 yVelocity = jumpVelocity;
 

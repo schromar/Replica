@@ -55,7 +55,7 @@ namespace Replica.Gamestates
             return eGamestates.MainMenu;
         }
 
-        public void Draw(GraphicsDevice graphicDevice, GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
             Game1.spriteBatch.Draw(Assets.dna, new Rectangle(0, 0, Assets.dna.Width, Assets.dna.Height), Color.White);
 

@@ -29,7 +29,7 @@ namespace Replica.Gamestates
             return eGamestates.Credits;
         }
 
-        public void Draw(GraphicsDevice graphicDevice, GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
             Game1.spriteBatch.Draw(Assets.happy, new Rectangle(0, 0, Assets.happy.Width, Assets.happy.Height), Color.White);
 

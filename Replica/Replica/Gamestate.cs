@@ -33,6 +33,6 @@ namespace Replica
 
         eGamestates Update(GameTime gameTime);
 
-        void Draw(GraphicsDevice graphicDevice, GameTime gameTime);       
+        void Draw(GameTime gameTime);       
     }
 }

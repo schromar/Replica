@@ -131,6 +131,9 @@ namespace Replica
                         case 11:
                             currentEntity = new JumpPad(entities, this, t, blockSize);
                             break;
+                        case 12:
+                            currentEntity = new Glass(entities, this, t, blockSize);
+                            break;
                         default:
                             break;
                     };

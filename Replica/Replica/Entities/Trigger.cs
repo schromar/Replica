@@ -17,6 +17,7 @@ namespace Replica.Entities
 
         bool collided;
         bool activated;
+        public bool Activated { get { return activated; } }
         /// <summary>
         /// Holds all of the objects that have collided since last time GetColliders() was called.
         /// </summary>
@@ -36,16 +37,11 @@ namespace Replica.Entities
 
         public override void OnCollision(Entity entity)
         {
-            if (entity.isSolid() && !excluded.Contains(entity)) //TODO 2: Let users handle solid check
+            if (entity.Solid && !excluded.Contains(entity))
             {
                 collided = true;
                 colliders.Add(entity);
             }
-        }
-
-        public bool IsActivated()
-        {
-            return activated;
         }
 
         public List<Entity> GetColliders()

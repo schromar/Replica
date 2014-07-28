@@ -55,8 +55,6 @@ namespace Replica.Entities
 
         public override void Update(GameTime gameTime, AudioListener listener)
         {
-            Console.WriteLine(t.position);
-
             base.Update(gameTime, listener); //PlayerBase is taking over Y movement and collisions, so that Replicant can behave in the same way
             Rotate(gameTime);
             MoveXZ(gameTime);
@@ -211,7 +209,7 @@ namespace Replica.Entities
             List<KeyValuePair<float, Entity>> rayIntersections = CollisionSystem.RayIntersection(entities, new Ray(t.position, t.Forward));
             for(int i=0; i<rayIntersections.Count; i++)
             {
-                if (rayIntersections[i].Value == this || !rayIntersections[i].Value.isSolid()) //We don't care if ray intersected with Player or a non-solid Block
+                if (rayIntersections[i].Value == this || !rayIntersections[i].Value.Solid) //We don't care if ray intersected with Player or a non-solid Block
                 {
                     rayIntersections.RemoveAt(i);
                     i--;
@@ -221,7 +219,7 @@ namespace Replica.Entities
                     if (rayIntersections[i].Key < spawnDistance)
                     {
                         //Found closest point with solid block
-                        if (rayIntersections[i].Value.isSolid())
+                        if (rayIntersections[i].Value.Solid)
                         {
                             finalSpawnDistance = rayIntersections[i].Key;
                             break;
@@ -253,7 +251,7 @@ namespace Replica.Entities
             {
                 foreach (Entity entity in entities)
                 {
-                    if (replicantBounds.Intersects(entity.Bounds) && entity.isSolid())
+                    if (replicantBounds.Intersects(entity.Bounds) && entity.Solid)
                     {
                         return false;
                     }

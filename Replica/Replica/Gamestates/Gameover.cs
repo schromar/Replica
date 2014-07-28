@@ -26,7 +26,7 @@ namespace Replica.Gamestates
             return eGamestates.GameOver;
         }
 
-        public void Draw(GraphicsDevice graphicDevice, GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
         }
     }
