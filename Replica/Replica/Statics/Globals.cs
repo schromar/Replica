@@ -23,7 +23,12 @@ namespace Replica.Statics
         public static bool reachedGoal = false;
 
         public static EntityType spawnType = EntityType.Replicant;
-        
+
+        public static int normalReplicants = 0;
+        public static int imitatingReplicants = 0;
+
+        public static int normalReplicantsCount = 0;
+        public static int imitatingReplicantsCount = 0; 
 
         public static int windowheight = 480;
         public static int windowwidth = 800;

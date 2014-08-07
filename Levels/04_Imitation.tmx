@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="6" height="9" tilewidth="32" tileheight="32">
  <properties>
-  <property name="MaxReplicants" value="1"/>
+  <property name="ReplicantsImitating" value="1"/>
+  <property name="ReplicantsNormal" value="0"/>
   <property name="Text" value="Use 1 and 2 to switch between standing and imitating Replicants."/>
  </properties>
  <tileset firstgid="1" name="ReplicaTileset" tilewidth="32" tileheight="32">

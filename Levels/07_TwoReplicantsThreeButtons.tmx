@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="5" height="10" tilewidth="32" tileheight="32">
  <properties>
-  <property name="MaxReplicants" value="2"/>
+  <property name="ReplicantsImitating" value="0"/>
+  <property name="ReplicantsNormal" value="2"/>
   <property name="Text" value="One Replicant can activate more than one Switch."/>
  </properties>
  <tileset firstgid="1" name="ReplicaTileset" tilewidth="32" tileheight="32">

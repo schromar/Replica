@@ -34,7 +34,9 @@ namespace Replica
         private Player p;
         public Player P { get { return p; } }
 
-        public int maxReplicants;
+        
+        
+
         string text;
         public string Text { get { return text; } }
 
@@ -43,7 +45,9 @@ namespace Replica
             //Load map with TiledSharp
             TmxMap map = new TmxMap("Levels/" + Globals.currentLvl + ".tmx"); //TODO 2: Check if file even exists
 
-            maxReplicants = Convert.ToInt32(map.Properties["MaxReplicants"]);
+            
+            Globals.normalReplicants = Convert.ToInt32(map.Properties["ReplicantsNormal"]);
+            Globals.imitatingReplicants = Convert.ToInt32(map.Properties["ReplicantsImitating"]);
             text = map.Properties["Text"];
 
             Vector3 size = new Vector3(map.Width, map.Layers.Count, map.Height);

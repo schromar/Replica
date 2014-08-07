@@ -30,6 +30,12 @@ namespace Replica.Entities
         /// </summary>
         List<Replicant> replicants = new List<Replicant>();
 
+        /// <summary>
+        /// Number of replicants that exist of the different types
+        /// </summary>
+        
+
+
         float spawnDistance;
         float finalSpawnDistance;
         int prevScrollWheel;
@@ -185,6 +191,17 @@ namespace Replica.Entities
                 //Destroy Replicant once he has run out of time
                 if (replicants[i].ExistenceTime <= 0)
                 {
+                    switch(replicants[i].Type)
+                    {
+                        case EntityType.Replicant:
+                            Globals.normalReplicantsCount--;
+                            break;
+                        case EntityType.ImitatingReplicant:
+                            Globals.imitatingReplicantsCount--;
+                            break;
+                        default:
+                            break;
+                    }
                     replicants[i].Destroy();
                     entities.Remove(replicants[i]);
                     replicants.RemoveAt(i);
@@ -247,18 +264,27 @@ namespace Replica.Entities
         /// <returns></returns>
         bool CanSpawn()
         {
-            if (replicants.Count < lvl.maxReplicants)
+            switch (Globals.spawnType)
             {
-                foreach (Entity entity in entities)
-                {
-                    if (replicantBounds.Intersects(entity.Bounds) && entity.Solid)
-                    {
+                case EntityType.Replicant:
+                    if (Globals.normalReplicantsCount >= Globals.normalReplicants)
                         return false;
-                    }
-                }
-                return true;
+                        break;
+                case EntityType.ImitatingReplicant:
+                        if (Globals.imitatingReplicantsCount >= Globals.imitatingReplicants)
+                            return false;
+                        break;
+                default:
+                    break;
             }
-            return false;
+            foreach (Entity entity in entities)
+            {
+                if (replicantBounds.Intersects(entity.Bounds) && entity.Solid)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         void SpawnReplicant()
@@ -269,12 +295,15 @@ namespace Replica.Entities
             {
                 case EntityType.Replicant:
                     replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 5);
+                    Globals.normalReplicantsCount++;
                     break;
                 case EntityType.ImitatingReplicant:
                     replicant = new ImitatingReplicant(entities, lvl, replicantTransform, boundsSize, 5);
+                    Globals.imitatingReplicantsCount++;
                     break;
                 default:
                     replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 5);
+                    Globals.normalReplicantsCount++;
                     break;
             };
 
