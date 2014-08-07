@@ -106,15 +106,15 @@ namespace Replica.Gamestates
                 }
             }
 
-            foreach (Drawable drawable in drawables)
-            {
-                drawable.Draw();
-            }
-
             //TODO 1: Find another way to draw 3D Text without drawing behind other objects
             foreach (Entity s in switches)
             {
                 s.Draw(Game1.graphics.GraphicsDevice, gameTime, defaultEffect, camera);
+            }
+
+            foreach (Drawable drawable in drawables)
+            {
+                drawable.Draw();
             }
         }
     }
