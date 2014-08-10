@@ -36,7 +36,7 @@ namespace Replica
 
         protected override void Initialize()
         {
-            Globals.currentLvl = "07_TwoReplicantsThreeButtons";
+           
 
             base.Initialize();
         }
@@ -64,7 +64,7 @@ namespace Replica
                 fpsCounter = 0;
                 fpsTimer = 0;
             }
-
+            Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
             Input.prevKeyboard = Input.currentKeyboard;
             Input.currentKeyboard = Keyboard.GetState();
 
@@ -107,7 +107,7 @@ namespace Replica
             base.Draw(gameTime);
         }
 
-        private void HandleNewGameState()
+         private void HandleNewGameState()
         {
             switch (Globals.currentState)
             {
@@ -141,6 +141,10 @@ namespace Replica
 
                 case eGamestates.Credits:
                     gamestate = new Credits();
+                    break;
+
+                case eGamestates.Loadingscreen:
+                    gamestate = new Loadinscreen();
                     break;
                 default:
                     System.Console.WriteLine("unknown gamestate in - handleNewGameState() - in Game1");

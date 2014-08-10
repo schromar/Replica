@@ -22,7 +22,8 @@ namespace Replica
         Credits,
         InGame,
         Cutscene,
-        GameOver
+        GameOver,
+        Loadingscreen
     }
 
     public interface Gamestate

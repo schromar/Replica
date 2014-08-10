@@ -70,8 +70,9 @@ namespace Replica.Gamestates
 
             if (Globals.reachedGoal == true)
             {
+                Globals.levelnamecounter++; 
                 Globals.reachedGoal = false;
-                return eGamestates.Credits;
+                return eGamestates.Loadingscreen;
             }
 
             foreach (Drawable drawable in drawables)

@@ -17,7 +17,11 @@ namespace Replica.Statics
 {
     public class Globals
     {
+
+       
         public static String currentLvl;
+        public static String[] levelnames = new String[] { "01_OneButton", "02_TwoButtons" };
+        public static int levelnamecounter = 0; 
         public static eGamestates currentState = eGamestates.MainMenu;
         public static eGamestates prevState = eGamestates.MainMenu;
         public static bool reachedGoal = false;

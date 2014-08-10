@@ -22,6 +22,7 @@ namespace Replica.Statics
         public static Texture2D exit;
         public static Texture2D levelselection;
         public static Texture2D pix;
+        public static Texture2D loading;
 
         public static Texture2D lvl00;
         public static Texture2D lvl01;
@@ -50,6 +51,7 @@ namespace Replica.Statics
             dna                         = Manager.Load<Texture2D>("Textures\\dna");
             happy                       = Manager.Load<Texture2D>("Textures\\happy");
             pix                         = Manager.Load<Texture2D>("Textures\\pix");
+            loading                     = Manager.Load<Texture2D>("Textures\\loading");
 
             lvl00                       = Manager.Load<Texture2D>("Textures\\lvl00");
             lvl01                       = Manager.Load<Texture2D>("Textures\\lvl01");

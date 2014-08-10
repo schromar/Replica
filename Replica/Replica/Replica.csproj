@@ -106,7 +106,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="TiledSharp">
-      <HintPath>References\TiledSharp.dll</HintPath>
+      <HintPath>..\..\..\TiledSharp\TiledSharp\TiledSharp\bin\Debug\TiledSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +132,7 @@
     <Compile Include="Gamestates\Gameover.cs" />
     <Compile Include="Gamestate.cs" />
     <Compile Include="Gamestates\Ingame.cs" />
+    <Compile Include="Gamestates\Loadinscreen.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Gamestates\Levelselection.cs" />
     <Compile Include="Gamestates\Mainmenu.cs" />
