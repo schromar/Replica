@@ -64,7 +64,10 @@ namespace Replica
                 fpsCounter = 0;
                 fpsTimer = 0;
             }
-            Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
+            if (Globals.levelnamecounter - 1 < Globals.levelnames.Length)
+            {
+                Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
+            }
             Input.prevKeyboard = Input.currentKeyboard;
             Input.currentKeyboard = Keyboard.GetState();
 

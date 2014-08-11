@@ -20,7 +20,7 @@ namespace Replica.Statics
 
        
         public static String currentLvl;
-        public static String[] levelnames = new String[] { "01_OneButton", "02_TwoButtons" };
+        public static String[] levelnames = new String[] { "01_OneButton","07_TwoReplicantsThreeButtons"};
         public static int levelnamecounter = 0; 
         public static eGamestates currentState = eGamestates.MainMenu;
         public static eGamestates prevState = eGamestates.MainMenu;
