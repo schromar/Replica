@@ -18,6 +18,7 @@ namespace Replica
             Goal,
             JumpPad,
             Switch,
+            Antiblock,
         ImitatingReplicant,
         Player,
         Replicant,

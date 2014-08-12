@@ -32,10 +32,7 @@ namespace Replica
         private List<Switch> greenSwitches;
         private List<Switch> blueSwitches;
         private Player p;
-        public Player P { get { return p; } }
-
-        
-        
+        public  Player P { get { return p; } }
 
         string text;
         public string Text { get { return text; } }
@@ -137,6 +134,9 @@ namespace Replica
                             break;
                         case 12:
                             currentEntity = new Glass(entities, this, t, blockSize);
+                            break;
+                        case 13:
+                            currentEntity = new Antiblock(entities, this, t, blockSize);
                             break;
                         default:
                             break;

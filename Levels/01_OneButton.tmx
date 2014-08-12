@@ -2,13 +2,13 @@
 <map version="1.0" orientation="orthogonal" width="6" height="5" tilewidth="32" tileheight="32">
  <properties>
   <property name="ReplicantsImitating" value="0"/>
-  <property name="ReplicantsNormal" value="1"/>
+  <property name="ReplicantsNormal" value="99"/>
   <property name="Text" value="Move your mouse to look around. Use wasd to move. Place Replicants by clicking."/>
  </properties>
  <tileset firstgid="1" name="ReplicaTileset" tilewidth="32" tileheight="32">
   <image source="ReplicaTileset.png" width="320" height="64"/>
  </tileset>
- <layer name="Tile Layer 1" width="6" height="5">
+ <layer name="Tile Layer 1" width="6" height="5" visible="0">
   <data encoding="csv">
 1,1,1,1,1,1,
 1,1,1,1,1,1,
@@ -21,12 +21,12 @@
   <data encoding="csv">
 1,1,1,1,1,1,
 1,2,0,1,1,1,
-1,0,0,7,3,1,
+1,13,0,7,3,1,
 1,4,0,1,1,1,
 1,1,1,1,1,1
 </data>
  </layer>
- <layer name="Tile Layer 3" width="6" height="5">
+ <layer name="Tile Layer 3" width="6" height="5" visible="0">
   <data encoding="csv">
 1,1,1,1,1,0,
 1,1,1,1,1,0,

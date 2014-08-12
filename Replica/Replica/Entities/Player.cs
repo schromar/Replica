@@ -106,6 +106,27 @@ namespace Replica.Entities
 
         public override void OnCollision(Entity entity)
         {
+            if (entity.Type == EntityType.Antiblock)
+            {
+                for (int i = 0; i < replicants.Count; i++)
+                {
+                    switch (replicants[i].Type)
+                    {
+                        case EntityType.Replicant:
+                            Globals.normalReplicantsCount--;
+                            break;
+                        case EntityType.ImitatingReplicant:
+                            Globals.imitatingReplicantsCount--;
+                            break;
+                        default:
+                            break;
+                    }
+                    replicants[i].Destroy();
+                    entities.Remove(replicants[i]);
+                    replicants.RemoveAt(i);
+                }
+                Globals.inAntiblock = true;
+            }
         }
 
         public override void Move(Vector3 velocity)
@@ -264,6 +285,9 @@ namespace Replica.Entities
         /// <returns></returns>
         bool CanSpawn()
         {
+            if (Globals.inAntiblock)
+                return false;
+
             switch (Globals.spawnType)
             {
                 case EntityType.Replicant:

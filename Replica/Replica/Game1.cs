@@ -119,6 +119,7 @@ namespace Replica
                     break;
 
                 case eGamestates.InGame:
+                    
                     gamestate = new Ingame();
                     break;
 

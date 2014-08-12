@@ -35,6 +35,7 @@ namespace Replica.Entities
         {    
 
             Globals.DrawModel(Assets.model, t, 0.001f, existenceTime/maxTime, camera);
+            
 
             base.Draw(graphics, gameTime, effect, camera);
         }

@@ -116,6 +116,7 @@
     <Compile Include="Drawables\LevelText.cs" />
     <Compile Include="Drawables\Skillbar.cs" />
     <Compile Include="Entities\Block.cs" />
+    <Compile Include="Entities\Blocks\Antiblock.cs" />
     <Compile Include="Entities\Blocks\Conveyor.cs" />
     <Compile Include="Entities\Blocks\Door.cs" />
     <Compile Include="Entities\Blocks\Glass.cs" />

@@ -17,7 +17,7 @@ namespace Replica.Statics
 {
     public class Globals
     {
-
+        public static bool inAntiblock = false;
        
         public static String currentLvl;
         public static String[] levelnames = new String[] { "01_OneButton","07_TwoReplicantsThreeButtons"};

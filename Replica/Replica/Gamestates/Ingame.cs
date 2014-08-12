@@ -70,6 +70,7 @@ namespace Replica.Gamestates
 
             if (Globals.reachedGoal == true)
             {
+                entities.Clear();
                 if (Globals.levelnamecounter == Globals.levelnames.Length - 1)
                 {
                     return eGamestates.Credits;
