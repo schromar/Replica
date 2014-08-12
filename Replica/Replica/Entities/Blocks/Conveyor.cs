@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Replica.Statics;
 
 namespace Replica.Entities.Blocks
 {
@@ -20,6 +22,13 @@ namespace Replica.Entities.Blocks
             : base(entities, lvl, transform, boundsSize, EntityType.Conveyor)
         {
             this.direction = direction;
+            draw = false;
+        }
+
+        public override void Draw(GraphicsDevice graphics, GameTime gameTime, Microsoft.Xna.Framework.Graphics.BasicEffect effect, Camera camera)
+        {
+            Globals.DrawModel(Assets.conveyorModel, t, 1, 1, camera);
+            base.Draw(graphics, gameTime, effect, camera);
         }
     }
 }

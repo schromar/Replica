@@ -63,20 +63,7 @@ namespace Replica.Entities.Blocks
 
         public override void OnCollision(Entity entity)
         {
-            //TODO 2: Need universal expression for this (see Door)
-            if (entity.Type == EntityType.Player || entity.Type == EntityType.Replicant || entity.Type == EntityType.ImitatingReplicant)
-            {
-                foreach (Entity e in entities)
-                {
-                    if (entity.Type == EntityType.Replicant || entity.Type == EntityType.ImitatingReplicant)
-                    {
-                        entities.Remove(e);
-                    }
-                }
-                Globals.inAntiblock = true;
-                Globals.normalReplicantsCount = 0;
-                Globals.imitatingReplicantsCount = 0;
-            }
+
         }
     }
 }

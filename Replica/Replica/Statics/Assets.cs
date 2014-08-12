@@ -35,7 +35,7 @@ namespace Replica.Statics
 
         public static Model model;
         public static Model wallModel;
-        public static Model testModel;
+        public static Model conveyorModel;
 
         public static SoundEffect doorClosing;
         public static SoundEffect doorOpening;
@@ -65,6 +65,7 @@ namespace Replica.Statics
 
             model                       = Manager.Load<Model>("Models\\p1_wedge");
             wallModel                   = Manager.Load<Model>("Models\\test");
+            conveyorModel               = Manager.Load<Model>("Models\\Conveyor");
 
 
             doorClosing                 = Manager.Load<SoundEffect>("Sounds\\doorClosing");
