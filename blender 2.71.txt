@@ -1,0 +1,5 @@
+Version: FBX 6.1 ASCII
+Texture:
+Edit Mode (Choose Vertices)
+UV/Image Editor
+Open
