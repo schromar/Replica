@@ -17,14 +17,16 @@ namespace Replica
         {
             for (int i = 0; i < entities.Count; i++) //Certain entities will create/delete other entities in their OnCollision
             {
-                for (int j = i + 1; j < entities.Count; j++)
-                {
-                    if (entities[i].Bounds.Intersects(entities[j].Bounds)) //TODO 2: Proper collision optimization
+                
+                    for (int j = 0; j < entities.Count; j++)
                     {
-                        entities[i].OnCollision(entities[j]);
-                        entities[j].OnCollision(entities[i]);
+                        if (entities[i].Bounds.Intersects(entities[j].Bounds)) //TODO 2: Proper collision optimization
+                        {
+                            entities[i].OnCollision(entities[j]);
+                            entities[j].OnCollision(entities[i]);
+                        }
                     }
-                }
+                
             }
         }
 

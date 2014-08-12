@@ -33,8 +33,6 @@ namespace Replica.Entities
         /// <summary>
         /// Number of replicants that exist of the different types
         /// </summary>
-        
-
 
         float spawnDistance;
         float finalSpawnDistance;
@@ -61,6 +59,8 @@ namespace Replica.Entities
 
         public override void Update(GameTime gameTime, AudioListener listener)
         {
+            Globals.inAntiblock = false;
+
             base.Update(gameTime, listener); //PlayerBase is taking over Y movement and collisions, so that Replicant can behave in the same way
             Rotate(gameTime);
             MoveXZ(gameTime);

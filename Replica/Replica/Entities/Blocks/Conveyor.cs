@@ -13,7 +13,7 @@ namespace Replica.Entities.Blocks
         /// </summary>
         Vector3 direction;
         public Vector3 Direction { get { return direction; } }
-        float speed=7;
+        float speed=6;
         public float Speed { get { return speed; } }
 
         public Conveyor(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, Vector3 direction)

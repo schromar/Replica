@@ -62,6 +62,8 @@ namespace Replica.Gamestates
                 entities[i].Update(gameTime, listener);
             }
 
+            
+
             CollisionSystem.CheckCollisions(entities);
 
 

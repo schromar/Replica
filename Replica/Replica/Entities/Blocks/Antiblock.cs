@@ -24,7 +24,7 @@ namespace Replica.Entities.Blocks
 
         public override void Update(GameTime gameTime, AudioListener listener)
         {
-            Globals.inAntiblock = false;
+            
         }
 
         public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
