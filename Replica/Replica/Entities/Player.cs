@@ -66,7 +66,8 @@ namespace Replica.Entities
             MoveXZ(gameTime);
             if (Input.isPressed(Keys.Space))
             {
-                jumping = true; //PlayerBase will react to this attribute in MoveY()
+                if (canJump)
+                    jumping = true; //PlayerBase will react to this attribute in MoveY()
             }
             UpdateReplicants();
             
@@ -318,15 +319,15 @@ namespace Replica.Entities
             switch (Globals.spawnType)
             {
                 case EntityType.Replicant:
-                    replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 5);
+                    replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 1000);
                     Globals.normalReplicantsCount++;
                     break;
                 case EntityType.ImitatingReplicant:
-                    replicant = new ImitatingReplicant(entities, lvl, replicantTransform, boundsSize, 5);
+                    replicant = new ImitatingReplicant(entities, lvl, replicantTransform, boundsSize, 1000);
                     Globals.imitatingReplicantsCount++;
                     break;
                 default:
-                    replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 5);
+                    replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 1000);
                     Globals.normalReplicantsCount++;
                     break;
             };

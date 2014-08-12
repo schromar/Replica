@@ -29,6 +29,7 @@ namespace Replica.Entities
         protected float gravity = -0.25f;
         protected float jumpVelocity = 10.5f;
         protected bool jumping;
+        protected bool canJump;
 
         /// <summary>
         /// Has to be a List because a single SoundEffectInstance can't be playing twice at the same time.
@@ -94,6 +95,8 @@ namespace Replica.Entities
 
         public override void Update(GameTime gameTime, AudioListener listener)
         {
+            canJump = true;
+
             for(int i=0; i<jumpingSounds.Count; i++)
             {
                 jumpingSounds[i].Apply3D(listener, emitter);
@@ -137,6 +140,8 @@ namespace Replica.Entities
         /// </summary>
         void HandleCollisions(GameTime gameTime)
         {
+
+
             for (int i = 0; i < movementBounds.Count; i++)
             {
                 if (movementBounds[i].Activated)
@@ -157,6 +162,7 @@ namespace Replica.Entities
                                     //Reacting if the foot hits a certain Block
                                     if (collider.Type == EntityType.Conveyor)
                                     {
+                                        canJump = false;
                                         Conveyor conveyor = (Conveyor)collider;
                                         Vector3 velocity = conveyor.Direction * conveyor.Speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
                                         prevVelocity += velocity;
