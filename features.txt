@@ -9,3 +9,5 @@ reverse replicant			15
 pushing boxes				16
 
 block which kills all replicants? (or if replicant runs into it it kills the player)
+
+test
