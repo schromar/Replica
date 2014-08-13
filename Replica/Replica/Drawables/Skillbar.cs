@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Replica.Entities;
 
 namespace Replica.Drawables
 {
@@ -53,9 +54,12 @@ namespace Replica.Drawables
         String count1;
         String count2;
 
-        
+        Player player;
 
-        
+        public Skillbar(Player player)
+        {
+            this.player = player;
+        }
 
         public override void Initialize()
         {
@@ -105,8 +109,8 @@ namespace Replica.Drawables
 
             
 
-            count1 = (Globals.normalReplicants - Globals.normalReplicantsCount).ToString();
-            count2 = (Globals.imitatingReplicants - Globals.imitatingReplicantsCount).ToString();
+            count1 = (Globals.normalReplicants - player.GetReplicantCount(EntityType.Replicant)).ToString();
+            count2 = (Globals.imitatingReplicants - player.GetReplicantCount(EntityType.ImitatingReplicant)).ToString();
             
 
 

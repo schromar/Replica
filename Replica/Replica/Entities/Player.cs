@@ -30,10 +30,6 @@ namespace Replica.Entities
         /// </summary>
         List<Replicant> replicants = new List<Replicant>();
 
-        /// <summary>
-        /// Number of replicants that exist of the different types
-        /// </summary>
-
         float spawnDistance;
         float finalSpawnDistance;
         int prevScrollWheel;
@@ -111,17 +107,6 @@ namespace Replica.Entities
             {
                 for (int i = 0; i < replicants.Count; i++)
                 {
-                    switch (replicants[i].Type)
-                    {
-                        case EntityType.Replicant:
-                            Globals.normalReplicantsCount--;
-                            break;
-                        case EntityType.ImitatingReplicant:
-                            Globals.imitatingReplicantsCount--;
-                            break;
-                        default:
-                            break;
-                    }
                     replicants[i].Destroy();
                     entities.Remove(replicants[i]);
                     replicants.RemoveAt(i);
@@ -134,6 +119,19 @@ namespace Replica.Entities
         {
             base.Move(velocity);
             cam.SetTransform(t);
+        }
+
+        public int GetReplicantCount(EntityType type)
+        {
+            int res = 0;
+            foreach (Replicant replicant in replicants)
+            {
+                if (replicant.Type == type)
+                {
+                    res++;
+                }
+            }
+            return res;
         }
 
         //TODO 2: Create universal rotation method?
@@ -213,17 +211,6 @@ namespace Replica.Entities
                 //Destroy Replicant once he has run out of time
                 if (replicants[i].ExistenceTime <= 0)
                 {
-                    switch(replicants[i].Type)
-                    {
-                        case EntityType.Replicant:
-                            Globals.normalReplicantsCount--;
-                            break;
-                        case EntityType.ImitatingReplicant:
-                            Globals.imitatingReplicantsCount--;
-                            break;
-                        default:
-                            break;
-                    }
                     replicants[i].Destroy();
                     entities.Remove(replicants[i]);
                     replicants.RemoveAt(i);
@@ -292,12 +279,12 @@ namespace Replica.Entities
             switch (Globals.spawnType)
             {
                 case EntityType.Replicant:
-                    if (Globals.normalReplicantsCount >= Globals.normalReplicants)
+                    if (GetReplicantCount(EntityType.Replicant) >= Globals.normalReplicants)
                         return false;
                         break;
                 case EntityType.ImitatingReplicant:
-                        if (Globals.imitatingReplicantsCount >= Globals.imitatingReplicants)
-                            return false;
+                    if (GetReplicantCount(EntityType.ImitatingReplicant) >= Globals.imitatingReplicants)
+                        return false;
                         break;
                 default:
                     break;
@@ -320,15 +307,12 @@ namespace Replica.Entities
             {
                 case EntityType.Replicant:
                     replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 1000);
-                    Globals.normalReplicantsCount++;
                     break;
                 case EntityType.ImitatingReplicant:
                     replicant = new ImitatingReplicant(entities, lvl, replicantTransform, boundsSize, 1000);
-                    Globals.imitatingReplicantsCount++;
                     break;
                 default:
                     replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 1000);
-                    Globals.normalReplicantsCount++;
                     break;
             };
 

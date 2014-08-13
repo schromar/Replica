@@ -33,12 +33,6 @@ namespace Replica.Statics
         public static int normalReplicants = 0;
         public static int imitatingReplicants = 0;
 
-        public static int normalReplicantsCount = 0;
-        public static int imitatingReplicantsCount = 0; 
-
-        public static int windowheight = 480;
-        public static int windowwidth = 800;
-
         public static BoundingBox GenerateBounds(Transform transform, Vector3 boundsSize)
         {
             BoundingBox bounds = new BoundingBox();

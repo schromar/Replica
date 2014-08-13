@@ -36,11 +36,11 @@ namespace Replica.Gamestates
             defaultEffect.VertexColorEnabled = true;
 
             entities = new List<Entity>();
-            lvl = new Level(entities);
+            lvl = new Level(entities, gDevice);
 
             drawables = new List<Drawable>();
 
-            drawables.Add(new Skillbar());
+            drawables.Add(new Skillbar(lvl.P));
             text = new LevelText(lvl.Text);
             drawables.Add(text);
 
