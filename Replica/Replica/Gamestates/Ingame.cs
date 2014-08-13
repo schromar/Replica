@@ -40,9 +40,14 @@ namespace Replica.Gamestates
 
             drawables = new List<Drawable>();
 
-            drawables.Add(new Skillbar());
+            drawables.Add(new Skillbar(gDevice));
+
             text = new LevelText(lvl.Text);
+
             drawables.Add(text);
+
+
+
 
             foreach (Drawable drawable in drawables)
             {

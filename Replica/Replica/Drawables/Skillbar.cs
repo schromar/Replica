@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Replica.Statics;
 using System;
 using System.Collections.Generic;
@@ -27,9 +28,6 @@ namespace Replica.Drawables
 
         int skillCountActiveY;
         int skillCountInactiveY;
-        
-
-        
 
         int skill1OffsetX;
         int skill2OffsetX;
@@ -53,9 +51,9 @@ namespace Replica.Drawables
         String count1;
         String count2;
 
-        
-
-        
+        public Skillbar(GraphicsDevice gDevice)
+        {
+        }
 
         public override void Initialize()
         {
@@ -71,10 +69,8 @@ namespace Replica.Drawables
             skill2CountActiveX = 428;
             skill2CountInactiveX = 430;
 
-
-
-            skillCountActiveY = 425;
-            skillCountInactiveY = 421;
+            skillCountActiveY = 450;
+            skillCountInactiveY = 446;
 
             count1 = "0";
             count2 = "0";
@@ -83,7 +79,7 @@ namespace Replica.Drawables
             skill2X = skill1X + normalSize;
             skill3X = skill2X + normalSize;
 
-            skillY = 380;
+            skillY = 405;
 
             offsetX = activeSize - normalSize;
             offsetY = 8;
@@ -103,12 +99,8 @@ namespace Replica.Drawables
             skill2OffsetY   = 0;
             skill3OffsetY   = 0;
 
-            
-
             count1 = (Globals.normalReplicants - Globals.normalReplicantsCount).ToString();
             count2 = (Globals.imitatingReplicants - Globals.imitatingReplicantsCount).ToString();
-            
-
 
             switch (Globals.spawnType)
             {
@@ -127,7 +119,6 @@ namespace Replica.Drawables
                 default :
                     break;
             }
-
         }
 
         public override void Draw()

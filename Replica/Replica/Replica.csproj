@@ -110,6 +110,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Antiblock.cs" />
     <Compile Include="Button.cs" />
     <Compile Include="CollisionSystem.cs" />
     <Compile Include="Drawable.cs" />
@@ -119,6 +120,7 @@
     <Compile Include="Entities\Blocks\Antiblock.cs" />
     <Compile Include="Entities\Blocks\Conveyor.cs" />
     <Compile Include="Entities\Blocks\Door.cs" />
+    <Compile Include="Entities\Blocks\Eventblock.cs" />
     <Compile Include="Entities\Blocks\Glass.cs" />
     <Compile Include="Entities\Blocks\Goal.cs" />
     <Compile Include="Entities\Blocks\JumpPad.cs" />

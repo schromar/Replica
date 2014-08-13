@@ -19,6 +19,7 @@ namespace Replica
             JumpPad,
             Switch,
             Antiblock,
+            Eventblock,
         ImitatingReplicant,
         Player,
         Replicant,

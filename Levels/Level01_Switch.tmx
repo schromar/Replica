@@ -6,7 +6,7 @@
   <property name="Text" value=""/>
  </properties>
  <tileset firstgid="1" name="ReplicaTileset" tilewidth="32" tileheight="32">
-  <image source="ReplicaTileset.png" width="320" height="64"/>
+  <image source="ReplicaTileset.png" width="320" height="128"/>
  </tileset>
  <layer name="Tile Layer 1" width="14" height="9" visible="0" opacity="0.39">
   <data encoding="csv">
@@ -30,7 +30,7 @@
 0,1,1,1,0,0,0,1,0,0,1,0,1,0,
 1,0,13,0,0,0,0,0,1,1,1,0,1,0,
 1,2,13,0,0,0,0,0,7,0,0,0,1,0,
-1,0,13,0,0,0,0,0,1,1,1,1,0,0,
+1,0,13,0,0,21,22,23,1,1,1,1,0,0,
 0,1,1,1,1,1,1,1,1,0,0,0,0,0
 </data>
  </layer>

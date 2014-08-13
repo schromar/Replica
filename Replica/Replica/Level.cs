@@ -35,6 +35,8 @@ namespace Replica
         public  Player P { get { return p; } }
 
         string text;
+        string currentText;
+
         public string Text { get { return text; } }
 
         public Level(List<Entity> entities)
@@ -45,6 +47,8 @@ namespace Replica
             
             Globals.normalReplicants = Convert.ToInt32(map.Properties["ReplicantsNormal"]);
             Globals.imitatingReplicants = Convert.ToInt32(map.Properties["ReplicantsImitating"]);
+
+
             text = map.Properties["Text"];
 
             Vector3 size = new Vector3(map.Width, map.Layers.Count, map.Height);
@@ -137,6 +141,15 @@ namespace Replica
                             break;
                         case 13:
                             currentEntity = new Antiblock(entities, this, t, blockSize);
+                            break;
+                        case 21:
+                            currentEntity = new Eventblock(entities, this, t, blockSize, 1);
+                            break;
+                        case 22:
+                            currentEntity = new Eventblock(entities, this, t, blockSize, 2);
+                            break;
+                        case 23:
+                            currentEntity = new Eventblock(entities, this, t, blockSize, 3);
                             break;
                         default:
                             break;

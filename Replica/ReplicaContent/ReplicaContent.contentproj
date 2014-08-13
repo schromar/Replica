@@ -187,8 +187,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\redswitch2.fbx">
-      <Name>redswitch2</Name>
+    <Compile Include="Textures\Conveyor.png">
+      <Name>Conveyor</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Models\redSwitch.fbx">
+      <Name>redSwitch</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
