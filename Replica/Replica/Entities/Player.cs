@@ -113,6 +113,20 @@ namespace Replica.Entities
                 }
                 Globals.inAntiblock = true;
             }
+
+            if (entity.Type == EntityType.Eventblock)
+            {
+                if (entity.index == 1)
+                {
+                    lvl.text = lvl.text1;
+                }
+                else if (entity.index == 2)
+                {
+                    lvl.text = lvl.text2;
+                }
+                Globals.newText = true;
+                entities.Remove(entity);
+            }
         }
 
         public override void Move(Vector3 velocity)

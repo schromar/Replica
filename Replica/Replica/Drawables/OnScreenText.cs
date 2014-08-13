@@ -7,7 +7,7 @@ using Replica.Statics;
 
 namespace Replica.Drawables
 {
-    class LevelText : Drawable
+    class OnScreenText : Drawable
     {
         /// <summary>
         /// The text to be displayed. Will usually be passed in from the current lvl.
@@ -19,7 +19,7 @@ namespace Replica.Drawables
         float existenceTime = 5;
         public float ExistenceTime { get { return existenceTime; } }
 
-        public LevelText(string text)
+        public OnScreenText(string text)
         {
             this.text = text;
         }

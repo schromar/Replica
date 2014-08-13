@@ -35,8 +35,10 @@ namespace Replica
         private Player p;
         public  Player P { get { return p; } }
 
-        string text;
-        string currentText;
+        public string text;
+        public string text1;
+        public string text2;
+        
 
         public string Text { get { return text; } }
 
@@ -50,7 +52,10 @@ namespace Replica
             Globals.imitatingReplicants = Convert.ToInt32(map.Properties["ReplicantsImitating"]);
 
 
-            text = map.Properties["Text"];
+            text1 = map.Properties["Text1"].ToString();
+
+            text2 = map.Properties["Text2"];
+            text  = text1;
 
             Vector3 size = new Vector3(map.Width, map.Layers.Count, map.Height);
 

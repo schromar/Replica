@@ -114,7 +114,7 @@
     <Compile Include="Button.cs" />
     <Compile Include="CollisionSystem.cs" />
     <Compile Include="Drawable.cs" />
-    <Compile Include="Drawables\LevelText.cs" />
+    <Compile Include="Drawables\OnScreenText.cs" />
     <Compile Include="Drawables\Skillbar.cs" />
     <Compile Include="Entities\Block.cs" />
     <Compile Include="Entities\Blocks\Antiblock.cs" />

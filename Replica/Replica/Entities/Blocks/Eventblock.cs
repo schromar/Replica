@@ -11,10 +11,10 @@ namespace Replica.Entities.Blocks
 {
     class Eventblock : Block
     {
-        int index;
+        
 
         public Eventblock(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize, int index)
-            : base(entities, lvl, transform, boundsSize, EntityType.Antiblock)
+            : base(entities, lvl, transform, boundsSize, EntityType.Eventblock)
         {
             this.index = index;
             drawBounds = true;
@@ -65,6 +65,7 @@ namespace Replica.Entities.Blocks
         public override void OnCollision(Entity entity)
         {
 
+            
         }
     }
 }

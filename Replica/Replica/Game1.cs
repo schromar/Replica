@@ -36,7 +36,7 @@ namespace Replica
 
         protected override void Initialize()
         {
-           
+            this.IsFixedTimeStep = false;
 
             base.Initialize();
         }

@@ -23,7 +23,7 @@ namespace Replica.Gamestates
         List<Entity> entities;
 
         List<Drawable> drawables;
-        LevelText text;
+        OnScreenText text;
 
         Level lvl;
         GraphicsDevice gDevice;
@@ -43,7 +43,7 @@ namespace Replica.Gamestates
             drawables = new List<Drawable>();
 
             drawables.Add(new Skillbar(lvl.P));
-            text = new LevelText(lvl.Text);
+            text = new OnScreenText(lvl.Text);
 
             drawables.Add(text);
 
@@ -72,10 +72,19 @@ namespace Replica.Gamestates
             test.Start();
             CollisionSystem.CheckCollisions(entities);
             test.Stop();
-            Console.WriteLine(test.Elapsed+ " " +entities.Count);
+            //Console.WriteLine(test.Elapsed+ " " +entities.Count);
 
             if(Input.isClicked(Microsoft.Xna.Framework.Input.Keys.Escape))
                 return eGamestates.MainMenu;
+
+            if (Globals.newText)
+            {
+                drawables.Add(new OnScreenText(lvl.text));
+                Globals.newText = false;
+            }
+
+
+
 
             if (Globals.reachedGoal == true)
             {
