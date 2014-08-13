@@ -33,6 +33,8 @@ namespace Replica.Statics
         public static int normalReplicants = 0;
         public static int imitatingReplicants = 0;
 
+        public static EntityType[] collisionDisabled = new EntityType[] { EntityType.Block, EntityType.Antiblock, EntityType.Conveyor, EntityType.Glass, EntityType.Goal, EntityType.ImitatingReplicant, EntityType.Replicant };
+
         public static BoundingBox GenerateBounds(Transform transform, Vector3 boundsSize)
         {
             BoundingBox bounds = new BoundingBox();

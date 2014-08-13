@@ -12,13 +12,13 @@ namespace Replica
     public enum EntityType
     {
         Block,
+            Antiblock,
             Conveyor,
             Door,
             Glass,
             Goal,
             JumpPad,
             Switch,
-            Antiblock,
         ImitatingReplicant,
         Player,
         Replicant,

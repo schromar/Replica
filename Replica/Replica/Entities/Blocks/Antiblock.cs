@@ -60,10 +60,5 @@ namespace Replica.Entities.Blocks
 
             base.Draw(graphics, gameTime, effect, camera);
         }
-
-        public override void OnCollision(Entity entity)
-        {
-
-        }
     }
 }
