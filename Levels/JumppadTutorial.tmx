@@ -10,17 +10,17 @@
  </tileset>
  <layer name="Kachelebene 1" width="7" height="7">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYBykmJtIdQAVeAA8
+   eJxjZGBgYBzEmJsINQAVUAA8
   </data>
  </layer>
  <layer name="Kachelebene 2" width="7" height="7">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYMSDsQF0OSYozYpHH7IcNjX47MbnPhAGABB0ACo=
+   eJxjZGBgYMSDsQF0OSYozYpHH7IcDPNBMQMWOWRz8LkPhAEYRABH
   </data>
  </layer>
  <layer name="Kachelebene 4" width="7" height="7">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYMSDsQFK5bCpgYkxAzEHAX3oGAAM3AAm
+   eJxjZGBgYMSDsQFK5bCpgYkxAzEfEPMCMQcOfegYABF4AEE=
   </data>
  </layer>
  <layer name="Kachelebene 3" width="7" height="7">
