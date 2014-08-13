@@ -20,8 +20,9 @@ namespace Replica.Statics
         public static bool inAntiblock = false;
        
         public static String currentLvl;
-        public static String[] levelnames = new String[] { "Conveyormadness", "07_TwoReplicantsThreeButtons" };
+        public static String[] levelnames = new String[] {"JumppadTutorial", "Conveyormadness", "07_TwoReplicantsThreeButtons" };
         public static int levelnamecounter = 0; 
+
         public static eGamestates currentState = eGamestates.MainMenu;
         public static eGamestates prevState = eGamestates.MainMenu;
         public static bool reachedGoal = false;
