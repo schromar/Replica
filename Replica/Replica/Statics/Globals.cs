@@ -20,7 +20,7 @@ namespace Replica.Statics
         public static bool inAntiblock = false;
        
         public static String currentLvl;
-        public static String[] levelnames = new String[] { "Level01_Switch", "Conveyormadness", "07_TwoReplicantsThreeButtons" };
+        public static String[] levelnames = new String[] { "Conveyormadness", "JumpTutorial", "07_TwoReplicantsThreeButtons" };
         public static int levelnamecounter = 0;
         public static int highesstreachedlvl = 0; 
 
@@ -33,11 +33,7 @@ namespace Replica.Statics
         public static int normalReplicants = 0;
         public static int imitatingReplicants = 0;
 
-        public static int normalReplicantsCount = 0;
-        public static int imitatingReplicantsCount = 0; 
-
-        public static int windowheight = 480;
-        public static int windowwidth = 800;
+        public static EntityType[] collisionDisabled = new EntityType[] { EntityType.Block, EntityType.Antiblock, EntityType.Conveyor, EntityType.Glass, EntityType.Goal, EntityType.ImitatingReplicant, EntityType.Replicant };
 
         public static BoundingBox GenerateBounds(Transform transform, Vector3 boundsSize)
         {

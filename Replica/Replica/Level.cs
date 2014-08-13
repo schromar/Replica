@@ -8,6 +8,7 @@ using TiledSharp;
 using Replica.Entities;
 using Replica.Entities.Blocks;
 using Replica.Statics;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Replica
 {
@@ -39,7 +40,7 @@ namespace Replica
 
         public string Text { get { return text; } }
 
-        public Level(List<Entity> entities)
+        public Level(List<Entity> entities, GraphicsDevice gDevice)
         {
             //Load map with TiledSharp
             TmxMap map = new TmxMap("Levels/" + Globals.currentLvl + ".tmx"); //TODO 2: Check if file even exists
@@ -82,7 +83,7 @@ namespace Replica
                             currentEntity = new Block(entities, this, t, blockSize);
                             break;
                         case 2:
-                            p = new Player(entities, this, t, Globals.windowwidth, Globals.windowheight);
+                            p = new Player(entities, this, t, gDevice.Viewport.Width, gDevice.Viewport.Height);
                             currentEntity = p;
                             break;
                         case 3:

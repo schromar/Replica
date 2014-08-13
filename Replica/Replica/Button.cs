@@ -17,10 +17,10 @@ namespace Replica
         Color color = new Color(255,255,255, 255);
         public Vector2 size;
 
-        public Button(Texture2D newTexture, GraphicsDevice gdevice)
+        public Button(Texture2D newTexture, GraphicsDevice gDevice)
         {
             texture = newTexture;
-            size = new Vector2(gdevice.Viewport.Width / 8, gdevice.Viewport.Height / 15);
+            size = new Vector2(gDevice.Viewport.Width / 8, gDevice.Viewport.Height / 15);
         }
 
         bool down;

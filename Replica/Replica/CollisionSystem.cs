@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Replica.Statics;
 
 namespace Replica
 {
@@ -17,7 +18,18 @@ namespace Replica
         {
             for (int i = 0; i < entities.Count; i++) //Certain entities will create/delete other entities in their OnCollision
             {
-                
+                bool check = true;
+                foreach (EntityType type in Globals.collisionDisabled)
+                {
+                    if (entities[i].Type == type)
+                    {
+                        check = false;
+                        break;
+                    }
+                }
+
+                if (check)
+                {
                     for (int j = 0; j < entities.Count; j++)
                     {
                         if (entities[i].Bounds.Intersects(entities[j].Bounds)) //TODO 2: Proper collision optimization
@@ -26,7 +38,7 @@ namespace Replica
                             entities[j].OnCollision(entities[i]);
                         }
                     }
-                
+                }
             }
         }
 

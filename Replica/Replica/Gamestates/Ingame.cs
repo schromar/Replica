@@ -14,6 +14,8 @@ using Replica.Entities.Blocks;
 using Replica.Statics;
 using Replica.Drawables;
 
+using System.Diagnostics;
+
 namespace Replica.Gamestates
 {
     public class Ingame : Gamestate
@@ -36,12 +38,11 @@ namespace Replica.Gamestates
             defaultEffect.VertexColorEnabled = true;
 
             entities = new List<Entity>();
-            lvl = new Level(entities);
+            lvl = new Level(entities, gDevice);
 
             drawables = new List<Drawable>();
 
-            drawables.Add(new Skillbar(gDevice));
-
+            drawables.Add(new Skillbar(lvl.P));
             text = new LevelText(lvl.Text);
 
             drawables.Add(text);
@@ -67,10 +68,11 @@ namespace Replica.Gamestates
                 entities[i].Update(gameTime, listener);
             }
 
-            
-
+            Stopwatch test=new Stopwatch();
+            test.Start();
             CollisionSystem.CheckCollisions(entities);
-
+            test.Stop();
+            Console.WriteLine(test.Elapsed+ " " +entities.Count);
 
             if(Input.isClicked(Microsoft.Xna.Framework.Input.Keys.Escape))
                 return eGamestates.MainMenu;
