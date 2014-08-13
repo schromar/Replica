@@ -71,6 +71,12 @@ namespace Replica.Gamestates
             if (Globals.reachedGoal == true)
             {
                 entities.Clear();
+                if (Globals.highesstreachedlvl <= Globals.levelnamecounter)
+                {
+                    Globals.highesstreachedlvl++; 
+                }
+
+
                 if (Globals.levelnamecounter == Globals.levelnames.Length - 1)
                 {
                     return eGamestates.Credits;
