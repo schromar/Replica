@@ -47,7 +47,7 @@ namespace Replica.Entities.Blocks
 
         public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
         {
-            Globals.DrawModel(Assets.switchModel, t, 1, 1, camera);
+            Globals.DrawModel(Assets.redSwitchModel, t, 1, 1, camera);
             //Identifying how many switches are activated
             List<Switch> switches=lvl.GetSwitches(color);
             int numActivated=0;

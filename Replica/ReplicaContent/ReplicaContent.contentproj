@@ -180,15 +180,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\switch2.fbx">
-      <Name>switch2</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\redswitch2.fbx">
-      <Name>redswitch2</Name>
+    <Compile Include="Models\redSwitch.fbx">
+      <Name>redSwitch</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
