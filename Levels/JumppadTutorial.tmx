@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="7" height="7" tilewidth="32" tileheight="32">
+ <properties>
+  <property name="ReplicantsImitating" value="0"/>
+  <property name="ReplicantsNormal" value="2"/>
+  <property name="Text" value="Use Jumppads to reach higher places"/>
+ </properties>
+ <tileset firstgid="1" name="ReplicaTileset" tilewidth="32" tileheight="32">
+  <image source="Desktop/Replica/Levels/ReplicaTileset.png" width="320" height="64"/>
+ </tileset>
+ <layer name="Kachelebene 1" width="7" height="7">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYBykmJtIdQAVeAA8
+  </data>
+ </layer>
+ <layer name="Kachelebene 2" width="7" height="7">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYMSDsQF0OSYozYpHH7IcNjX47MbnPhAGABB0ACo=
+  </data>
+ </layer>
+ <layer name="Kachelebene 4" width="7" height="7">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYMSDsQFK5bCpgYkxAzEHAX3oGAAM3AAm
+  </data>
+ </layer>
+ <layer name="Kachelebene 3" width="7" height="7">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYBziGAAT6AAy
+  </data>
+ </layer>
+</map>

@@ -51,38 +51,63 @@ namespace Replica.Gamestates
 
             if (lvl00button.isClicked)
             {
-                Globals.currentLvl = "01_OneButton";
+                Globals.levelnamecounter = 0;
+                if (Globals.levelnamecounter >= Globals.highesstreachedlvl)
+                {
+                    Globals.levelnamecounter = Globals.highesstreachedlvl;
+                }
+                Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
                 return eGamestates.InGame;
             }
             if (lvl01button.isClicked)
             {
-                Globals.currentLvl = "02_TwoButtons";
+                Globals.levelnamecounter = 1;
+                if (Globals.levelnamecounter >= Globals.highesstreachedlvl)
+                {
+                    Globals.levelnamecounter = Globals.highesstreachedlvl;
+                }
+                Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
                 return eGamestates.InGame;
             }
+                if (lvl02button.isClicked)
+                {
+                    Globals.levelnamecounter = 2;
+                    if (Globals.levelnamecounter >= Globals.highesstreachedlvl)
+                    {
+                        Globals.levelnamecounter = Globals.highesstreachedlvl;
+                    }
+                    Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
+                    return eGamestates.InGame;
+                }
 
-            if (lvl02button.isClicked)
-            {
-                Globals.currentLvl = "05_LockedIn";
-                return eGamestates.InGame;
+                if (lvl03button.isClicked)
+                {
+                    Globals.levelnamecounter = 3;
+                    if (Globals.levelnamecounter >= Globals.highesstreachedlvl)
+                    {
+                        Globals.levelnamecounter = Globals.highesstreachedlvl;
+                    }
+                    Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
+                    return eGamestates.InGame;
+                }
+
+                if (lvl04button.isClicked)
+                {
+                    Globals.levelnamecounter = 4;
+                    if (Globals.levelnamecounter >= Globals.highesstreachedlvl)
+                    {
+                        Globals.levelnamecounter = Globals.highesstreachedlvl;
+                    }
+                    Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
+                    return eGamestates.InGame;
+                }
+
+                if (Input.isClicked(Keys.Escape))
+                    return eGamestates.MainMenu;
+
+                return eGamestates.Levelselection;
             }
-
-            if (lvl03button.isClicked)
-            {
-                Globals.currentLvl = "06_Bridge";
-                return eGamestates.InGame;
-            }
-
-            if (lvl04button.isClicked)
-            {
-                Globals.currentLvl = "07_TwoReplicantsThreeButtons";
-                return eGamestates.InGame;
-            }
-
-            if(Input.isClicked(Keys.Escape))
-                return eGamestates.MainMenu;
-
-            return eGamestates.Levelselection;
-        }
+        
 
         public void Draw(GameTime gameTime)
         {
