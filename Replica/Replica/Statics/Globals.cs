@@ -20,7 +20,7 @@ namespace Replica.Statics
         public static bool inAntiblock = false;
        
         public static String currentLvl;
-        public static String[] levelnames = new String[] {"JumppadTutorial", "JumpTutorial", "07_TwoReplicantsThreeButtons" };
+        public static String[] levelnames = new String[] { "Conveyormadness", "JumpTutorial", "07_TwoReplicantsThreeButtons" };
         public static int levelnamecounter = 0;
         public static int highesstreachedlvl = 0; 
 
