@@ -22,13 +22,14 @@ namespace Replica.Entities
         {
             drawBounds = false;
             solid = true;
+
+            t.Rotation = new Vector2();
         }
 
         public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
         {
             if (draw)
             {
-                t.Rotation = new Vector2();
                 Globals.DrawModel(Assets.wallModel, t, 2, 1, camera);
             }
 
