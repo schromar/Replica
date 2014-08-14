@@ -6,10 +6,14 @@ using Microsoft.Xna.Framework;
 
 namespace Replica
 {
-    class Drawable
+    class Drawable    
     {
+        public float existenceTime;
+        public float ExistenceTime { get { return existenceTime; } }
+
         public virtual void Initialize()
         {
+            existenceTime = 0;
         }
 
         public virtual void Update(GameTime gameTime)

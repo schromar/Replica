@@ -11,6 +11,8 @@ namespace Replica.Drawables
 {
     class Skillbar : Drawable
     {
+        public float ExistenceTime { get { return existenceTime; } }
+
         int skill1X;
         int skill2X;
         int skill3X;
@@ -61,6 +63,7 @@ namespace Replica.Drawables
 
         public override void Initialize()
         {
+
             normalSize = 64;
             activeSize = 80;
 

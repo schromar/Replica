@@ -55,41 +55,40 @@ namespace Replica
             Globals.normalReplicants = Convert.ToInt32(map.Properties["ReplicantsNormal"]);
             Globals.imitatingReplicants = Convert.ToInt32(map.Properties["ReplicantsImitating"]);
 
-
-            //text1 = map.Properties["Text1"];
-            int k = 1;
-            int l = 1;
-            text1 = map.Properties["Text1"];
-            text2 = map.Properties["Text2"];
-
-            texts = new List<string>();
-
-            texts.Add(text1);
-            texts.Add(text2);
-            
-
-            for (int i = 1; i <= 1; i++)
+            //if the map contains text, it is loaded here
+            if (map.Properties.ContainsKey("Text1"))
             {
-                text = texts.ElementAt(i-1);
+                if (map.Properties.ContainsKey("Text1"))
+                    text1 = map.Properties["Text1"];
+                if (map.Properties.ContainsKey("Text2"))
+                    text2 = map.Properties["Text2"];
 
-                for (int j = 1; j <= 5; j++)
+                texts = new List<string>();
+
+                texts.Add(text1);
+                texts.Add(text2);
+
+                for (int i = 1; i <= 2; i++)
                 {
-                    if (map.Properties["Text" + i + "_" + j] == null)
-                        break;
-                    t = map.Properties["Text" + i + "_" + j];
-                    
+                    text = texts.ElementAt(i - 1);
+
+                    for (int j = 1; j <= 5; j++)
+                    {
+                        if (!map.Properties.ContainsKey("Text" + i + "_" + j))
+                            break;
+                        t = map.Properties["Text" + i + "_" + j];
+
                         text += "\n";
                         text += t;
+                    }
+                    texts.RemoveAt(i - 1);
+                    texts.Insert(i - 1, text);
+
+                    if (i == texts.Count)
+                        break;
                 }
-                texts.RemoveAt(i - 1);
-                texts.Insert(i - 1, text);
-
-                if (i == texts.Count)
-                    break;
+                text1 = texts.ElementAt(0);
             }
-            text1 = texts.ElementAt(0);
-
-
             text  = text1;
 
             Vector3 size = new Vector3(map.Width, map.Layers.Count, map.Height);
