@@ -35,9 +35,13 @@ namespace Replica
         private Player p;
         public  Player P { get { return p; } }
 
-        public string text;
-        public string text1;
-        public string text2;
+        public string text = "";
+        public string t = ""; 
+        public string text1 = "";
+        public string text2 = "";
+
+        private List<String> texts;
+        
         
 
         public string Text { get { return text; } }
@@ -52,9 +56,40 @@ namespace Replica
             Globals.imitatingReplicants = Convert.ToInt32(map.Properties["ReplicantsImitating"]);
 
 
-            text1 = map.Properties["Text1"].ToString();
-
+            //text1 = map.Properties["Text1"];
+            int k = 1;
+            int l = 1;
+            text1 = map.Properties["Text1"];
             text2 = map.Properties["Text2"];
+
+            texts = new List<string>();
+
+            texts.Add(text1);
+            texts.Add(text2);
+            
+
+            for (int i = 1; i <= 1; i++)
+            {
+                text = texts.ElementAt(i-1);
+
+                for (int j = 1; j <= 5; j++)
+                {
+                    if (map.Properties["Text" + i + "_" + j] == null)
+                        break;
+                    t = map.Properties["Text" + i + "_" + j];
+                    
+                        text += "\n";
+                        text += t;
+                }
+                texts.RemoveAt(i - 1);
+                texts.Insert(i - 1, text);
+
+                if (i == texts.Count)
+                    break;
+            }
+            text1 = texts.ElementAt(0);
+
+
             text  = text1;
 
             Vector3 size = new Vector3(map.Width, map.Layers.Count, map.Height);

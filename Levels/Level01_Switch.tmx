@@ -4,7 +4,12 @@
   <property name="ReplicantsImitating" value="0"/>
   <property name="ReplicantsNormal" value="1"/>
   <property name="Text" value=""/>
-  <property name="Text1" value="Test 1\nTest2"/>
+  <property name="Text1" value="Cut my life into pieces"/>
+  <property name="Text1_1" value="This is my last resort"/>
+  <property name="Text1_2" value="Suffocation"/>
+  <property name="Text1_3" value="No breathing"/>
+  <property name="Text1_4" value="Don't give a fuck if I cut my arm bleeding"/>
+  <property name="Text1_5" value=""/>
   <property name="Text2" value="Test 2"/>
   <property name="Text3" value="Test 3"/>
   <property name="Text4" value=""/>
@@ -20,7 +25,7 @@
 0,0,0,0,1,1,1,0,0,0,0,1,0,0,
 0,0,0,0,1,1,1,0,0,0,0,1,0,0,
 0,0,0,0,1,1,1,0,0,0,0,1,0,0,
-0,1,1,1,1,1,1,1,1,0,0,1,0,0,
+0,1,1,1,1610612746,1610612746,1,1,1,0,0,1,0,0,
 0,1,1,1,1,1,1,1,1,1,1,1,0,0,
 0,1,1,1,1,1,1,1,1,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0
