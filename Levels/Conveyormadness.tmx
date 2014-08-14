@@ -4,9 +4,14 @@
   <property name="ReplicantsImitating" value="0"/>
   <property name="ReplicantsNormal" value="3"/>
   <property name="Text" value=""/>
+  <property name="Text1" value=""/>
+  <property name="Text2" value=""/>
+  <property name="Text3" value=""/>
+  <property name="Text4" value=""/>
+  <property name="Text5" value=""/>
  </properties>
  <tileset firstgid="1" name="ReplicaTileset" tilewidth="32" tileheight="32">
-  <image source="ReplicaTileset.png" width="320" height="64"/>
+  <image source="ReplicaTileset.png" width="320" height="128"/>
  </tileset>
  <layer name="Tile Layer 1" width="20" height="11" visible="0">
   <data encoding="csv">

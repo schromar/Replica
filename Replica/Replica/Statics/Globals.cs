@@ -20,13 +20,15 @@ namespace Replica.Statics
         public static bool inAntiblock = false;
        
         public static String currentLvl;
-        public static String[] levelnames = new String[] { "Conveyormadness", "JumpTutorial", "07_TwoReplicantsThreeButtons" };
+        public static String[] levelnames = new String[] { "Level01_Switch", "JumpTutorial", "07_TwoReplicantsThreeButtons" };
         public static int levelnamecounter = 0;
         public static int highesstreachedlvl = 0; 
 
         public static eGamestates currentState = eGamestates.MainMenu;
-        public static eGamestates prevState = eGamestates.MainMenu;
+        public static eGamestates prevState    = eGamestates.MainMenu;
+
         public static bool reachedGoal = false;
+        public static bool newText = false;
 
         public static EntityType spawnType = EntityType.Replicant;
 

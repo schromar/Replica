@@ -11,14 +11,15 @@ namespace Replica
 {
     public enum EntityType
     {
-        Block,
-            Antiblock,
+        Block,        
             Conveyor,
             Door,
             Glass,
             Goal,
             JumpPad,
             Switch,
+            Antiblock,
+            Eventblock,
         ImitatingReplicant,
         Player,
         Replicant,
@@ -46,6 +47,8 @@ namespace Replica
         /// Used for testing purposes.
         /// </summary>
         protected Color boundsColor = Color.White;
+
+        public int index;
 
         /// <summary>
         /// The BoundingBox for this Entity. The position of the transform is its midpoint.
