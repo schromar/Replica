@@ -57,8 +57,11 @@ namespace Replica.Entities
         {
             Globals.inAntiblock = false;
 
+            //TODO 0: performance
             base.Update(gameTime, listener); //PlayerBase is taking over Y movement and collisions, so that Replicant can behave in the same way
+            //TODO 0: performance (?????)
             Rotate(gameTime);
+
             MoveXZ(gameTime);
             if (Input.isPressed(Keys.Space))
             {
@@ -78,7 +81,8 @@ namespace Replica.Entities
                 Globals.spawnType = EntityType.ImitatingReplicant;
             }
 
-            MouseState mState = Mouse.GetState();
+            MouseState mState = Input.mouse;
+            //TODO 0: performance (Entity count?)
             UpdateSpawnDistance(mState);
 
             replicantTransform = t;
@@ -155,12 +159,14 @@ namespace Replica.Entities
         /// <param name="gameTime"></param>
         void Rotate(GameTime gameTime)
         {
-            MouseState mState = Mouse.GetState();
+            //TODO 0: performance (GetState?)
+            MouseState mState = Input.mouse;
 
             Vector2 mouseMovement = resolution / 2 - new Vector2(mState.X, mState.Y);
             Mouse.SetPosition((int)resolution.X / 2, (int)resolution.Y / 2);
 
             Vector2 rotationChange = mouseMovement * mouseSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             float yDegrees = MathHelper.ToDegrees(t.Rotation.Y + rotationChange.Y);
             if(yDegrees > maxRotation || yDegrees < -maxRotation)
             {
@@ -234,7 +240,6 @@ namespace Replica.Entities
 
         void UpdateSpawnDistance(MouseState mState)
         {
-
             int scrollWheelChange = mState.ScrollWheelValue - prevScrollWheel;
             spawnDistance += scrollWheelChange / 200.0f; //TODO 2: Remove constant
             prevScrollWheel = mState.ScrollWheelValue;
@@ -246,36 +251,15 @@ namespace Replica.Entities
             }
 
             //Maximum
-            List<KeyValuePair<float, Entity>> rayIntersections = CollisionSystem.RayIntersection(entities, new Ray(t.position, t.Forward));
-            for(int i=0; i<rayIntersections.Count; i++)
+            float? rayIntersection = CollisionSystem.RayIntersection(entities, new Ray(t.position, t.Forward), this);
+            if (rayIntersection != null && (float)rayIntersection < spawnDistance)
             {
-                if (rayIntersections[i].Value == this || !rayIntersections[i].Value.Solid) //We don't care if ray intersected with Player or a non-solid Block
-                {
-                    rayIntersections.RemoveAt(i);
-                    i--;
-                }
-                else
-                {
-                    if (rayIntersections[i].Key < spawnDistance)
-                    {
-                        //Found closest point with solid block
-                        if (rayIntersections[i].Value.Solid)
-                        {
-                            finalSpawnDistance = rayIntersections[i].Key;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        //User-picked point is closest (since rayIntersections is sorted by distance)
-                        finalSpawnDistance = spawnDistance;
-                        break;
-                    }
-                }
+                //Found closest point with solid block
+                finalSpawnDistance = (float)rayIntersection;
             }
-            //We are not looking at any solid Block
-            if (rayIntersections.Count == 0)
+            else
             {
+                //User-picked point is closest (since rayIntersections is sorted by distance)
                 finalSpawnDistance = spawnDistance;
             }
         }

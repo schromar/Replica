@@ -35,10 +35,10 @@ namespace Replica.Gamestates
         }
 
         public eGamestates Update(GameTime gameTime)
-        {        
-            playbutton.Update(Mouse.GetState());
-            exitbutton.Update(Mouse.GetState());
-            loadbutton.Update(Mouse.GetState());
+        {
+            playbutton.Update(Input.mouse);
+            exitbutton.Update(Input.mouse);
+            loadbutton.Update(Input.mouse);
 
             if (playbutton.isClicked)
             {

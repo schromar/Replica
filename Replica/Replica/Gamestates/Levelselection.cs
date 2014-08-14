@@ -43,11 +43,11 @@ namespace Replica.Gamestates
 
         public eGamestates Update(GameTime gameTime)
         {
-            lvl00button.Update(Mouse.GetState());
-            lvl01button.Update(Mouse.GetState());
-            lvl02button.Update(Mouse.GetState());
-            lvl03button.Update(Mouse.GetState());
-            lvl04button.Update(Mouse.GetState());
+            lvl00button.Update(Input.mouse);
+            lvl01button.Update(Input.mouse);
+            lvl02button.Update(Input.mouse);
+            lvl03button.Update(Input.mouse);
+            lvl04button.Update(Input.mouse);
 
             if (lvl00button.isClicked)
             {
