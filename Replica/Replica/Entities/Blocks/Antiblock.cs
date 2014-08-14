@@ -16,7 +16,7 @@ namespace Replica.Entities.Blocks
             : base(entities, lvl, transform, boundsSize, EntityType.Antiblock)
         {
             
-            drawBounds = true;
+            drawBounds = false;
             solid = false;
 
             draw = false;

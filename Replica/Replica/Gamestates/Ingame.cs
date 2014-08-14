@@ -100,14 +100,14 @@ namespace Replica.Gamestates
                
             }
 
-            foreach (Drawable drawable in drawables)
+            for (int i = 0; i < drawables.Count; i++)
             {
-                /*if (drawable.ExistenceTime < 0)
+                drawables[i].Update(gameTime);
+                if (drawables[i].ExistenceTime < 0)
                 {
-                    drawables.Remove(drawable);
-                }*/
-                drawable.Update(gameTime);
-                
+                    drawables.RemoveAt(i);
+                }
+
             }
            
 

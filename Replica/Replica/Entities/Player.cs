@@ -20,6 +20,9 @@ namespace Replica.Entities
         float mouseSpeed = 0.1f;
         float movementSpeed = 5;
 
+        Int32 normalTime;
+        Int32 imitatingTime;
+
         float maxRotation = 60;
         Vector2 prevRotationChange;
         Camera cam;
@@ -45,6 +48,9 @@ namespace Replica.Entities
         public Player(List<Entity> entities, Level lvl, Transform transform,  int windowWidth, int windowHeight)
             : base(entities, lvl, EntityType.Player, transform)
         {
+            normalTime = lvl.NormalTime;
+            imitatingTime = lvl.ImitatingTime;
+
             resolution = new Vector2(windowWidth, windowHeight);
 
             cam = new Camera(resolution);
@@ -120,16 +126,43 @@ namespace Replica.Entities
 
             if (entity.Type == EntityType.Eventblock)
             {
+                int index = 0;
+
                 if (entity.index == 1)
                 {
                     lvl.text = lvl.text1;
+                    index = 1;
                 }
                 else if (entity.index == 2)
                 {
                     lvl.text = lvl.text2;
+                    index = 2;
+                }
+                else if (entity.index == 3)
+                {
+                    lvl.text = lvl.text3;
+                    index = 3;
+                }
+                else if (entity.index == 4)
+                {
+                    lvl.text = lvl.text4;
+                    index = 4;
+                }
+                else if (entity.index == 5)
+                {
+                    lvl.text = lvl.text5;
+                    index = 5;
                 }
                 Globals.newText = true;
-                entities.Remove(entity);
+
+                for (int i = 0; i < entities.Count; i++)
+                {
+                    if (entities.ElementAt(i).Type == EntityType.Eventblock && entities.ElementAt(i).index == index)
+                    {
+                        entities.RemoveAt(i);
+                        i--;
+                    }
+                }
             }
         }
 
@@ -277,11 +310,11 @@ namespace Replica.Entities
             switch (Globals.spawnType)
             {
                 case EntityType.Replicant:
-                    if (GetReplicantCount(EntityType.Replicant) >= Globals.normalReplicants)
+                    if (Globals.normalReplicants <= 0)
                         return false;
                         break;
                 case EntityType.ImitatingReplicant:
-                    if (GetReplicantCount(EntityType.ImitatingReplicant) >= Globals.imitatingReplicants)
+                        if (Globals.imitatingReplicants <= 0)
                         return false;
                         break;
                 default:
@@ -301,18 +334,90 @@ namespace Replica.Entities
         {
             //TODO 1: Define how long a Replicant will exist
             Replicant replicant;
+            EntityType type;
             switch (Globals.spawnType)
             {
                 case EntityType.Replicant:
-                    replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 1000);
+                    replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, normalTime);
+                    type = EntityType.Replicant;
                     break;
                 case EntityType.ImitatingReplicant:
-                    replicant = new ImitatingReplicant(entities, lvl, replicantTransform, boundsSize, 1000);
+                    replicant = new ImitatingReplicant(entities, lvl, replicantTransform, boundsSize, imitatingTime);
+                    type = EntityType.ImitatingReplicant;
                     break;
                 default:
-                    replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, 1000);
+                    replicant = new Replicant(entities, lvl, replicantTransform, boundsSize, normalTime);
+                    type = EntityType.Replicant;
                     break;
-            };
+            }
+
+            switch (type)
+            {
+                case EntityType.Replicant:
+                    if (GetReplicantCount(EntityType.Replicant) >= Globals.normalReplicants)
+                    {
+                        for (int i = 0; i < entities.Count; i++)
+                        {
+                            if (entities.ElementAt(i).Type == EntityType.Replicant)
+                            {
+                                entities.RemoveAt(i);
+                                break;
+                            }
+                        }
+                        for (int i = 0; i < replicants.Count; i++)
+                        {
+                            if (replicants.ElementAt(i).Type == EntityType.Replicant)
+                            {
+                                replicants.RemoveAt(i);
+                                break;
+                            }
+                        }
+                    }                    
+                    break;
+                case EntityType.ImitatingReplicant:
+                    if (GetReplicantCount(EntityType.ImitatingReplicant) >= Globals.imitatingReplicants)
+                    {
+                        for (int i = 0; i < entities.Count; i++)
+                        {
+                            if (entities.ElementAt(i).Type == EntityType.ImitatingReplicant)
+                            {
+                                entities.RemoveAt(i);
+                                break;
+                            }
+                        }
+                        for (int i = 0; i < replicants.Count; i++)
+                        {
+                            if (replicants.ElementAt(i).Type == EntityType.ImitatingReplicant)
+                            {
+                                replicants.RemoveAt(i);
+                                break;
+                            }
+                        }
+                    }                    
+                    break;
+                default:
+                    if (GetReplicantCount(EntityType.Replicant) >= Globals.normalReplicants)
+                    {
+                        for (int i = 0; i < entities.Count; i++)
+                        {
+                            if (entities.ElementAt(i).Type == EntityType.Replicant)
+                            {
+                                entities.RemoveAt(i);
+                                break;
+                            }
+                        }
+                        for (int i = 0; i < replicants.Count; i++)
+                        {
+                            if (replicants.ElementAt(i).Type == EntityType.Replicant)
+                            {
+                                replicants.RemoveAt(i);
+                                break;
+                            }
+                        }
+                    }                    
+                    break;
+            }
+            
 
             entities.Add(replicant);
             replicants.Add(replicant);

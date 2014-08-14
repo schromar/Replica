@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="14" height="9" tilewidth="32" tileheight="32">
+ <properties>
+  <property name="RepNormalTime" value=""/>
+  <property name="ReplicantsImitating" value="0"/>
+  <property name="ReplicantsNormal" value="1"/>
+  <property name="Text" value=""/>
+  <property name="Text1" value="Use the spacebar to jump."/>
+  <property name="Text1_1" value="Don't us the spacebar"/>
+  <property name="Text1_2" value="to fall and break your"/>
+  <property name="Text1_3" value="valuable bones. "/>
+  <property name="Text1_4" value="So please use the spacebar."/>
+  <property name="Text1_5" value="It's not that hard."/>
+  <property name="Text1_6" value=""/>
+  <property name="Text2" value="I'm surrounded by Idiots."/>
+  <property name="Text2_1" value="Well, not exactly surrounded."/>
+  <property name="Text2_2" value="But there's you!"/>
+  <property name="Text2_3" value="                 "/>
+  <property name="Text2_4" value="Should have used"/>
+  <property name="Text2_5" value="the monkey..."/>
+  <property name="Text2_6" value=""/>
+  <property name="Text3" value="You can use the replicants"/>
+  <property name="Text3_1" value="as steps. It's a good thing"/>
+  <property name="Text3_2" value="that I haven't worked out"/>
+  <property name="Text3_3" value="feelings yet."/>
+  <property name="Text3_4" value="Otherwise that wold be"/>
+  <property name="Text3_5" value="quite unethical."/>
+  <property name="Text3_6" value=""/>
+  <property name="Text4" value="It's nice to see that i did "/>
+  <property name="Text4_1" value="not expect too much of you."/>
+  <property name="Text5" value=""/>
+ </properties>
+ <tileset firstgid="1" name="ReplicaTileset" tilewidth="32" tileheight="32">
+  <image source="ReplicaTileset.png" width="320" height="128"/>
+ </tileset>
+ <layer name="Tile Layer 8" width="14" height="9" visible="0">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,0,0,0,0,0,
+1,1,1,1,1,1,1,1,0,0,0,0,0,0,
+1,1,1,1,1,1,1,1,0,0,0,0,0,0,
+1,1,1,1,1,1,1,1,0,0,0,0,0,0,
+1,1,1,1,1,1,1,1,0,0,0,0,0,0,
+1,1,1,1,1,1,1,1,0,0,0,0,0,0,
+1,1,1,1,1,1,1,1,0,0,0,0,0,0,
+1,1,1,1,1,1,1,1,0,0,0,0,0,0,
+1,1,1,1,1,1,1,1,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Tile Layer 7" width="14" height="9">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,0,0,0,0,0,
+1,0,0,0,0,1,22,1,0,0,0,0,0,0,
+1,0,0,0,0,1,22,1,0,0,0,0,0,0,
+1,0,0,0,0,1,22,1,0,0,0,0,0,0,
+1,0,0,0,0,1,22,1,0,0,0,0,0,0,
+1,0,0,0,0,1,22,1,0,0,0,0,0,0,
+1,1,1,1,1,1,22,1,0,0,0,0,0,0,
+1,0,0,0,1,23,22,1,0,0,0,0,0,0,
+1,1,1,1,1,1,1,1,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Tile Layer 6" width="14" height="9">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,0,0,0,0,0,
+1,0,0,0,0,1,0,1,0,0,0,0,0,0,
+1,0,0,0,0,1,0,1,0,0,0,0,0,0,
+1,0,0,0,0,1,0,1,0,0,0,0,0,0,
+1,0,0,0,0,1,0,1,0,0,0,0,0,0,
+1,0,0,0,0,1,0,1,0,0,0,0,0,0,
+1,1,1,1,1,1,0,1,0,0,0,0,0,0,
+1,0,0,1,0,0,0,1,0,0,0,0,0,0,
+1,1,1,1,1,1,1,1,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Tile Layer 5" width="14" height="9">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,0,0,0,0,0,0,
+1,0,0,0,0,1,0,1,0,0,0,0,0,0,
+1,0,0,0,0,1,0,1,0,0,0,0,0,0,
+1,0,0,0,0,1,0,1,0,0,0,0,0,0,
+1,0,0,0,0,1,0,1,0,0,0,0,0,0,
+1,0,0,0,0,1,0,1,0,0,0,0,0,0,
+1,1,1,1,1,1,0,1,0,0,0,0,0,0,
+0,0,1,0,0,0,0,1,0,0,0,0,0,0,
+1,1,1,1,1,1,1,1,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Tile Layer 1" width="14" height="9" opacity="0.21">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,1,0,1,1,1,1,1,1,1,
+1,1,1,1,1,1,0,1,1,1,1,1,1,1,
+1,1,1,1,1,1,0,1,1,1,1,1,1,1,
+1,1,1,1,1,1,0,1,1,1,1,1,1,1,
+1,1,1,1,1,1,0,1,1,1,1,1,1,1,
+1,1,1,1,1,1,0,1,1,1,1,1,1,1,
+1,1,0,0,0,0,0,1,1,1,1,1,1,1,
+1,1,1,1,1,1,1,1,1,1,1,1,1,1
+</data>
+ </layer>
+ <layer name="Tile Layer 2" width="14" height="9" opacity="0.39">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,0,1,1,1,0,
+1,0,0,0,0,0,0,0,1,0,1,3,1,0,
+1,0,6,0,0,0,0,0,1,1,1,13,1,0,
+1,0,0,0,0,0,0,9,9,1,1,0,1,0,
+1,0,0,0,0,0,0,1,0,1,1,0,1,0,
+1,0,0,0,0,0,0,1,13,1,1,0,1,0,
+1,2,0,0,0,0,0,1,24,0,0,0,1,0,
+1,0,0,0,0,0,0,1,1,1,1,1,1,0,
+1,1,1,1,1,1,1,1,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Tile Layer 3" width="14" height="9" opacity="0.68">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,1,0,0,
+1,0,0,0,0,0,0,0,1,0,1,0,1,0,
+1,0,0,0,0,0,0,0,1,1,1,0,1,0,
+1,0,0,0,0,0,0,1,1,1,1,0,1,0,
+1,0,0,0,0,0,0,1,1,1,1,0,1,0,
+1,0,0,0,0,0,0,1,1,1,1,0,1,0,
+1,0,0,0,0,0,0,1,0,0,0,0,1,0,
+1,0,0,0,0,0,0,1,1,1,1,1,1,0,
+0,1,1,1,1,1,1,1,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer name="Tile Layer 4" width="14" height="9" visible="0">
+  <data encoding="csv">
+1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+1,1,1,1,1,1,1,1,1,1,1,1,1,0,
+1,1,1,1,1,1,1,1,1,1,0,0,0,0
+</data>
+ </layer>
+</map>

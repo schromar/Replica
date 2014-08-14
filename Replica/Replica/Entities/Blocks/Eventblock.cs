@@ -17,7 +17,7 @@ namespace Replica.Entities.Blocks
             : base(entities, lvl, transform, boundsSize, EntityType.Eventblock)
         {
             this.index = index;
-            drawBounds = true;
+            drawBounds = false;
             solid = false;
 
             draw = false;
@@ -25,7 +25,6 @@ namespace Replica.Entities.Blocks
 
         public override void Update(GameTime gameTime, AudioListener listener)
         {
-
         }
 
         public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
@@ -33,7 +32,7 @@ namespace Replica.Entities.Blocks
 
             string text = "Event " + index;
 
-            //Drawing 3D Text
+            /*Drawing 3D Text
             Matrix rotation = Matrix.Identity;
             rotation.Right = -lvl.P.T.Right;
             rotation.Up = lvl.P.T.Up;
@@ -56,8 +55,8 @@ namespace Replica.Entities.Blocks
 
             Game1.spriteBatch.End();
             Game1.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-
-            Game1.spriteBatch.Begin();
+            */
+            //Game1.spriteBatch.Begin();
 
             base.Draw(graphics, gameTime, effect, camera);
         }

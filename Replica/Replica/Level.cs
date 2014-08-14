@@ -39,6 +39,15 @@ namespace Replica
         public string t = ""; 
         public string text1 = "";
         public string text2 = "";
+        public string text3 = "";
+        public string text4 = "";
+        public string text5 = "";
+
+        public Int32 normalTime;
+        public Int32 imitatingTime;
+
+        public Int32 NormalTime { get { return normalTime; } }
+        public Int32 ImitatingTime { get { return imitatingTime; } }
 
         private List<String> texts;
         
@@ -55,20 +64,46 @@ namespace Replica
             Globals.normalReplicants = Convert.ToInt32(map.Properties["ReplicantsNormal"]);
             Globals.imitatingReplicants = Convert.ToInt32(map.Properties["ReplicantsImitating"]);
 
+            //check, if there are timelimits for the replicants
+            if (map.Properties.ContainsKey("ReplicantsNormalTime"))
+                normalTime = Convert.ToInt32(map.Properties["ReplicantsNormalTime"]);
+            else normalTime = 9000;
+
+            if (map.Properties.ContainsKey("ReplicantsImitatingTime"))
+                imitatingTime = Convert.ToInt32(map.Properties["ReplicantsImitatingTime"]);
+            else imitatingTime = 9000;
+
             //if the map contains text, it is loaded here
             if (map.Properties.ContainsKey("Text1"))
-            {
-                if (map.Properties.ContainsKey("Text1"))
-                    text1 = map.Properties["Text1"];
+            {              
+                text1 = map.Properties["Text1"];
                 if (map.Properties.ContainsKey("Text2"))
+                {
                     text2 = map.Properties["Text2"];
+                    if (map.Properties.ContainsKey("Text3"))
+                    {
+                        text3 = map.Properties["Text3"];
+                        if (map.Properties.ContainsKey("Text4"))
+                        {
+                            text4 = map.Properties["Text4"];
+                            if (map.Properties.ContainsKey("Text5"))
+                            {
+                                text5 = map.Properties["Text5"];
+                            }
+                        }
+                    }
+                }
+                
 
                 texts = new List<string>();
 
                 texts.Add(text1);
                 texts.Add(text2);
+                texts.Add(text3);
+                texts.Add(text4);
+                texts.Add(text5);
 
-                for (int i = 1; i <= 2; i++)
+                for (int i = 1; i <= 5; i++)
                 {
                     text = texts.ElementAt(i - 1);
 
@@ -88,6 +123,10 @@ namespace Replica
                         break;
                 }
                 text1 = texts.ElementAt(0);
+                text2 = texts.ElementAt(1);
+                text3 = texts.ElementAt(2);
+                text4 = texts.ElementAt(3);
+                text5 = texts.ElementAt(4);
             }
             text  = text1;
 
@@ -190,6 +229,12 @@ namespace Replica
                             break;
                         case 23:
                             currentEntity = new Eventblock(entities, this, t, blockSize, 3);
+                            break;
+                        case 24:
+                            currentEntity = new Eventblock(entities, this, t, blockSize, 4);
+                            break;
+                        case 25:
+                            currentEntity = new Eventblock(entities, this, t, blockSize, 5);
                             break;
                         default:
                             break;

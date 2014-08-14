@@ -6,7 +6,7 @@
   <property name="Text" value="Press space to jump"/>
  </properties>
  <tileset firstgid="1" name="ReplicaTileset" tilewidth="32" tileheight="32">
-  <image source="Desktop/Replica/Levels/ReplicaTileset.png" width="320" height="64"/>
+  <image source="ReplicaTileset.png" width="320" height="64"/>
  </tileset>
  <layer name="Kachelebene 1" width="7" height="7">
   <data encoding="base64" compression="zlib">
