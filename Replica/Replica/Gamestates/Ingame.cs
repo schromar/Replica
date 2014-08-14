@@ -71,7 +71,9 @@ namespace Replica.Gamestates
 
             if (Globals.newText)
             {
-                drawables.Add(new OnScreenText(lvl.text));
+                OnScreenText newText = new OnScreenText(lvl.text);
+                newText.Initialize();
+                drawables.Add(newText);
                 Globals.newText = false;
             }
 
