@@ -16,30 +16,53 @@ namespace Replica.Drawables
         /// <summary>
         /// How long the text will be drawn.
         /// </summary>
-        float existenceTime = 5;
-        public float ExistenceTime { get { return existenceTime; } }
+        float textExistenceTime = 3;
+        
+
+        float fadeout = 1.5f;
+
+        public float TextExistenceTime { get { return textExistenceTime; } }
+        public float ExistenceTime  { get { return existenceTime; } }
 
         public OnScreenText(string text)
         {
             this.text = text;
         }
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            existenceTime = 4.25f;
+        }
+
         public override void Update(GameTime gameTime)
         {
-            existenceTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            textExistenceTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            existenceTime  -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             base.Update(gameTime);
         }
 
         public override void Draw()
         {
-            //The text will start to fade out once a certain amount of time is left
-            if (existenceTime < 1.5f)
+            //The text and the box will start to fade out once a certain amount of time has passed
+
+            if (existenceTime < fadeout)
             {
-                Game1.spriteBatch.DrawString(Assets.font1, text, new Vector2(0, 375), Color.White * (existenceTime / 1.5f));
+                Game1.spriteBatch.Draw(Assets.textbox, new Rectangle(495, 5, Assets.textbox.Width, Assets.textbox.Height), Color.White * (existenceTime / fadeout));
             }
             else
             {
-                Game1.spriteBatch.DrawString(Assets.font1, text, new Vector2(0, 375), Color.White);
+                Game1.spriteBatch.Draw(Assets.textbox, new Rectangle(495, 5, Assets.textbox.Width, Assets.textbox.Height), Color.White);
+            }
+
+            if (textExistenceTime < fadeout)
+            {
+                Game1.spriteBatch.DrawString(Assets.font1, text, new Vector2(495, 10), Color.White * (textExistenceTime / fadeout));
+            }
+            else
+            {
+                Game1.spriteBatch.DrawString(Assets.font1, text, new Vector2(495, 10), Color.White);
+                
             }
             base.Draw();
         }

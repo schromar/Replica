@@ -23,6 +23,7 @@ namespace Replica.Statics
         public static Texture2D levelselection;
         public static Texture2D pix;
         public static Texture2D loading;
+        public static Texture2D textbox;
 
         public static Texture2D lvl00;
         public static Texture2D lvl01;
@@ -53,6 +54,7 @@ namespace Replica.Statics
             happy                       = Manager.Load<Texture2D>("Textures\\happy");
             pix                         = Manager.Load<Texture2D>("Textures\\pix");
             loading                     = Manager.Load<Texture2D>("Textures\\loading");
+            textbox                     = Manager.Load<Texture2D>("Textures\\textbox");
 
             lvl00                       = Manager.Load<Texture2D>("Textures\\lvl00");
             lvl01                       = Manager.Load<Texture2D>("Textures\\lvl01");
@@ -67,7 +69,7 @@ namespace Replica.Statics
             model                       = Manager.Load<Model>("Models\\p1_wedge");
             wallModel                   = Manager.Load<Model>("Models\\test");
             conveyorModel               = Manager.Load<Model>("Models\\Conveyor");
-            redSwitchModel                 = Manager.Load<Model>("Models\\redSwitch");
+            redSwitchModel              = Manager.Load<Model>("Models\\redSwitch");
 
             doorClosing                 = Manager.Load<SoundEffect>("Sounds\\doorClosing");
             doorOpening                 = Manager.Load<SoundEffect>("Sounds\\doorOpening");

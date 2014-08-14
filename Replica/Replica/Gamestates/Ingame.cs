@@ -29,6 +29,7 @@ namespace Replica.Gamestates
         GraphicsDevice gDevice;
         BasicEffect defaultEffect;
 
+
         AudioListener listener=new AudioListener();
 
         public void Init(GraphicsDevice gDevice)
@@ -43,12 +44,9 @@ namespace Replica.Gamestates
             drawables = new List<Drawable>();
 
             drawables.Add(new Skillbar(lvl.P));
+
             text = new OnScreenText(lvl.Text);
-
             drawables.Add(text);
-
-
-
 
             foreach (Drawable drawable in drawables)
             {
@@ -108,12 +106,14 @@ namespace Replica.Gamestates
 
             foreach (Drawable drawable in drawables)
             {
+                /*if (drawable.ExistenceTime < 0)
+                {
+                    drawables.Remove(drawable);
+                }*/
                 drawable.Update(gameTime);
+                
             }
-            if (text.ExistenceTime < 0)
-            {
-                drawables.Remove(text);
-            }
+           
 
             return eGamestates.InGame;
         }
