@@ -43,24 +43,29 @@ namespace Replica
         }
 
         /// <summary>
-        /// Checks whether a ray intersects one or more entities.
+        /// Checks whether a ray intersects one or more (solid) entities.
         /// </summary>
         /// <param name="entities"></param>
         /// <param name="ray"></param>
         /// <returns>A List of entities that collide with the ray (sorted by their distance from said ray)</returns>
-        public static List<KeyValuePair<float, Entity>> RayIntersection(List<Entity> entities, Ray ray)
+        public static float? RayIntersection(List<Entity> entities, Ray ray, Entity exception)
         {
-            List<KeyValuePair<float, Entity>> res = new List<KeyValuePair<float, Entity>>();
+            float? min = null;
             for (int i = 0; i < entities.Count; i++)
             {
-                float? distance = ray.Intersects(entities[i].Bounds);
-                if (distance!=null)
+                if (entities[i].Solid && entities[i] != exception)
                 {
-                    res.Add(new KeyValuePair<float, Entity>((float)distance, entities[i]));
+                    float? distance = ray.Intersects(entities[i].Bounds);
+                    if (distance != null)
+                    {
+                        if (min == null || distance < min)
+                        {
+                            min = distance;
+                        }
+                    }
                 }
             }
-            res.Sort(Compare);
-            return res;
+            return min;
         }
 
         /// <summary>

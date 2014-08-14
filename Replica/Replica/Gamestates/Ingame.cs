@@ -14,8 +14,6 @@ using Replica.Entities.Blocks;
 using Replica.Statics;
 using Replica.Drawables;
 
-using System.Diagnostics;
-
 namespace Replica.Gamestates
 {
     public class Ingame : Gamestate
@@ -64,11 +62,7 @@ namespace Replica.Gamestates
                 entities[i].Update(gameTime, listener);
             }
 
-            Stopwatch test=new Stopwatch();
-            test.Start();
             CollisionSystem.CheckCollisions(entities);
-            test.Stop();
-            Console.WriteLine(test.Elapsed+ " " +entities.Count);
 
             if(Input.isClicked(Microsoft.Xna.Framework.Input.Keys.Escape))
                 return eGamestates.MainMenu;

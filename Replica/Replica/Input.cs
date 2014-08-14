@@ -17,6 +17,7 @@ namespace Replica
     {
         public static KeyboardState currentKeyboard;
         public static KeyboardState prevKeyboard;
+        public static MouseState mouse;
 
         public static bool isClicked(Keys key)
         {

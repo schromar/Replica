@@ -61,7 +61,7 @@ namespace Replica.Entities.Blocks
             string text = numActivated + "/" + switches.Count;
 
             //Drawing 3D Text
-            Matrix rotation = Matrix.Identity;
+            /*Matrix rotation = Matrix.Identity;
             rotation.Right = -lvl.P.T.Right;
             rotation.Up = lvl.P.T.Up;
 
@@ -84,7 +84,7 @@ namespace Replica.Entities.Blocks
             Game1.spriteBatch.End();
             Game1.graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
-            Game1.spriteBatch.Begin();
+            Game1.spriteBatch.Begin();*/
 
             base.Draw(graphics, gameTime, effect, camera);
         }

@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-
 using Replica.Entities;
 using Replica.Entities.Blocks;
 using Replica.Gamestates;
@@ -32,11 +31,14 @@ namespace Replica
             //TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 120.0f);
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            /*graphics.SynchronizeWithVerticalRetrace = false;
+            IsFixedTimeStep = false;
+            graphics.ApplyChanges();*/
         }
 
         protected override void Initialize()
         {
-           
 
             base.Initialize();
         }
@@ -70,6 +72,7 @@ namespace Replica
             }
             Input.prevKeyboard = Input.currentKeyboard;
             Input.currentKeyboard = Keyboard.GetState();
+            Input.mouse = Mouse.GetState();
 
             Globals.currentState = gamestate.Update(gameTime);
 
