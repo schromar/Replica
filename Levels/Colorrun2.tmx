@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="12" height="10" tilewidth="32" tileheight="32">
+ <properties>
+  <property name="ReplicantsImitating" value="2"/>
+  <property name="ReplicantsNormal" value="1"/>
+  <property name="Text" value=""/>
+ </properties>
+ <tileset firstgid="1" name="ReplicaTileset" tilewidth="32" tileheight="32">
+  <image source="Desktop/Replica/Levels/ReplicaTileset.png" width="320" height="64"/>
+ </tileset>
+ <layer name="Kachelebene 1" width="12" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYBzFgwpzU9EsAHZIAIM=
+  </data>
+ </layer>
+ <layer name="Kachelebene 3" width="12" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYCQRIwMmJDEQzQfEbFAapp4FTQ8PEg1Sx4ukH5s9PGjy7FjUYVOPDmDqWaFmYFPPi0U9unuQxTjwqCMEYOqZoTQnAyIM8aknBQMADHsA+w==
+  </data>
+ </layer>
+ <layer name="Kachelebene 2" width="12" height="10">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYBzFwxYDAHNQAHk=
+  </data>
+ </layer>
+</map>

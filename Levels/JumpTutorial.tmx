@@ -6,16 +6,16 @@
   <property name="Text" value="Press space to jump"/>
  </properties>
  <tileset firstgid="1" name="ReplicaTileset" tilewidth="32" tileheight="32">
-  <image source="ReplicaTileset.png" width="320" height="64"/>
+  <image source="ReplicaTileset.png" width="320" height="128"/>
  </tileset>
  <layer name="Kachelebene 1" width="7" height="7">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYCQT81Egh4zJMQMZAwAxXACN
+   eJxjZGBgYCQT8yFhfHLo8vjk0NUR4w4ATcwAzg==
   </data>
  </layer>
  <layer name="Kachelebene 3" width="7" height="7">
   <data encoding="base64" compression="zlib">
-   eJxjZGBgYMSDkQErlIbJ8aFhbHJMWOQY8OhjBmIONHvxuQ+EAUkYALc=
+   eJxjZGBgYMSDkQErEDMhyfGhYQY8cnxoZuLSxwzEvEDMgWQvPveBMABWSADg
   </data>
  </layer>
  <layer name="Kachelebene 4" width="7" height="7">
@@ -23,7 +23,7 @@
    eJxjZGBgYMSDsQFK5figmFQ5XBgAGCQAUQ==
   </data>
  </layer>
- <layer name="Kachelebene 2" width="7" height="7">
+ <layer name="Kachelebene 2" width="7" height="7" visible="0">
   <data encoding="base64" compression="zlib">
    eJxjZGBgYBziGAAT6AAy
   </data>
