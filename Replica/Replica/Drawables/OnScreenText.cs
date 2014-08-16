@@ -16,6 +16,13 @@ namespace Replica.Drawables
         string currentText;
 
         int pos;
+        int textY = 10;
+        int linebreakCount;
+
+        int count;
+
+        List<int> linebreaks;
+
         bool done = false;
         /// <summary>
         /// How long the text will be drawn.
@@ -29,7 +36,7 @@ namespace Replica.Drawables
         float fadeout = 1.5f;
 
         public float TextExistenceTime { get { return textExistenceTime; } }
-        public float ExistenceTime  { get { return existenceTime; } }
+        
 
         public OnScreenText(string text)
         {
@@ -40,16 +47,19 @@ namespace Replica.Drawables
         {
             base.Initialize();
             pos = 0;
+            linebreakCount = 0;
             textExistenceTime = 300000;
             existenceTime = textExistenceTime + 1.25f;
             currentText = "";
+            linebreaks = new List<int>();
+            count = 0;
 
-            textSpeedMax = 0.06f;
+            textSpeedMax = 0.01f;
             textSpeed = textSpeedMax;
+
+            //count the number of lines
+            
         }
-
-        
-
         public override void Update(GameTime gameTime)
         {
 
@@ -61,6 +71,27 @@ namespace Replica.Drawables
             if (currentText.Length < text.Length && textSpeed < 0)
             {
                 pos++;
+                count++;
+              
+                    if (text.Substring(pos - 1, 1).Equals("\n"))
+                    {
+                        linebreaks.Add(count);
+                        count = 0;
+
+                        if (linebreakCount < 5)
+                        {
+                            Console.WriteLine("Test");
+                            linebreakCount++;                          
+                        }
+                        else
+                        {
+                            //numberOfLines++;
+                            text = text.Substring(linebreaks.ElementAt(0));
+                            //textY -= 22;
+                            pos -= linebreaks.ElementAt(0);
+                            linebreaks.RemoveAt(0);
+                        }
+                    }                
                 textSpeed = textSpeedMax;
             }
 
@@ -71,12 +102,10 @@ namespace Replica.Drawables
                 done = true;
             }
 
-
             textSpeed -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             textExistenceTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
             existenceTime  -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-            base.Update(gameTime);
-            
+            base.Update(gameTime);            
         }
 
         public override void Draw()
@@ -94,11 +123,11 @@ namespace Replica.Drawables
 
             if (textExistenceTime < fadeout)
             {
-                Game1.spriteBatch.DrawString(Assets.font1, currentText, new Vector2(495, 10), Color.White * (textExistenceTime / fadeout));
+                Game1.spriteBatch.DrawString(Assets.font1, currentText, new Vector2(495, textY), Color.White * (textExistenceTime / fadeout));
             }
             else
             {
-                Game1.spriteBatch.DrawString(Assets.font1, currentText, new Vector2(495, 10), Color.White);
+                Game1.spriteBatch.DrawString(Assets.font1, currentText, new Vector2(495, textY), Color.White);
                 
             }
             base.Draw();

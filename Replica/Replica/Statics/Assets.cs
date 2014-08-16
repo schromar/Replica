@@ -68,7 +68,7 @@ namespace Replica.Statics
 
             model                       = Manager.Load<Model>("Models\\p1_wedge");
             wallModel                   = Manager.Load<Model>("Models\\test");
-            conveyorModel               = Manager.Load<Model>("Models\\Conveyor");
+            //conveyorModel               = Manager.Load<Model>("Models\\Conveyor");
             redSwitchModel              = Manager.Load<Model>("Models\\redSwitch");
 
             doorClosing                 = Manager.Load<SoundEffect>("Sounds\\doorClosing");

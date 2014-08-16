@@ -173,13 +173,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Conveyor.fbx">
-      <Name>Conveyor</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Models\redSwitch.fbx">
       <Name>redSwitch</Name>
       <Importer>FbxImporter</Importer>
@@ -189,6 +182,13 @@
   <ItemGroup>
     <Compile Include="Textures\textbox.png">
       <Name>textbox</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\Conveyor.png">
+      <Name>Conveyor</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -128,31 +128,10 @@ namespace Replica.Entities
             {
                 int index = 0;
 
-                if (entity.index == 1)
-                {
-                    lvl.text = lvl.text1;
-                    index = 1;
-                }
-                else if (entity.index == 2)
-                {
-                    lvl.text = lvl.text2;
-                    index = 2;
-                }
-                else if (entity.index == 3)
-                {
-                    lvl.text = lvl.text3;
-                    index = 3;
-                }
-                else if (entity.index == 4)
-                {
-                    lvl.text = lvl.text4;
-                    index = 4;
-                }
-                else if (entity.index == 5)
-                {
-                    lvl.text = lvl.text5;
-                    index = 5;
-                }
+                lvl.text = lvl.Texts.ElementAt(entity.index - 1);
+                index = entity.index;
+
+                
                 Globals.newText = true;
 
                 for (int i = 0; i < entities.Count; i++)
