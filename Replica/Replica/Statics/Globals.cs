@@ -71,7 +71,7 @@ namespace Replica.Statics
             }
         }
     
-        public static void DrawModel(Model model, Transform t, float scale, float alpha, Camera camera)
+        public static void DrawModel(Model model, Transform t, Vector3 scale, float alpha, Camera camera)
         {
             Matrix rotation = Matrix.Identity;
             rotation.Forward = t.Forward;

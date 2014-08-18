@@ -30,7 +30,7 @@ namespace Replica.Entities
         {
             if (draw)
             {
-                Globals.DrawModel(Assets.wallModel, t, 2, 1, camera);
+                Globals.DrawModel(Assets.wallModel, t, boundsSize/2, 1, camera);
             }
 
             base.Draw(graphics, gameTime, effect, camera);

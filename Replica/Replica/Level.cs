@@ -12,17 +12,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Replica
 {
-    public enum eLevels
-    {
-        Level00,
-        Level01,
-        Level02,
-        Level03,
-        Level04,
-        Level05,
-        Level06
-    }
-
     class Level
     {
         /// <summary>
@@ -48,6 +37,8 @@ namespace Replica
 
         public string Text { get { return text; } }
         public List<String> Texts { get { return texts; } }
+
+        Vector3 blockSize = new Vector3(4, 4, 4);
 
         public Level(List<Entity> entities, GraphicsDevice gDevice)
         {
@@ -111,8 +102,6 @@ namespace Replica
             redSwitches = new List<Switch>();
             greenSwitches = new List<Switch>();
             blueSwitches = new List<Switch>();
-
-            Vector3 blockSize = new Vector3(4, 4, 4);
 
             //Iterate through map and create Entity for each tile
             for (int y = 0; y < map.Layers.Count; y++)
@@ -216,6 +205,180 @@ namespace Replica
                     lvl[(int)position.X, (int)position.Y, (int)position.Z] = currentEntity;
                     if(currentEntity != null)
                         entities.Add(currentEntity);
+                }
+            }
+
+            Merge(entities);
+        }
+
+        void Merge(List<Entity> entities)
+        {
+            bool[, ,] merged=new bool[lvl.GetLength(0), lvl.GetLength(1), lvl.GetLength(2)];
+            for (int x = 0; x < lvl.GetLength(0); x++)
+            {
+                for (int y = 0; y < lvl.GetLength(1); y++)
+                {
+                    for (int z = 0; z < lvl.GetLength(2); z++)
+                    {
+                        if (lvl[x, y, z] != null && !merged[x, y, z])
+                        {
+                            EntityType type = lvl[x, y, z].Type;
+                            if (type == EntityType.Block || type == EntityType.Glass)
+                            {
+                                merged[x, y, z] = true;
+                                Vector3 size = new Vector3(1, 1, 1);
+                                //optimization: check previous extension axis, axis focus?
+
+                                bool extendX = true;
+                                bool extendY = true;
+                                bool extendZ = true;
+                                while (extendX || extendY || extendZ)
+                                {
+                                    //Check each axis to extend into
+                                    int subX = x + (int)size.X;
+                                    int subY = 0;
+                                    int subZ = 0;
+                                    if (subX < lvl.GetLength(0))
+                                    {
+                                        extendX = true;
+                                        for (subY = y; subY < y + size.Y; subY++)
+                                        {
+                                            for (subZ = z; subZ < z + size.Z; subZ++)
+                                            {
+                                                if (lvl[subX, subY, subZ] == null || lvl[subX, subY, subZ].Type != type || merged[subX, subY, subZ])
+                                                {
+                                                    extendX = false;
+                                                    break;
+                                                }
+                                            }
+                                            if (!extendX)
+                                            {
+                                                break;
+                                            }
+                                        }
+
+                                        if (extendX)
+                                        {
+                                            size.X++;
+                                            for (subY = y; subY < y + size.Y; subY++)
+                                            {
+                                                for (subZ = z; subZ < z + size.Z; subZ++)
+                                                {
+                                                    merged[subX, subY, subZ] = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        extendX = false;
+                                    }
+
+
+                                    subY = y + (int)size.Y;
+                                    if (subY < lvl.GetLength(1))
+                                    {
+                                        extendY = true;
+                                        for (subX = x; subX < x + size.X; subX++)
+                                        {
+                                            for (subZ = z; subZ < z + size.Z; subZ++)
+                                            {
+                                                if (lvl[subX, subY, subZ] == null || lvl[subX, subY, subZ].Type != type || merged[subX, subY, subZ])
+                                                {
+                                                    extendY = false;
+                                                    break;
+                                                }
+                                            }
+                                            if (!extendY)
+                                            {
+                                                break;
+                                            }
+                                        }
+
+                                        if (extendY)
+                                        {
+                                            size.Y++;
+                                            for (subX = x; subX < x + size.X; subX++)
+                                            {
+                                                for (subZ = z; subZ < z + size.Z; subZ++)
+                                                {
+                                                    merged[subX, subY, subZ] = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        extendY = false;
+                                    }
+
+
+                                    subZ = z + (int)size.Z;
+                                    if (subZ < lvl.GetLength(2))
+                                    {
+                                        extendZ = true;
+                                        for (subX = x; subX < x + size.X; subX++)
+                                        {
+                                            for (subY = y; subY < y + size.Y; subY++)
+                                            {
+                                                if (lvl[subX, subY, subZ] == null || lvl[subX, subY, subZ].Type != type || merged[subX, subY, subZ])
+                                                {
+                                                    extendZ = false;
+                                                    break;
+                                                }
+                                            }
+                                            if (!extendZ)
+                                            {
+                                                break;
+                                            }
+                                        }
+
+                                        if (extendZ)
+                                        {
+                                            size.Z++;
+                                            for (subX = x; subX < x + size.X; subX++)
+                                            {
+                                                for (subY = y; subY < y + size.Y; subY++)
+                                                {
+                                                    merged[subX, subY, subZ] = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        extendZ = false;
+                                    }
+                                }
+
+                                //use size and position to create new block
+                                Transform t = new Transform();
+                                t.position = (new Vector3(x, y, z) + size / 2.0f) * blockSize - blockSize / 2;
+                                Entity entity = null;
+                                if (type == EntityType.Block)
+                                {
+                                    entity = new Block(entities, this, t, size * blockSize);
+                                }
+                                else if (type == EntityType.Glass)
+                                {
+                                    entity = new Glass(entities, this, t, size * blockSize);
+                                }
+
+                                entities.Add(entity);
+                                for (int newX = x; newX < x + size.X; newX++)
+                                {
+                                    for (int newY = y; newY < y + size.Y; newY++)
+                                    {
+                                        for (int newZ = z; newZ < z + size.Z; newZ++)
+                                        {
+                                            entities.Remove(lvl[newX, newY, newZ]);
+                                            lvl[newX, newY, newZ] = entity;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

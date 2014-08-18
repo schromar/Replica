@@ -27,7 +27,7 @@ namespace Replica.Entities.Blocks
 
         public override void Draw(GraphicsDevice graphics, GameTime gameTime, Microsoft.Xna.Framework.Graphics.BasicEffect effect, Camera camera)
         {
-            Globals.DrawModel(Assets.wallModel, t, 1, 1, camera);
+            Globals.DrawModel(Assets.wallModel, t, new Vector3(1), 1, camera);
             base.Draw(graphics, gameTime, effect, camera);
         }
     }

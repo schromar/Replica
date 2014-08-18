@@ -80,7 +80,6 @@ namespace Replica.Drawables
 
                         if (linebreakCount < 5)
                         {
-                            Console.WriteLine("Test");
                             linebreakCount++;                          
                         }
                         else
