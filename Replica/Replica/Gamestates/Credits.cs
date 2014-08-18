@@ -23,15 +23,17 @@ namespace Replica.Gamestates
 
         public eGamestates Update(GameTime gameTime)
         {
-            if (Input.isClicked(Keys.Escape) || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (Input.isClicked(Keys.Space) || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            {
+                Globals.currentLvl = Globals.levelnames[0];
                 return eGamestates.MainMenu;
-
+            }
             return eGamestates.Credits;
         }
 
         public void Draw(GameTime gameTime)
         {
-            Game1.spriteBatch.Draw(Assets.happy, new Rectangle(0, 0, Assets.happy.Width, Assets.happy.Height), Color.White);
+            Game1.spriteBatch.Draw(Assets.happy, new Rectangle(0, 0, Globals.resolutionWidht,Globals.resolutionHeight), Color.White);
 
         }
     }

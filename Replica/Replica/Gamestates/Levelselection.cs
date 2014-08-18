@@ -23,31 +23,37 @@ namespace Replica.Gamestates
         Button lvl03button;
         Button lvl04button;
 
+        int buttonX;
+        int buttonY;
+
         public void Init(GraphicsDevice gDevice)
         {
+            buttonX = (int)(Globals.resolutionWidht * 0.45f);
+            buttonY = (int)(Globals.resolutionHeight * 0.11f);
+
             lvl00button = new Button(Assets.lvl00, Game1.graphics.GraphicsDevice);
-            lvl00button.setPosition(new Vector2(350, 100));
+            lvl00button.setPosition(new Vector2(buttonX, buttonY * 2));
 
             lvl01button = new Button(Assets.lvl01, Game1.graphics.GraphicsDevice);
-            lvl01button.setPosition(new Vector2(350, 175));
+            lvl01button.setPosition(new Vector2(buttonX, buttonY * 3));
 
             lvl02button = new Button(Assets.lvl02, Game1.graphics.GraphicsDevice);
-            lvl02button.setPosition(new Vector2(350, 250));
+            lvl02button.setPosition(new Vector2(buttonX, buttonY * 4));
 
             lvl03button = new Button(Assets.lvl02, Game1.graphics.GraphicsDevice);
-            lvl03button.setPosition(new Vector2(350, 325));
+            lvl03button.setPosition(new Vector2(buttonX, buttonY * 5));
 
             lvl04button = new Button(Assets.lvl02, Game1.graphics.GraphicsDevice);
-            lvl04button.setPosition(new Vector2(350, 400));
+            lvl04button.setPosition(new Vector2(buttonX, buttonY * 6));
         }
 
         public eGamestates Update(GameTime gameTime)
         {
-            lvl00button.Update(Input.mouse);
-            lvl01button.Update(Input.mouse);
-            lvl02button.Update(Input.mouse);
-            lvl03button.Update(Input.mouse);
-            lvl04button.Update(Input.mouse);
+            lvl00button.Update(Input.currentMouse, Input.prevMouse);
+            lvl01button.Update(Input.currentMouse, Input.prevMouse);
+            lvl02button.Update(Input.currentMouse, Input.prevMouse);
+            lvl03button.Update(Input.currentMouse, Input.prevMouse);
+            lvl04button.Update(Input.currentMouse, Input.prevMouse);
 
             if (lvl00button.isClicked)
             {
@@ -111,7 +117,7 @@ namespace Replica.Gamestates
 
         public void Draw(GameTime gameTime)
         {
-            Game1.spriteBatch.Draw(Assets.dna, new Rectangle(0, 0, Assets.dna.Width, Assets.dna.Height), Color.White);
+            Game1.spriteBatch.Draw(Assets.dna, new Rectangle(0, 0, Globals.resolutionWidht, Globals.resolutionHeight), Color.White);
 
             lvl00button.Draw(Game1.spriteBatch);
             lvl01button.Draw(Game1.spriteBatch);

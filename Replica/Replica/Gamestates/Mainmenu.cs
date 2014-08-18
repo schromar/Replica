@@ -21,24 +21,31 @@ namespace Replica.Gamestates
         Button playbutton;
         Button exitbutton;
         Button loadbutton;
+        float buttonX;
+        float buttonY;
 
         public void Init(GraphicsDevice gDevice)
-        {           
+        {
+            buttonX = gDevice.Viewport.Width * 0.44f;
+            buttonY = gDevice.Viewport.Height * 0.11f;
+
             playbutton = new Button(Assets.play, Game1.graphics.GraphicsDevice);
-            playbutton.setPosition(new Vector2(350, 100));
+            playbutton.setPosition(new Vector2(buttonX, buttonY * 2));
 
             exitbutton = new Button(Assets.exit, Game1.graphics.GraphicsDevice);
-            exitbutton.setPosition(new Vector2(350, 200));
+            exitbutton.setPosition(new Vector2(buttonX, buttonY * 3));
 
             loadbutton = new Button(Assets.levelselection, Game1.graphics.GraphicsDevice);
-            loadbutton.setPosition(new Vector2(350, 300));
+            loadbutton.setPosition(new Vector2(buttonX, buttonY * 4));
         }
 
         public eGamestates Update(GameTime gameTime)
         {
-            playbutton.Update(Input.mouse);
-            exitbutton.Update(Input.mouse);
-            loadbutton.Update(Input.mouse);
+
+
+            playbutton.Update(Input.currentMouse, Input.prevMouse);
+            exitbutton.Update(Input.currentMouse, Input.prevMouse);
+            loadbutton.Update(Input.currentMouse, Input.prevMouse);
 
             if (playbutton.isClicked)
             {
@@ -57,7 +64,7 @@ namespace Replica.Gamestates
 
         public void Draw(GameTime gameTime)
         {
-            Game1.spriteBatch.Draw(Assets.dna, new Rectangle(0, 0, Assets.dna.Width, Assets.dna.Height), Color.White);
+            Game1.spriteBatch.Draw(Assets.dna, new Rectangle(0, 0, Globals.resolutionWidht, Globals.resolutionHeight), Color.White);
 
             playbutton.Draw(Game1.spriteBatch);           
             exitbutton.Draw(Game1.spriteBatch);

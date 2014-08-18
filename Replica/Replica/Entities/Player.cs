@@ -87,7 +87,7 @@ namespace Replica.Entities
                 Globals.spawnType = EntityType.ImitatingReplicant;
             }
 
-            MouseState mState = Input.mouse;
+            MouseState mState = Input.currentMouse;
             //TODO 0: performance (Entity count?)
             UpdateSpawnDistance(mState);
 
@@ -172,7 +172,7 @@ namespace Replica.Entities
         void Rotate(GameTime gameTime)
         {
             //TODO 0: performance (GetState?)
-            MouseState mState = Input.mouse;
+            MouseState mState = Input.currentMouse;
 
             Vector2 mouseMovement = resolution / 2 - new Vector2(mState.X, mState.Y);
             Mouse.SetPosition((int)resolution.X / 2, (int)resolution.Y / 2);
