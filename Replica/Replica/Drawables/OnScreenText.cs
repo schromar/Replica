@@ -19,6 +19,9 @@ namespace Replica.Drawables
         int textY = 10;
         int linebreakCount;
 
+        int boxX;
+        int boxY;
+
         int count;
 
         List<int> linebreaks;
@@ -56,6 +59,9 @@ namespace Replica.Drawables
 
             textSpeedMax = 0.01f;
             textSpeed = textSpeedMax;
+
+            boxX = (int)(Globals.resolutionWidht * 0.7f);
+            boxY = (int)(Globals.resolutionHeight * 0.01f);
 
             //count the number of lines
             
@@ -113,20 +119,20 @@ namespace Replica.Drawables
 
             if (existenceTime < fadeout)
             {
-                Game1.spriteBatch.Draw(Assets.textbox, new Rectangle(495, 5, Assets.textbox.Width, Assets.textbox.Height), Color.White * (existenceTime / fadeout));
+                Game1.spriteBatch.Draw(Assets.textbox, new Rectangle(boxX, boxY, Assets.textbox.Width, Assets.textbox.Height), Color.White * (existenceTime / fadeout));
             }
             else
             {
-                Game1.spriteBatch.Draw(Assets.textbox, new Rectangle(495, 5, Assets.textbox.Width, Assets.textbox.Height), Color.White);
+                Game1.spriteBatch.Draw(Assets.textbox, new Rectangle(boxX, boxY, Assets.textbox.Width, Assets.textbox.Height), Color.White);
             }
 
             if (textExistenceTime < fadeout)
             {
-                Game1.spriteBatch.DrawString(Assets.font1, currentText, new Vector2(495, textY), Color.White * (textExistenceTime / fadeout));
+                Game1.spriteBatch.DrawString(Assets.font1, currentText, new Vector2(boxX, textY), Color.White * (textExistenceTime / fadeout));
             }
             else
             {
-                Game1.spriteBatch.DrawString(Assets.font1, currentText, new Vector2(495, textY), Color.White);
+                Game1.spriteBatch.DrawString(Assets.font1, currentText, new Vector2(boxX, textY), Color.White);
                 
             }
             base.Draw();

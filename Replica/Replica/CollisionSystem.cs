@@ -56,6 +56,9 @@ namespace Replica
                 if (entities[i].Solid && entities[i] != exception)
                 {
                     float? distance = ray.Intersects(entities[i].Bounds);
+
+                    Vector3[] corners = entities[i].Bounds.GetCorners();
+
                     if (distance != null)
                     {
                         if (min == null || distance < min)

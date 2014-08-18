@@ -17,11 +17,18 @@ namespace Replica
     {
         public static KeyboardState currentKeyboard;
         public static KeyboardState prevKeyboard;
-        public static MouseState mouse;
+        public static MouseState currentMouse;
+        public static MouseState prevMouse;
+        
 
         public static bool isClicked(Keys key)
         {
             return currentKeyboard.IsKeyDown(key) && prevKeyboard.IsKeyUp(key);
+        }
+
+        public static bool isLeftClicked()
+        {
+            return prevMouse.LeftButton == ButtonState.Released && currentMouse.LeftButton == ButtonState.Pressed;
         }
 
         public static bool isPressed(Keys key)

@@ -25,18 +25,18 @@ namespace Replica
 
         bool down;
         public bool isClicked;
-        public void Update(MouseState mouse)
+        public void Update(MouseState currentMouse, MouseState prevMouse)
         {
             rectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
 
-            Rectangle mouseRec = new Rectangle(mouse.X, mouse.Y, 1, 1);
+            Rectangle mouseRec = new Rectangle(currentMouse.X, currentMouse.Y, 1, 1);
             if (mouseRec.Intersects(rectangle))
             {
                 if (color.A == 255) down = false;
                 if (color.A == 0) down = true;
                 if (down) color.A += 3; else color.A -= 3;
 
-                if (mouse.LeftButton == ButtonState.Pressed) isClicked = true;
+                if (Input.isLeftClicked()) isClicked = true;
 
 
             }

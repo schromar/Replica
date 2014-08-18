@@ -30,7 +30,11 @@ namespace Replica
         {
             //TargetElapsedTime = TimeSpan.FromSeconds(1.0f / 120.0f);
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferHeight = Globals.resolutionHeight;
+            graphics.PreferredBackBufferWidth = Globals.resolutionWidht;
+
             Content.RootDirectory = "Content";
+            
 
             /*graphics.SynchronizeWithVerticalRetrace = false;
             IsFixedTimeStep = false;
@@ -58,6 +62,12 @@ namespace Replica
 
         protected override void Update(GameTime gameTime)
         {
+            if (Input.isClicked(Keys.F1))
+                graphics.ToggleFullScreen();
+
+            
+
+
             fpsCounter++;
             fpsTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (fpsTimer >= 1)
@@ -72,7 +82,9 @@ namespace Replica
             }
             Input.prevKeyboard = Input.currentKeyboard;
             Input.currentKeyboard = Keyboard.GetState();
-            Input.mouse = Mouse.GetState();
+
+            Input.prevMouse = Input.currentMouse;
+            Input.currentMouse = Mouse.GetState();
 
             Globals.currentState = gamestate.Update(gameTime);
 

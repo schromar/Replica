@@ -35,7 +35,7 @@ namespace Replica.Gamestates
         }
         public void Draw(GameTime gameTime)
         {
-            Game1.spriteBatch.Draw(Assets.loading, new Rectangle(0, 0, Assets.loading.Width, Assets.loading.Height), Color.White);
+            Game1.spriteBatch.Draw(Assets.loading, new Rectangle(0, 0, Globals.resolutionWidht, Globals.resolutionHeight), Color.White);
         }
 
 
