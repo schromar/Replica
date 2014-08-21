@@ -17,113 +17,85 @@ namespace Replica.Gamestates
 {
     public class Levelselection : Gamestate
     {
-        Button lvl00button;
-        Button lvl01button;
-        Button lvl02button;
-        Button lvl03button;
-        Button lvl04button;
+        List<Button> buttons;
 
-        int buttonX;
+        int buttonX_1;
+        int buttonX_2;
+        int buttonX_3;
         int buttonY;
+
+        int buttonsPerColumn = 6;
 
         public void Init(GraphicsDevice gDevice)
         {
-            buttonX = (int)(Globals.resolutionWidht * 0.45f);
+            buttonX_1 = (int)(Globals.resolutionWidht * 0.2f);
+            buttonX_2 = (int)(Globals.resolutionWidht * 0.4f);
+            buttonX_3 = (int)(Globals.resolutionWidht * 0.6f);
+
             buttonY = (int)(Globals.resolutionHeight * 0.11f);
 
-            lvl00button = new Button(Assets.lvl00, Game1.graphics.GraphicsDevice);
-            lvl00button.setPosition(new Vector2(buttonX, buttonY * 2));
+            buttons = new List<Button>();
 
-            lvl01button = new Button(Assets.lvl01, Game1.graphics.GraphicsDevice);
-            lvl01button.setPosition(new Vector2(buttonX, buttonY * 3));
+            int curColumn = 1;
+            int curLine = 1;
 
-            lvl02button = new Button(Assets.lvl02, Game1.graphics.GraphicsDevice);
-            lvl02button.setPosition(new Vector2(buttonX, buttonY * 4));
+            for (int i = 0; i < Globals.levelnames.Length; i++)
+            {
+                String name = "LVL ";
 
-            lvl03button = new Button(Assets.lvl02, Game1.graphics.GraphicsDevice);
-            lvl03button.setPosition(new Vector2(buttonX, buttonY * 5));
+                if (i < 9)
+                    name += "0";
 
-            lvl04button = new Button(Assets.lvl02, Game1.graphics.GraphicsDevice);
-            lvl04button.setPosition(new Vector2(buttonX, buttonY * 6));
+                name += i + 1;
+                Button curButton = new Button(Assets.lvl_clear, Game1.graphics.GraphicsDevice, i, name);
+                curButton.setPosition(new Vector2 (buttonX_1 * curColumn,buttonY *  (curLine+1)));
+
+                buttons.Add(curButton);
+
+                curLine++;
+
+                if (curLine > buttonsPerColumn)
+                {
+                    curColumn++;
+                    curLine = 1;
+                }
+            }
         }
 
         public eGamestates Update(GameTime gameTime)
         {
-            lvl00button.Update(Input.currentMouse, Input.prevMouse);
-            lvl01button.Update(Input.currentMouse, Input.prevMouse);
-            lvl02button.Update(Input.currentMouse, Input.prevMouse);
-            lvl03button.Update(Input.currentMouse, Input.prevMouse);
-            lvl04button.Update(Input.currentMouse, Input.prevMouse);
+            
 
-            if (lvl00button.isClicked)
+            for (int i = 0; i < buttons.Count; i++)
             {
-                Globals.levelnamecounter = 0;
-                if (Globals.levelnamecounter >= Globals.highesstreachedlvl)
+                buttons[i].Update(Input.currentMouse, Input.prevMouse);
+
+                if (buttons[i].IsClicked())
                 {
-                    Globals.levelnamecounter = Globals.highesstreachedlvl;
-                }
-                Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
-                return eGamestates.InGame;
-            }
-            if (lvl01button.isClicked)
-            {
-                Globals.levelnamecounter = 1;
-                if (Globals.levelnamecounter >= Globals.highesstreachedlvl)
-                {
-                    Globals.levelnamecounter = Globals.highesstreachedlvl;
-                }
-                Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
-                return eGamestates.InGame;
-            }
-                if (lvl02button.isClicked)
-                {
-                    Globals.levelnamecounter = 2;
-                    if (Globals.levelnamecounter >= Globals.highesstreachedlvl)
+                    if (buttons[i].GetIndex() <= Globals.highesstreachedlvl)
                     {
-                        Globals.levelnamecounter = Globals.highesstreachedlvl;
+                        Globals.levelnamecounter = buttons[i].GetIndex();
+                        Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
+                        return eGamestates.InGame;
                     }
-                    Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
-                    return eGamestates.InGame;
                 }
 
-                if (lvl03button.isClicked)
-                {
-                    Globals.levelnamecounter = 3;
-                    if (Globals.levelnamecounter >= Globals.highesstreachedlvl)
-                    {
-                        Globals.levelnamecounter = Globals.highesstreachedlvl;
-                    }
-                    Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
-                    return eGamestates.InGame;
-                }
-
-                if (lvl04button.isClicked)
-                {
-                    Globals.levelnamecounter = 4;
-                    if (Globals.levelnamecounter >= Globals.highesstreachedlvl)
-                    {
-                        Globals.levelnamecounter = Globals.highesstreachedlvl;
-                    }
-                    Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
-                    return eGamestates.InGame;
-                }
-
-                if (Input.isClicked(Keys.Escape))
-                    return eGamestates.MainMenu;
-
-                return eGamestates.Levelselection;
             }
+            if (Input.isClicked(Keys.Escape))
+                return eGamestates.MainMenu;
+
+            return eGamestates.Levelselection;
+         }
         
 
         public void Draw(GameTime gameTime)
         {
             Game1.spriteBatch.Draw(Assets.dna, new Rectangle(0, 0, Globals.resolutionWidht, Globals.resolutionHeight), Color.White);
 
-            lvl00button.Draw(Game1.spriteBatch);
-            lvl01button.Draw(Game1.spriteBatch);
-            lvl02button.Draw(Game1.spriteBatch);
-            lvl03button.Draw(Game1.spriteBatch);
-            lvl04button.Draw(Game1.spriteBatch);
+            for (int i = 0; i < buttons.Count; i++)
+            {
+                buttons[i].Draw(Game1.spriteBatch);
+            }
         }
 
     }

@@ -106,7 +106,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="TiledSharp">
-      <HintPath>TiledSharp.dll</HintPath>
+      <HintPath>.\TiledSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

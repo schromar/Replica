@@ -29,13 +29,13 @@ namespace Replica.Gamestates
             buttonX = gDevice.Viewport.Width * 0.44f;
             buttonY = gDevice.Viewport.Height * 0.11f;
 
-            playbutton = new Button(Assets.play, Game1.graphics.GraphicsDevice);
+            playbutton = new Button(Assets.play, Game1.graphics.GraphicsDevice, 0, "");
             playbutton.setPosition(new Vector2(buttonX, buttonY * 2));
 
-            exitbutton = new Button(Assets.exit, Game1.graphics.GraphicsDevice);
+            exitbutton = new Button(Assets.exit, Game1.graphics.GraphicsDevice, 0, "");
             exitbutton.setPosition(new Vector2(buttonX, buttonY * 3));
 
-            loadbutton = new Button(Assets.levelselection, Game1.graphics.GraphicsDevice);
+            loadbutton = new Button(Assets.levelselection, Game1.graphics.GraphicsDevice, 0, "");
             loadbutton.setPosition(new Vector2(buttonX, buttonY * 4));
         }
 
@@ -47,15 +47,15 @@ namespace Replica.Gamestates
             exitbutton.Update(Input.currentMouse, Input.prevMouse);
             loadbutton.Update(Input.currentMouse, Input.prevMouse);
 
-            if (playbutton.isClicked)
+            if (playbutton.IsClicked())
             {
                 return eGamestates.InGame;
             }
-            if (exitbutton.isClicked || Input.isClicked(Keys.Escape) || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (exitbutton.IsClicked() || Input.isClicked(Keys.Escape) || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
             {
                 return eGamestates.LeaveGame;
             }
-            if (loadbutton.isClicked)
+            if (loadbutton.IsClicked())
             {
                 return eGamestates.Levelselection;
             }          

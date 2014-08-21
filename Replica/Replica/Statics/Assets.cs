@@ -25,6 +25,7 @@ namespace Replica.Statics
         public static Texture2D loading;
         public static Texture2D textbox;
 
+        public static Texture2D lvl_clear;
         public static Texture2D lvl00;
         public static Texture2D lvl01;
         public static Texture2D lvl02;
@@ -56,6 +57,7 @@ namespace Replica.Statics
             loading                     = Manager.Load<Texture2D>("Textures\\loading");
             textbox                     = Manager.Load<Texture2D>("Textures\\textbox");
 
+            lvl_clear                       = Manager.Load<Texture2D>("Textures\\lvl_clear");
             lvl00                       = Manager.Load<Texture2D>("Textures\\lvl00");
             lvl01                       = Manager.Load<Texture2D>("Textures\\lvl01");
             lvl02                       = Manager.Load<Texture2D>("Textures\\lvl02");
