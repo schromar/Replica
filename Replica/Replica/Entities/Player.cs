@@ -34,7 +34,6 @@ namespace Replica.Entities
         List<Replicant> replicants = new List<Replicant>();
 
         float spawnDistance;
-        float finalSpawnDistance;
         int prevScrollWheel;
         /// <summary>
         /// The transform of the Replicant we are about to spawn.
@@ -56,7 +55,6 @@ namespace Replica.Entities
             cam = new Camera(resolution);
 
             spawnDistance = boundsSize.Length();
-            finalSpawnDistance = spawnDistance;
         }
 
         public override void Update(GameTime gameTime, AudioListener listener)
@@ -88,13 +86,25 @@ namespace Replica.Entities
             }
 
             MouseState mState = Input.currentMouse;
-            //TODO 0: performance (Entity count?)
             UpdateSpawnDistance(mState);
 
             replicantTransform = t;
-            replicantTransform.position = t.position + t.Forward * finalSpawnDistance;
-            replicantBounds = Globals.GenerateBounds(replicantTransform, boundsSize);
-            if (mState.RightButton == ButtonState.Pressed && CanSpawn())
+
+            bool goodDistance=false;
+            while (spawnDistance >= 0 && !goodDistance)
+            {
+                //Console.WriteLine(spawnDistance);
+                replicantTransform.position = t.position + t.Forward * spawnDistance;
+                replicantBounds = Globals.GenerateBounds(replicantTransform, boundsSize);
+                if (ReplicantBoundsIntersect())
+                {
+                    spawnDistance -= 0.25f;
+                    continue;
+                }
+                goodDistance = true;
+            }
+
+            if (mState.LeftButton == ButtonState.Pressed && Input.prevMouse.LeftButton!=ButtonState.Pressed && CanSpawn() && goodDistance)
             {
                 SpawnReplicant();
             }
@@ -267,13 +277,9 @@ namespace Replica.Entities
             if (rayIntersection != null && (float)rayIntersection < spawnDistance)
             {
                 //Found closest point with solid block
-                finalSpawnDistance = (float)rayIntersection;
+                spawnDistance = (float)rayIntersection;
             }
-            else
-            {
-                //User-picked point is closest (since rayIntersections is sorted by distance)
-                finalSpawnDistance = spawnDistance;
-            }
+            //User-picked point is closest (since rayIntersections is sorted by distance)
         }
 
         /// <summary>
@@ -299,14 +305,23 @@ namespace Replica.Entities
                 default:
                     break;
             }
+            if (ReplicantBoundsIntersect())
+            {
+                return false;
+            }
+            return true;
+        }
+
+        bool ReplicantBoundsIntersect()
+        {
             foreach (Entity entity in entities)
             {
                 if (replicantBounds.Intersects(entity.Bounds) && entity.Solid)
                 {
-                    return false;
+                    return true;
                 }
             }
-            return true;
+            return false;
         }
 
         void SpawnReplicant()
