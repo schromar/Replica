@@ -26,5 +26,11 @@ namespace Replica.Entities
             t.Rotation += rotation;
             this.jumping = jumping;
         }
+
+        public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
+        {
+            Globals.DrawModel(Assets.imitatingReplicantModel, t, new Vector3(1), 1, camera);
+            base.Draw(graphics, gameTime, effect, camera);
+        }
     }
 }

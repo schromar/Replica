@@ -33,8 +33,7 @@ namespace Replica.Entities
 
         public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
         {    
-
-            Globals.DrawModel(Assets.model, t, new Vector3(0.001f), existenceTime/maxTime, camera);
+            Globals.DrawModel(Assets.normalReplicantModel, t, new Vector3(1), existenceTime/maxTime, camera);
             
             base.Draw(graphics, gameTime, effect, camera);
         }

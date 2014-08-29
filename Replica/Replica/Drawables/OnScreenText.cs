@@ -119,11 +119,11 @@ namespace Replica.Drawables
 
             if (existenceTime < fadeout)
             {
-                Game1.spriteBatch.Draw(Assets.textbox, new Rectangle(boxX, boxY, Assets.textbox.Width, Assets.textbox.Height), Color.White * (existenceTime / fadeout));
+                Game1.spriteBatch.Draw(Assets.textbox, new Rectangle(boxX, boxY, Assets.textbox.Width, Assets.textbox.Height/3), Color.White * (existenceTime / fadeout));
             }
             else
             {
-                Game1.spriteBatch.Draw(Assets.textbox, new Rectangle(boxX, boxY, Assets.textbox.Width, Assets.textbox.Height), Color.White);
+                Game1.spriteBatch.Draw(Assets.textbox, new Rectangle(boxX, boxY, Assets.textbox.Width, Assets.textbox.Height/3), Color.White);
             }
 
             if (textExistenceTime < fadeout)

@@ -90,7 +90,7 @@ namespace Replica.Gamestates
 
         public void Draw(GameTime gameTime)
         {
-            Game1.spriteBatch.Draw(Assets.dna, new Rectangle(0, 0, Globals.resolutionWidht, Globals.resolutionHeight), Color.White);
+            Game1.spriteBatch.Draw(Assets.levelSelection, new Rectangle(0, 0, Globals.resolutionWidht, Globals.resolutionHeight), Color.White);
 
             for (int i = 0; i < buttons.Count; i++)
             {
