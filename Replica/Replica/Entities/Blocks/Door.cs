@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Replica.Statics;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Replica.Entities.Blocks
 {
@@ -91,6 +92,14 @@ namespace Replica.Entities.Blocks
 
             draw = solid;
         }
+        public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
+        {
+            if (draw)
+            {
+                Globals.DrawModel(Assets.doorModel, t, new Vector3(2), 1, camera);
+                base.Draw(graphics, gameTime, effect, camera);
+            }
+        }
 
         public override void OnCollision(Entity entity)
         {
@@ -99,5 +108,6 @@ namespace Replica.Entities.Blocks
                 playerCollided = true;
             }
         }
+       
     }
 }

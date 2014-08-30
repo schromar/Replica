@@ -45,6 +45,7 @@ namespace Replica.Statics
         public static Model blueSwitchModel;
         public static Model normalReplicantModel;
         public static Model imitatingReplicantModel;
+        public static Model doorModel;
 
         public static SoundEffect doorClosing;
         public static SoundEffect doorOpening;
@@ -83,7 +84,8 @@ namespace Replica.Statics
             blueSwitchModel             = Manager.Load<Model>("Models\\blueSwitch");
             jumppadModel                = Manager.Load<Model>("Models\\Jumppad");
             normalReplicantModel        = Manager.Load<Model>("Models\\ReplicantNormal");
-            imitatingReplicantModel     = Manager.Load<Model>("Models\\ReplicantImitating"); 
+            imitatingReplicantModel     = Manager.Load<Model>("Models\\ReplicantImitating");
+            doorModel                   = Manager.Load<Model>("Models\\doorblock");
 
             doorClosing                 = Manager.Load<SoundEffect>("Sounds\\doorClosing");
             doorOpening                 = Manager.Load<SoundEffect>("Sounds\\doorOpening");
