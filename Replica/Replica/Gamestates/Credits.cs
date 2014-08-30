@@ -23,7 +23,7 @@ namespace Replica.Gamestates
 
         public eGamestates Update(GameTime gameTime)
         {
-            if (Input.isClicked(Keys.Space) || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (Input.isClicked(Keys.Escape) || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
             {
                 Globals.currentLvl = Globals.levelnames[0];
                 return eGamestates.MainMenu;

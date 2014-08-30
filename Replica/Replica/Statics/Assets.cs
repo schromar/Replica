@@ -59,7 +59,7 @@ namespace Replica.Statics
             exit                        = Manager.Load<Texture2D>("Textures\\exit");
             levelselection              = Manager.Load<Texture2D>("Textures\\levelselection");
             mainmenu                        = Manager.Load<Texture2D>("Textures\\MainMenu");
-            happy                       = Manager.Load<Texture2D>("Textures\\happy");
+            happy                       = Manager.Load<Texture2D>("Textures\\credits");
             pix                         = Manager.Load<Texture2D>("Textures\\pix");
             loading                     = Manager.Load<Texture2D>("Textures\\loading");
             textbox                     = Manager.Load<Texture2D>("Textures\\textBoxtexture");
