@@ -77,7 +77,7 @@ namespace Replica.Statics
             
 
           //  model                       = Manager.Load<Model>("Models\\p1_wedge");
-            wallModel                   = Manager.Load<Model>("Models\\wallblock");
+            wallModel                   = Manager.Load<Model>("Models\\wall");
            // conveyorModel               = Manager.Load<Model>("Models\\Conveyor");
             redSwitchModel              = Manager.Load<Model>("Models\\redSwitch");
             greenSwitchModel            = Manager.Load<Model>("Models\\greenSwitch");
@@ -85,7 +85,7 @@ namespace Replica.Statics
             jumppadModel                = Manager.Load<Model>("Models\\Jumppad");
             normalReplicantModel        = Manager.Load<Model>("Models\\ReplicantNormal");
             imitatingReplicantModel     = Manager.Load<Model>("Models\\ReplicantImitating");
-            doorModel                   = Manager.Load<Model>("Models\\doorblock");
+            doorModel                   = Manager.Load<Model>("Models\\door");
 
             doorClosing                 = Manager.Load<SoundEffect>("Sounds\\doorClosing");
             doorOpening                 = Manager.Load<SoundEffect>("Sounds\\doorOpening");

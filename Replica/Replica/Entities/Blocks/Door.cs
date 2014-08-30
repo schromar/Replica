@@ -92,14 +92,14 @@ namespace Replica.Entities.Blocks
 
             draw = solid;
         }
-        public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
+     /*   public override void Draw(GraphicsDevice graphics, GameTime gameTime, BasicEffect effect, Camera camera)
         {
             if (draw)
             {
                 Globals.DrawModel(Assets.doorModel, t, new Vector3(2), 1, camera);
                 base.Draw(graphics, gameTime, effect, camera);
             }
-        }
+        } */
 
         public override void OnCollision(Entity entity)
         {
