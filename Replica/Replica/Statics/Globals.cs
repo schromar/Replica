@@ -22,7 +22,7 @@ namespace Replica.Statics
         public static String currentLvl;
 
 
-        public static String[] levelnames = new String[] { "Level01_Switch", "Level02_Jump", "Level03_HiddenSwitch", "Level04_Mousewheel", "Level05_TwoButtons", "Level06_TwoReplicantsThreeButtons", "Level10_Imitation"};
+        public static String[] levelnames = new String[] { /*"Level01_Switch", "Level02_Jump", "Level03_HiddenSwitch", "Level04_Mousewheel", "Level05_TwoButtons", */"Level06_TwoReplicantsThreeButtons", "Level10_Imitation"};
 
         public static int levelnamecounter = 0;
         public static int highesstreachedlvl = 0; 
