@@ -5,8 +5,8 @@
   <property name="ReplicantsNormal" value="0"/>
   <property name="Text1" value="Hah! A breakthrough!"/>
   <property name="Text1_1" value="Push the &quot;2&quot; button!"/>
-  <property name="Text1_2" value="And than creat a replicant."/>
-  <property name="Text1_3" value="And than set eyes on my"/>
+  <property name="Text1_2" value="Then create a replicant."/>
+  <property name="Text1_3" value="And then set eyes on my"/>
   <property name="Text1_4" value="newest creation!"/>
   <property name="Text1_5" value="I truly am a genius."/>
  </properties>
