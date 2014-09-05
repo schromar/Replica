@@ -50,6 +50,9 @@ namespace Replica.Gamestates
             {
                 drawable.Initialize();
             }
+
+            MediaPlayer.Play(Assets.song[Globals.random.Next(Assets.song.Length)]);
+            MediaPlayer.IsRepeating = true;
         }
 
         public eGamestates Update(GameTime gameTime)

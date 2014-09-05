@@ -53,6 +53,8 @@ namespace Replica.Statics
 
         public static SpriteFont font1;
 
+        public static Song[] song;
+
         public static void Loadcontent(ContentManager Manager)
         {
             play                        = Manager.Load<Texture2D>("Textures\\game");
@@ -93,6 +95,16 @@ namespace Replica.Statics
 
 
             font1 = Manager.Load<SpriteFont>("Fonts\\SpriteFont1");
+
+            song = new Song[]
+            { 
+                Manager.Load<Song>("Music\\Chris Zabriskie - I Am a Man Who Will Fight for Your Honor"),
+                Manager.Load<Song>("Music\\DOCTOR VOX - Radar"),
+                Manager.Load<Song>("Music\\Goto80 and the Uwe Schenk Band - Ponky Fonky Ferret"),
+                Manager.Load<Song>("Music\\Mooma - Tachyon Lullaby"),
+                Manager.Load<Song>("Music\\Rainfallen - Phyzo's Right"),
+                Manager.Load<Song>("Music\\Rolemusic - The Pirate And The Dancer")
+            };
         }
     }
 }

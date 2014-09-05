@@ -62,54 +62,57 @@ namespace Replica
 
         protected override void Update(GameTime gameTime)
         {
-            if (Input.isClicked(Keys.F1))
-                graphics.ToggleFullScreen();
-
-            
-
-
-            fpsCounter++;
-            fpsTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (fpsTimer >= 1)
+            if (IsActive)
             {
-                Window.Title = "" +fpsCounter;
-                fpsCounter = 0;
-                fpsTimer = 0;
+                if (Input.isClicked(Keys.F1))
+                    graphics.ToggleFullScreen();
+
+
+
+
+                fpsCounter++;
+                fpsTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if (fpsTimer >= 1)
+                {
+                    Window.Title = "" + fpsCounter;
+                    fpsCounter = 0;
+                    fpsTimer = 0;
+                }
+                if (Globals.levelnamecounter - 1 < Globals.levelnames.Length)
+                {
+                    Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
+                }
+                Input.prevKeyboard = Input.currentKeyboard;
+                Input.currentKeyboard = Keyboard.GetState();
+
+                Input.prevMouse = Input.currentMouse;
+                Input.currentMouse = Mouse.GetState();
+
+                Globals.currentState = gamestate.Update(gameTime);
+
+                switch (Globals.currentState)
+                {
+                    case eGamestates.MainMenu:
+
+                        IsMouseVisible = true;
+                        break;
+
+                    case eGamestates.InGame:
+
+                        IsMouseVisible = false;
+                        break;
+
+                    default:
+
+                        break;
+                };
+
+                if (Globals.currentState != Globals.prevState)
+                    HandleNewGameState();
+
+                Globals.prevState = Globals.currentState;
+
             }
-            if (Globals.levelnamecounter - 1 < Globals.levelnames.Length)
-            {
-                Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
-            }
-            Input.prevKeyboard = Input.currentKeyboard;
-            Input.currentKeyboard = Keyboard.GetState();
-
-            Input.prevMouse = Input.currentMouse;
-            Input.currentMouse = Mouse.GetState();
-
-            Globals.currentState = gamestate.Update(gameTime);
-
-            switch (Globals.currentState)
-            {
-                case eGamestates.MainMenu:
-
-                    IsMouseVisible = true;      
-                    break;
-
-                case eGamestates.InGame:
-
-                    IsMouseVisible = false;
-                    break;
-
-                default:
-
-                    break;
-            };
-
-            if (Globals.currentState != Globals.prevState)
-                HandleNewGameState();
-
-            Globals.prevState = Globals.currentState;
-
             base.Update(gameTime);
         }
 
@@ -127,6 +130,11 @@ namespace Replica
 
          private void HandleNewGameState()
         {
+            if (Globals.prevState == eGamestates.InGame && Globals.currentState != eGamestates.InGame)
+            {
+                MediaPlayer.Stop();
+            }
+
             switch (Globals.currentState)
             {
                 case eGamestates.LeaveGame:
