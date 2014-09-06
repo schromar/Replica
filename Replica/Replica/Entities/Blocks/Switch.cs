@@ -39,7 +39,7 @@ namespace Replica.Entities.Blocks
             draw = false;
         }
 
-        public override void Update(GameTime gameTime, AudioListener listener)
+        public override void Update(GameTime gameTime)
         {
             activated = collided;
             collided = false;

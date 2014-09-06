@@ -39,6 +39,11 @@ namespace Replica
             /*graphics.SynchronizeWithVerticalRetrace = false;
             IsFixedTimeStep = false;
             graphics.ApplyChanges();*/
+
+            SoundEffect.MasterVolume = 1;
+            SoundEffect.DistanceScale = 4;
+            MediaPlayer.Volume = 0.15f;
+            //MediaPlayer.Volume = 0;
         }
 
         protected override void Initialize()

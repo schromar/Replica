@@ -50,6 +50,8 @@ namespace Replica.Statics
         public static SoundEffect doorClosing;
         public static SoundEffect doorOpening;
         public static SoundEffect jumping;
+        public static SoundEffect jumpPad;
+        public static SoundEffect textEvent;
 
         public static SpriteFont font1;
 
@@ -92,6 +94,8 @@ namespace Replica.Statics
             doorClosing                 = Manager.Load<SoundEffect>("Sounds\\doorClosing");
             doorOpening                 = Manager.Load<SoundEffect>("Sounds\\doorOpening");
             jumping                     = Manager.Load<SoundEffect>("Sounds\\jumping");
+            jumpPad                     = Manager.Load<SoundEffect>("Sounds\\jumpPad");
+            textEvent                   = Manager.Load<SoundEffect>("Sounds\\textEvent");
 
 
             font1 = Manager.Load<SpriteFont>("Fonts\\SpriteFont1");

@@ -56,10 +56,10 @@ namespace Replica.Entities.Blocks
             emitter.Position = transform.position;
         }
 
-        public override void Update(GameTime gameTime, AudioListener listener)
+        public override void Update(GameTime gameTime)
         {
-            openingSound.Apply3D(listener, emitter);
-            closingSound.Apply3D(listener, emitter);
+            openingSound.Apply3D(Globals.listener, emitter);
+            closingSound.Apply3D(Globals.listener, emitter);
 
             solid = false;
             foreach(Switch requirement in requirements)

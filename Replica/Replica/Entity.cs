@@ -72,7 +72,7 @@ namespace Replica
             bounds=Globals.GenerateBounds(transform, boundsSize);
         }
 
-        public virtual void Update(GameTime gameTime, AudioListener listener)
+        public virtual void Update(GameTime gameTime)
         {
 
         }

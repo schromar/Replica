@@ -57,12 +57,12 @@ namespace Replica.Entities
             spawnDistance = boundsSize.Length();
         }
 
-        public override void Update(GameTime gameTime, AudioListener listener)
+        public override void Update(GameTime gameTime)
         {
             Globals.inAntiblock = false;
 
             //TODO 0: performance
-            base.Update(gameTime, listener); //PlayerBase is taking over Y movement and collisions, so that Replicant can behave in the same way
+            base.Update(gameTime); //PlayerBase is taking over Y movement and collisions, so that Replicant can behave in the same way
             //TODO 0: performance (?????)
             Rotate(gameTime);
 
@@ -152,6 +152,11 @@ namespace Replica.Entities
                         i--;
                     }
                 }
+
+                SoundEffectInstance textEvent = Assets.textEvent.CreateInstance();
+                textEvent.Volume = 0.4f;
+                textEvent.Apply3D(Globals.listener, emitter);
+                textEvent.Play();
             }
         }
 

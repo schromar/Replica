@@ -25,9 +25,9 @@ namespace Replica.Entities
             this.existenceTime = existenceTime;
         }
 
-        public override void Update(GameTime gameTime, AudioListener listener)
+        public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime, listener);
+            base.Update(gameTime);
             existenceTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
         }
 

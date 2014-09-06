@@ -31,12 +31,16 @@ namespace Replica.Entities
         protected bool jumping;
         protected bool canJump;
 
+        private bool boosted=false;
+
         /// <summary>
         /// Has to be a List because a single SoundEffectInstance can't be playing twice at the same time.
         /// </summary>
         List<SoundEffectInstance> jumpingSounds;
         //TODO 1: Emitter should be part of entity?
-        AudioEmitter emitter = new AudioEmitter();
+        protected AudioEmitter emitter = new AudioEmitter();
+
+        SoundEffectInstance jumpPadSound = Assets.jumpPad.CreateInstance();
 
         public PlayerBase(List<Entity> entities, Level lvl, EntityType type, Transform transform)
             : base(entities, lvl, type, transform, new Vector3(2, 2, 2))
@@ -93,13 +97,13 @@ namespace Replica.Entities
             emitter.Position = transform.position;
         }
 
-        public override void Update(GameTime gameTime, AudioListener listener)
+        public override void Update(GameTime gameTime)
         {
             canJump = true;
 
             for(int i=0; i<jumpingSounds.Count; i++)
             {
-                jumpingSounds[i].Apply3D(listener, emitter);
+                jumpingSounds[i].Apply3D(Globals.listener, emitter);
                 if (jumpingSounds[i].State == SoundState.Stopped)
                 {
                     jumpingSounds.RemoveAt(i);
@@ -108,7 +112,7 @@ namespace Replica.Entities
             }
 
             //Sequence is important
-            MoveY(gameTime, listener);
+            MoveY(gameTime);
             HandleCollisions(gameTime);
         }
 
@@ -140,7 +144,7 @@ namespace Replica.Entities
         /// </summary>
         void HandleCollisions(GameTime gameTime)
         {
-
+            boosted = false;
 
             for (int i = 0; i < movementBounds.Count; i++)
             {
@@ -157,7 +161,10 @@ namespace Replica.Entities
                                 if (prevVelocity.Y < 0.0f)
                                 {
                                     newPosition.Y = collider.T.position.Y + collider.BoundsSize.Y / 2 + boundsSize.Y / 2 + offset;
-                                    yVelocity = 0;
+                                    if (!boosted)
+                                    {
+                                        yVelocity = 0;
+                                    }
 
                                     //Reacting if the foot hits a certain Block
                                     if (collider.Type == EntityType.Conveyor)
@@ -168,10 +175,19 @@ namespace Replica.Entities
                                         prevVelocity += velocity;
                                         newPosition += velocity;
                                     }
+
                                     if (collider.Type == EntityType.JumpPad)
                                     {
-                                        JumpPad jumpPad=(JumpPad)collider;
+                                        JumpPad jumpPad = (JumpPad)collider;
                                         yVelocity = jumpPad.Velocity;
+                                        boosted = true;
+
+                                        if (jumpPadSound.State == SoundState.Stopped)
+                                        {
+                                            jumpPadSound.Volume = 0.05f;
+                                            jumpPadSound.Apply3D(Globals.listener, emitter);
+                                            jumpPadSound.Play();
+                                        }
                                     }
                                 }
                                 break;
@@ -215,7 +231,7 @@ namespace Replica.Entities
             }
         }
 
-        void MoveY(GameTime gameTime, AudioListener listener)
+        void MoveY(GameTime gameTime)
         {
             if (movementBounds[0].Activated && jumping)
             {
@@ -223,7 +239,7 @@ namespace Replica.Entities
 
                 SoundEffectInstance jumpingSound = Assets.jumping.CreateInstance();
                 jumpingSound.Volume = 0.1f;
-                jumpingSound.Apply3D(listener, emitter);
+                jumpingSound.Apply3D(Globals.listener, emitter);
                 jumpingSound.Play();
                 jumpingSounds.Add(jumpingSound);
             }
