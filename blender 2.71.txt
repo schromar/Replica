@@ -3,3 +3,4 @@ Texture:
 Edit Mode (Choose Vertices)
 UV/Image Editor
 Open
+a
