@@ -32,11 +32,11 @@ namespace Replica.Gamestates
             playbutton = new Button(Assets.play, Game1.graphics.GraphicsDevice, 0, "");
             playbutton.setPosition(new Vector2(buttonX/3, buttonY * 2));
 
-            exitbutton = new Button(Assets.exit, Game1.graphics.GraphicsDevice, 0, "");
-            exitbutton.setPosition(new Vector2(buttonX/3, buttonY * 3));
-
             loadbutton = new Button(Assets.levelselection, Game1.graphics.GraphicsDevice, 0, "");
-            loadbutton.setPosition(new Vector2(buttonX/3, buttonY * 4));
+            loadbutton.setPosition(new Vector2(buttonX/3, buttonY * 3));
+
+            exitbutton = new Button(Assets.exit, Game1.graphics.GraphicsDevice, 0, "");
+            exitbutton.setPosition(new Vector2(buttonX / 3, buttonY * 4));
         }
 
         public eGamestates Update(GameTime gameTime)
