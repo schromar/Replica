@@ -8,7 +8,7 @@ namespace Replica.Entities.Blocks
 {
     class JumpPad : Block
     {
-        float velocity = 20;
+        float velocity = 35;
         public float Velocity { get { return velocity; } }
 
         public JumpPad(List<Entity> entities, Level lvl, Transform transform, Vector3 boundsSize)

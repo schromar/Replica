@@ -64,7 +64,7 @@ namespace Replica.Drawables
 
             countLength = 22;
 
-            skill1X = (int)(Globals.resolutionWidht * 0.35f);
+            skill1X = (int)(Globals.resolutionWidht * 0.40f);
 
 
             count1 = "0";
@@ -118,7 +118,7 @@ namespace Replica.Drawables
         {
             Game1.spriteBatch.Draw(Assets.simpleReplicantButton, new Microsoft.Xna.Framework.Rectangle(skill1X, skillY - skill1OffsetY, skill1Size, skill1Size), Color.White);
             Game1.spriteBatch.Draw(Assets.imitatingReplicantButton, new Microsoft.Xna.Framework.Rectangle(skill2X, skillY - skill2OffsetY, skill2Size, skill2Size), Color.White);
-            Game1.spriteBatch.Draw(Assets.clearSkill, new Microsoft.Xna.Framework.Rectangle(skill3X, skillY - skill3OffsetY, skill3Size, skill3Size), Color.White);
+            //Game1.spriteBatch.Draw(Assets.clearSkill, new Microsoft.Xna.Framework.Rectangle(skill3X, skillY - skill3OffsetY, skill3Size, skill3Size), Color.White);
       
             Game1.spriteBatch.DrawString(Assets.font1, count1, count1Pos, Color.Black, 0, new Vector2(0, 0), count1Scale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
             Game1.spriteBatch.DrawString(Assets.font1, count2, count2Pos, Color.Black, 0, new Vector2(0, 0), count2Scale, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
