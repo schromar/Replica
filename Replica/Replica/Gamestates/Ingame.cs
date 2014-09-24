@@ -124,7 +124,7 @@ namespace Replica.Gamestates
             List<Entity> switches=new List<Entity>();
             foreach (Entity entity in entities)
             {
-                if (entity.Type != EntityType.Switch)
+                if (entity.Type != EntityType.Switch && entity.Type != EntityType.Goal)
                 {
                     entity.Draw(Game1.graphics.GraphicsDevice, gameTime, defaultEffect, camera);
                 }
