@@ -34,9 +34,17 @@ namespace Replica
         {
             rectangle = new Rectangle((int)position.X, (int)position.Y, (int)size.X, (int)size.Y);
 
+            if (index != 0 && index > Globals.highesstreachedlvl)
+                color = Color.Gray;
+            else color = Color.White;
+
             Rectangle mouseRec = new Rectangle(currentMouse.X, currentMouse.Y, 1, 1);
             if (mouseRec.Intersects(rectangle))
             {
+                if (!(index != 0 && index > Globals.highesstreachedlvl))
+                    color = new Color(200,255,255, 255);
+
+
                 if (color.A == 255) down = false;
                 if (color.A == 0) down = true;
                 if (down) color.A += 3; else color.A -= 3;
@@ -74,10 +82,8 @@ namespace Replica
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (index != 0 && index > Globals.highesstreachedlvl)
-                spriteBatch.Draw(texture, rectangle, Color.Gray);
-            else
-                spriteBatch.Draw(texture, rectangle, Color.White);
+            
+                spriteBatch.Draw(texture, rectangle, color);
 
            if (!name.Equals(""))
             {
