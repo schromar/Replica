@@ -5,10 +5,10 @@
   <property name="ReplicantsNormal" value="2"/>
   <property name="Text1" value="Hmm...three switches. Tricky."/>
   <property name="Text1_1" value="Can't really support three"/>
-  <property name="Text1_2" value="replicas at the moment."/>
+  <property name="Text1_2" value="replicants at the moment."/>
   <property name="Text1_3" value="Just wait while I sort this"/>
   <property name="Text1_4" value="out. Should not take "/>
-  <property name="Text1_5" value="longer than an hour."/>
+  <property name="Text1_5" value="longer than an hour or so."/>
   <property name="Text1_6" value=""/>
   <property name="Text2" value="Oh, you solved the puzzle."/>
   <property name="Text2_1" value="Bravo!"/>

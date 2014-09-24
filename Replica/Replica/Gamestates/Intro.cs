@@ -15,27 +15,32 @@ using Replica.Statics;
 
 namespace Replica.Gamestates
 {
-    class Loadinscreen : Gamestate
+    public class Intro : Gamestate
     {
-        TimeSpan TargetElapsedTime = new TimeSpan(0, 0, 5);
-        GameTime loading = new GameTime();
+        String text;
 
         public void Init(GraphicsDevice gDevice)
         {
+            text = "Ok, this is the situation: \n" + "Your boss, the professor has kidnapped you \n" + "and now you are locked in his basement, \n" + "a very strange device attached to your hand. \n" + "Until you find a way out, \n" + "You'll have to play his games. \n \n" +"Good luck!";
         }
+            
 
         public eGamestates Update(GameTime gameTime)
         {
+
             if (Input.isClicked(Microsoft.Xna.Framework.Input.Keys.Space) || Input.isLeftClicked())
             {
                 return eGamestates.InGame;
             }
-            return eGamestates.Loadingscreen;
-
+            
+            return eGamestates.Intro;
         }
+
         public void Draw(GameTime gameTime)
         {
-            Game1.spriteBatch.Draw(Assets.loading, new Rectangle(0, 0, Globals.resolutionWidht, Globals.resolutionHeight), Color.White);
+            Game1.spriteBatch.Draw(Assets.pix, new Rectangle(0, 0, Globals.resolutionWidht, Globals.resolutionHeight), Color.Black);
+
+            Game1.spriteBatch.DrawString(Assets.font1, text, new Vector2(10, 10), Color.White, 0f, new Vector2(0, 0), 2, SpriteEffects.None, 0f);
         }
 
 

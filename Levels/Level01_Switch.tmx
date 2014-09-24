@@ -6,7 +6,7 @@
   <property name="ReplicantsNormal" value="1"/>
   <property name="Text" value=""/>
   <property name="Text1" value="Use the left button of the "/>
-  <property name="Text1_1" value="device to place a replica in"/>
+  <property name="Text1_1" value="mouse to place a replicant in"/>
   <property name="Text1_2" value="the virtual box you see in "/>
   <property name="Text1_3" value="front of you."/>
   <property name="Text1_4" value="If the box is red, you can't "/>

@@ -21,6 +21,7 @@ namespace Replica
         public static GraphicsDeviceManager graphics;
         public static SpriteBatch spriteBatch;
 
+
         Gamestate gamestate = new Mainmenu();
 
         int fpsCounter;
@@ -34,7 +35,6 @@ namespace Replica
             graphics.PreferredBackBufferWidth = Globals.resolutionWidht;
 
             Content.RootDirectory = "Content";
-            
 
             /*graphics.SynchronizeWithVerticalRetrace = false;
             IsFixedTimeStep = false;
@@ -43,12 +43,14 @@ namespace Replica
             SoundEffect.MasterVolume = 1;
             SoundEffect.DistanceScale = 4;
             MediaPlayer.Volume = 0.15f;
+            
+            //MediaPlayer.Play(Assets.song[Globals.random.Next(Assets.song.Length)]);
             //MediaPlayer.Volume = 0;
         }
 
         protected override void Initialize()
         {
-
+            //MediaPlayer.Play(Assets.song[Globals.random.Next(Assets.song.Length)]);
             base.Initialize();
         }
 
@@ -135,10 +137,7 @@ namespace Replica
 
          private void HandleNewGameState()
         {
-            if (Globals.prevState == eGamestates.InGame && Globals.currentState != eGamestates.InGame)
-            {
-                MediaPlayer.Stop();
-            }
+           
 
             switch (Globals.currentState)
             {
@@ -155,8 +154,12 @@ namespace Replica
                     gamestate = new Levelselection();
                     break;
 
-                case eGamestates.Cutscene:
-                    gamestate = new Cutscene();
+                case eGamestates.Intro:
+                    gamestate = new Intro();
+                    break;
+
+                case eGamestates.Ending:
+                    gamestate = new Ending();
                     break;
 
                 case eGamestates.Options:

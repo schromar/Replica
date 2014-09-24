@@ -51,13 +51,13 @@ namespace Replica.Drawables
             base.Initialize();
             pos = 0;
             linebreakCount = 0;
-            textExistenceTime = 300000;
+            textExistenceTime = 3000000;
             existenceTime = textExistenceTime + 1.25f;
             currentText = "";
             linebreaks = new List<int>();
             count = 0;
 
-            textSpeedMax = 0.01f;
+            textSpeedMax = 0.07f;
             textSpeed = textSpeedMax;
 
             boxX = (int)(Globals.resolutionWidht * 0.7f);
@@ -84,7 +84,7 @@ namespace Replica.Drawables
                         linebreaks.Add(count);
                         count = 0;
 
-                        if (linebreakCount < 5)
+                        if (linebreakCount < 7)
                         {
                             linebreakCount++;                          
                         }
@@ -128,11 +128,11 @@ namespace Replica.Drawables
 
             if (textExistenceTime < fadeout)
             {
-                Game1.spriteBatch.DrawString(Assets.font1, currentText, new Vector2(boxX, textY), Color.White * (textExistenceTime / fadeout));
+                Game1.spriteBatch.DrawString(Assets.font1, currentText, new Vector2(boxX + 13, textY), Color.White * (textExistenceTime / fadeout));
             }
             else
             {
-                Game1.spriteBatch.DrawString(Assets.font1, currentText, new Vector2(boxX, textY), Color.White);
+                Game1.spriteBatch.DrawString(Assets.font1, currentText, new Vector2(boxX + 13, textY), Color.White);
                 
             }
             base.Draw();

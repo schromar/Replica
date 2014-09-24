@@ -5,7 +5,11 @@
   <property name="ReplicantsNormal" value="2"/>
   <property name="Text" value=""/>
   <property name="Text1" value=""/>
-  <property name="Text2" value="No, not here!"/>
+  <property name="Text2" value="Wait, it's a trap!"/>
+  <property name="Text3" value="OK, you got me,"/>
+  <property name="Text3_1" value="it was no trap."/>
+  <property name="Text3_2" value="But I'm very disappointed"/>
+  <property name="Text3_3" value="that you don't trust me."/>
  </properties>
  <tileset firstgid="1" name="ReplicaTileset" tilewidth="32" tileheight="32">
   <image source="ReplicaTileset.png" width="320" height="128"/>
@@ -37,7 +41,7 @@
 0,0,0,1,0,4,0,1,0,0,1,0,1,0,0,0,0,0,0,0,
 0,1,1,1,0,0,0,1,0,0,1,0,1,0,0,0,0,0,0,0,
 1,0,13,0,0,0,0,0,1,1,1,0,1,0,0,0,0,0,0,0,
-1,2,13,0,0,0,0,0,8,0,0,0,1,0,0,0,0,0,0,0,
+1,2,13,0,0,0,0,0,8,23,0,0,1,0,0,0,0,0,0,0,
 1,0,13,0,0,0,0,0,1,1,1,1,5,1,0,0,0,0,0,0,
 0,1,1,1,1,1,1,0,22,0,0,0,0,1,0,0,0,0,0,0,
 0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,

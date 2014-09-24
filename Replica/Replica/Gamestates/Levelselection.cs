@@ -60,6 +60,10 @@ namespace Replica.Gamestates
                     curLine = 1;
                 }
             }
+
+            Button backbutton = new Button(Assets.lvl_clear, Game1.graphics.GraphicsDevice, 0, " Back");
+            backbutton.setPosition(new Vector2((int)(Globals.resolutionWidht * 0.8f), (int)(Globals.resolutionHeight * 0.90f)));
+            buttons.Add(backbutton);
         }
 
         public eGamestates Update(GameTime gameTime)
@@ -72,11 +76,15 @@ namespace Replica.Gamestates
 
                 if (buttons[i].IsClicked())
                 {
-                    if (buttons[i].GetIndex() <= Globals.highesstreachedlvl)
+                    if (buttons[i].GetIndex() <= Globals.highesstreachedlvl && buttons[i].GetIndex() > 0)
                     {
                         Globals.levelnamecounter = buttons[i].GetIndex();
                         Globals.currentLvl = Globals.levelnames[Globals.levelnamecounter];
                         return eGamestates.InGame;
+                    }
+                    else if(buttons[i].GetName().Equals(" Back"))
+                    {
+                        return eGamestates.MainMenu;
                     }
                 }
 

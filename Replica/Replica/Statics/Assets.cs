@@ -103,11 +103,11 @@ namespace Replica.Statics
             song = new Song[]
             { 
                 Manager.Load<Song>("Music\\Chris Zabriskie - I Am a Man Who Will Fight for Your Honor"),
-                Manager.Load<Song>("Music\\DOCTOR VOX - Radar"),
+                /*Manager.Load<Song>("Music\\DOCTOR VOX - Radar"),
                 Manager.Load<Song>("Music\\Goto80 and the Uwe Schenk Band - Ponky Fonky Ferret"),
                 Manager.Load<Song>("Music\\Mooma - Tachyon Lullaby"),
                 Manager.Load<Song>("Music\\Rainfallen - Phyzo's Right"),
-                Manager.Load<Song>("Music\\Rolemusic - The Pirate And The Dancer")
+                Manager.Load<Song>("Music\\Rolemusic - The Pirate And The Dancer")*/
             };
         }
     }

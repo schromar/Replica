@@ -26,6 +26,7 @@ namespace Replica.Gamestates
         Level lvl;
         GraphicsDevice gDevice;
         BasicEffect defaultEffect;
+        bool music = false;
 
         public void Init(GraphicsDevice gDevice)
         {
@@ -48,8 +49,9 @@ namespace Replica.Gamestates
                 drawable.Initialize();
             }
 
-            MediaPlayer.Play(Assets.song[Globals.random.Next(Assets.song.Length)]);
-            MediaPlayer.IsRepeating = true;
+            
+
+            
         }
 
         public eGamestates Update(GameTime gameTime)
@@ -78,8 +80,6 @@ namespace Replica.Gamestates
             }
 
 
-
-
             if (Globals.reachedGoal == true)
             {
                 entities.Clear();
@@ -91,7 +91,7 @@ namespace Replica.Gamestates
 
                 if (Globals.levelnamecounter == Globals.levelnames.Length - 1)
                 {
-                    return eGamestates.Credits;
+                    return eGamestates.Ending;
                 }
                 Globals.levelnamecounter++; 
                 Globals.reachedGoal = false;

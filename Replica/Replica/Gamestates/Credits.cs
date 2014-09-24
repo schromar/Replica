@@ -25,7 +25,10 @@ namespace Replica.Gamestates
         {
             if (Input.isClicked(Keys.Escape) || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
             {
-                Globals.currentLvl = Globals.levelnames[0];
+                if (Globals.levelnamecounter == Globals.levelnames.Length - 1)
+                    Globals.currentLvl = Globals.levelnames[0];
+
+
                 return eGamestates.MainMenu;
             }
             return eGamestates.Credits;

@@ -6,16 +6,16 @@
   <property name="ReplicantsNormal" value="1"/>
   <property name="Text" value=""/>
   <property name="Text1" value="Use the spacebar to jump."/>
-  <property name="Text1_1" value="Don't us the spacebar"/>
+  <property name="Text1_1" value="Don't use the spacebar"/>
   <property name="Text1_2" value="to fall and break your"/>
-  <property name="Text1_3" value="valuable bones. "/>
+  <property name="Text1_3" value="bones. "/>
   <property name="Text1_4" value="So please use the spacebar."/>
   <property name="Text1_5" value="It's not that hard."/>
   <property name="Text1_6" value=""/>
   <property name="Text2" value="I'm surrounded by Idiots."/>
   <property name="Text2_1" value="Well, not exactly surrounded."/>
   <property name="Text2_2" value="But there's you!"/>
-  <property name="Text2_3" value="                 "/>
+  <property name="Text2_3" value="                           "/>
   <property name="Text2_4" value="Should have used"/>
   <property name="Text2_5" value="the monkey..."/>
   <property name="Text2_6" value=""/>
@@ -23,7 +23,7 @@
   <property name="Text3_1" value="as steps. It's a good thing"/>
   <property name="Text3_2" value="that I haven't worked out"/>
   <property name="Text3_3" value="feelings yet."/>
-  <property name="Text3_4" value="Otherwise that wold be"/>
+  <property name="Text3_4" value="Otherwise that would be"/>
   <property name="Text3_5" value="quite unethical."/>
   <property name="Text3_6" value=""/>
   <property name="Text4" value="It's nice to see that i did "/>

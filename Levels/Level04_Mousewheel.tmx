@@ -9,6 +9,7 @@
   <property name="Text2_1" value="spawn clones at a"/>
   <property name="Text2_2" value="further distance."/>
   <property name="Text2_3" value="Or don't."/>
+  <property name="Text2_4" value="It's your life."/>
  </properties>
  <tileset firstgid="1" name="ReplicaTileset" tilewidth="32" tileheight="32">
   <image source="ReplicaTileset.png" width="320" height="128"/>

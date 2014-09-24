@@ -67,6 +67,11 @@ namespace Replica
             return index;
         }
 
+        public string GetName()
+        {
+            return name;
+        }
+
         public void Draw(SpriteBatch spriteBatch)
         {
             if (index != 0 && index > Globals.highesstreachedlvl)
@@ -76,7 +81,7 @@ namespace Replica
 
            if (!name.Equals(""))
             {
-                Game1.spriteBatch.DrawString(Assets.font1, name, new Vector2(position.X + 18,position.Y + 8), Color.Red, 0, new Vector2(0, 0), 1.5f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
+                Game1.spriteBatch.DrawString(Assets.font1, name, new Vector2(position.X + 12,position.Y + 8), Color.Red, 0, new Vector2(0, 0), 1.5f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None, 0);
             }
 
         }

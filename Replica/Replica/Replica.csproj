@@ -132,9 +132,11 @@
     <Compile Include="Camera.cs" />
     <Compile Include="Gamestates\Cutscene.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="Gamestates\Ending.cs" />
     <Compile Include="Gamestates\Gameover.cs" />
     <Compile Include="Gamestate.cs" />
     <Compile Include="Gamestates\Ingame.cs" />
+    <Compile Include="Gamestates\Intro.cs" />
     <Compile Include="Gamestates\Loadinscreen.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Gamestates\Levelselection.cs" />

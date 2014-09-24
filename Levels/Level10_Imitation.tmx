@@ -4,7 +4,7 @@
   <property name="ReplicantsImitating" value="1"/>
   <property name="ReplicantsNormal" value="0"/>
   <property name="Text1" value="Hah! A breakthrough!"/>
-  <property name="Text1_1" value="Push the &quot;2&quot; button!"/>
+  <property name="Text1_1" value="Push the &quot;2&quot; key!"/>
   <property name="Text1_2" value="Then create a replicant."/>
   <property name="Text1_3" value="And then set eyes on my"/>
   <property name="Text1_4" value="newest creation!"/>

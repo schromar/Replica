@@ -21,22 +21,33 @@ namespace Replica.Gamestates
         Button playbutton;
         Button exitbutton;
         Button loadbutton;
+        Button creditsbutton;
         float buttonX;
         float buttonY;
 
         public void Init(GraphicsDevice gDevice)
         {
             buttonX = gDevice.Viewport.Width * 0.44f;
-            buttonY = gDevice.Viewport.Height * 0.11f;
+            buttonY = gDevice.Viewport.Height * 0.13f;
 
-            playbutton = new Button(Assets.play, Game1.graphics.GraphicsDevice, 0, "");
-            playbutton.setPosition(new Vector2(buttonX/3, buttonY * 2));
+            playbutton = new Button(Assets.lvl_clear, Game1.graphics.GraphicsDevice, 0, " START");
+            playbutton.setPosition(new Vector2(buttonX, buttonY * 3));
 
-            loadbutton = new Button(Assets.levelselection, Game1.graphics.GraphicsDevice, 0, "");
-            loadbutton.setPosition(new Vector2(buttonX/3, buttonY * 3));
+            loadbutton = new Button(Assets.lvl_clear, Game1.graphics.GraphicsDevice, 0, " LEVEL");
+            loadbutton.setPosition(new Vector2(buttonX, buttonY * 4));
 
-            exitbutton = new Button(Assets.exit, Game1.graphics.GraphicsDevice, 0, "");
-            exitbutton.setPosition(new Vector2(buttonX / 3, buttonY * 4));
+            creditsbutton = new Button(Assets.lvl_clear, Game1.graphics.GraphicsDevice, 0, "CREDITS");
+            creditsbutton.setPosition(new Vector2(buttonX, buttonY * 5));
+
+            exitbutton = new Button(Assets.lvl_clear, Game1.graphics.GraphicsDevice, 0, " EXIT");
+            exitbutton.setPosition(new Vector2(buttonX, buttonY * 6));
+
+            if (!Globals.playmusic)
+            {
+                MediaPlayer.Play(Assets.song[Globals.random.Next(Assets.song.Length)]);
+                MediaPlayer.IsRepeating = true;
+                Globals.playmusic = true;
+            }
         }
 
         public eGamestates Update(GameTime gameTime)
@@ -46,9 +57,15 @@ namespace Replica.Gamestates
             playbutton.Update(Input.currentMouse, Input.prevMouse);
             exitbutton.Update(Input.currentMouse, Input.prevMouse);
             loadbutton.Update(Input.currentMouse, Input.prevMouse);
+            creditsbutton.Update(Input.currentMouse, Input.prevMouse);
 
             if (playbutton.IsClicked())
             {
+                if (Globals.newGame)
+                {
+                    Globals.newGame = false;
+                    return eGamestates.Intro;
+                }
                 return eGamestates.InGame;
             }
             if (exitbutton.IsClicked() || Input.isClicked(Keys.Escape) || GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
@@ -58,7 +75,11 @@ namespace Replica.Gamestates
             if (loadbutton.IsClicked())
             {
                 return eGamestates.Levelselection;
-            }          
+            }
+            if (creditsbutton.IsClicked())
+            {
+                return eGamestates.Credits;
+            }
             return eGamestates.MainMenu;
         }
 
@@ -69,6 +90,7 @@ namespace Replica.Gamestates
             playbutton.Draw(Game1.spriteBatch);           
             exitbutton.Draw(Game1.spriteBatch);
             loadbutton.Draw(Game1.spriteBatch);
+            creditsbutton.Draw(Game1.spriteBatch);
         }
          
 
