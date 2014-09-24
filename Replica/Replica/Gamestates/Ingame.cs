@@ -91,7 +91,11 @@ namespace Replica.Gamestates
 
                 if (Globals.levelnamecounter == Globals.levelnames.Length - 1)
                 {
-                    return eGamestates.Ending;
+                    if (!Globals.reachedEnd)
+                    {
+                        Globals.reachedEnd = true;
+                        return eGamestates.Ending;
+                    }
                 }
                 Globals.levelnamecounter++; 
                 Globals.reachedGoal = false;
