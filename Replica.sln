@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Replica", "Replica\Replica\Replica.csproj", "{0392A88C-CA3E-4174-9883-65C40F7C2E38}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "ReplicaContent", "Replica\ReplicaContent\ReplicaContent.contentproj", "{B046E55D-7891-4A3E-8037-21837024FC03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReplicaContent", "Replica\ReplicaContent\ReplicaContent.contentproj", "{B046E55D-7891-4A3E-8037-21837024FC03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TiledSharp", "extern\TiledSharp\TiledSharp\TiledSharp.csproj", "{E4130F8D-D301-4E0C-916D-489C4A23C9B1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

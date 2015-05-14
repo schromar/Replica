@@ -105,9 +105,6 @@
     <Reference Include="System.Net">
       <Private>False</Private>
     </Reference>
-    <Reference Include="TiledSharp">
-      <HintPath>References\TiledSharp.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Antiblock.cs" />
@@ -157,6 +154,10 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\extern\TiledSharp\TiledSharp\TiledSharp.csproj">
+      <Project>{E4130F8D-D301-4E0C-916D-489C4A23C9B1}</Project>
+      <Name>TiledSharp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ReplicaContent\ReplicaContent.contentproj">
       <Name>ReplicaContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>

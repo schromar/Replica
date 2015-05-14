@@ -1,0 +1,3 @@
+[submodule "extern/TiledSharp"]
+	path = extern/TiledSharp
+	url = https://github.com/marshallward/TiledSharp
